@@ -15,8 +15,8 @@ from app.core.database import get_db
 from app.models.user import User
 from app.schemas.auth import TokenPayload
 
-# Password hashing context
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+# Password hashing context prioritizes Argon2 while keeping bcrypt for legacy hashes.
+pwd_context = CryptContext(schemes=["argon2", "bcrypt"], deprecated="auto")
 
 # Security scheme for bearer token
 security = HTTPBearer(

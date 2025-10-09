@@ -10,6 +10,11 @@ from fastapi.middleware.trustedhost import TrustedHostMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.exceptions import RequestValidationError
 from starlette.exceptions import HTTPException as StarletteHTTPException
+from slowapi import Limiter
+from slowapi.errors import RateLimitExceeded
+from slowapi.middleware import SlowAPIMiddleware
+from slowapi.util import get_remote_address
+from prometheus_fastapi_instrumentator import Instrumentator
 
 from app.api.routes import auth, users, ai
 from app.core.config import settings
@@ -49,6 +54,15 @@ async def lifespan(app: FastAPI):
     except RuntimeError as exc:
         print(f"[startup] {exc}")
         raise
+    
+    if settings.metrics_enabled:
+        global instrumentator
+        instrumentator = Instrumentator().instrument(app)
+        instrumentator.expose(
+            app,
+            endpoint=settings.metrics_endpoint,
+            include_in_schema=False,
+        )
 
     yield
 
@@ -73,7 +87,7 @@ app = FastAPI(
 if not settings.debug:
     app.add_middleware(
         TrustedHostMiddleware,
-        allowed_hosts=["*.syferstack.com", "localhost", "127.0.0.1"],
+        allowed_hosts=settings.allowed_hosts,
     )
 
 # CORS middleware
@@ -84,6 +98,33 @@ app.add_middleware(
     allow_methods=settings.allowed_methods,
     allow_headers=settings.allowed_headers,
 )
+
+async def rate_limit_exceeded_handler(request: Request, exc: RateLimitExceeded):
+    """Handle rate limit exceeded errors."""
+    response = JSONResponse(
+        status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+        content={
+            "error": "Too Many Requests",
+            "message": getattr(exc, "detail", "Rate limit exceeded"),
+        },
+    )
+    reset_in = getattr(exc, "reset_in", None)
+    if reset_in is not None:
+        response.headers["Retry-After"] = str(int(reset_in))
+    return response
+
+
+limiter: Limiter | None = None
+instrumentator: Instrumentator | None = None
+
+if settings.rate_limit_enabled:
+    limiter = Limiter(
+        key_func=get_remote_address,
+        default_limits=settings.rate_limit_default or None,
+    )
+    app.state.limiter = limiter
+    app.add_exception_handler(RateLimitExceeded, rate_limit_exceeded_handler)
+    app.add_middleware(SlowAPIMiddleware)
 
 
 # Custom exception handlers

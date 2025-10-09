@@ -1,0 +1,33 @@
+name: backend-ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test-build-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+        working-directory: backend
+
+      - name: Run tests
+        run: pytest -q
+        working-directory: backend
+
+      - name: Build backend image
+        run: docker build -t syferstack-backend .
+        working-directory: backend
+
+      - name: Trivy filesystem scan
+        uses: aquasecurity/trivy-action@0.22.0
+        with:
+          scan-type: fs
+          scan-ref: .

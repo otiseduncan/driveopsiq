@@ -56,6 +56,7 @@ class Settings(BaseSettings):
             "http://localhost:3000",
             "http://localhost:5173",
             "http://localhost:8080",
+            "https://app.syfernetics.com",
         ],
         description="Allowed CORS origins",
     )
@@ -66,6 +67,18 @@ class Settings(BaseSettings):
     allowed_headers: list[str] = Field(
         default=["*"],
         description="Allowed headers",
+    )
+    allowed_hosts: list[str] = Field(
+        default=["localhost", "127.0.0.1", "*.syfernetics.com", "*.syferstack.com"],
+        description="Allowed hosts for TrustedHostMiddleware",
+    )
+    rate_limit_default: list[str] = Field(
+        default=["100/minute"],
+        description="Default rate limits applied per client",
+    )
+    rate_limit_enabled: bool = Field(
+        default=True,
+        description="Enable or disable SlowAPI rate limiting",
     )
     
     # AI API settings
@@ -83,6 +96,16 @@ class Settings(BaseSettings):
     max_file_size: int = Field(default=10 * 1024 * 1024, description="Max file size in bytes (10MB)")
     upload_dir: str = Field(default="uploads", description="Upload directory")
     
+    # Observability settings
+    metrics_enabled: bool = Field(
+        default=True,
+        description="Enable Prometheus metrics endpoint instrumentation",
+    )
+    metrics_endpoint: str = Field(
+        default="/metrics",
+        description="Route path exposing Prometheus metrics",
+    )
+    
     @field_validator("debug", mode="before")
     @classmethod
     def parse_debug(cls, value: str | bool, _: ValidationInfo) -> bool:
@@ -98,6 +121,28 @@ class Settings(BaseSettings):
         if isinstance(value, str):
             return [origin.strip() for origin in value.split(",") if origin.strip()]
         return value
+
+    @field_validator("allowed_hosts", mode="before")
+    @classmethod
+    def parse_hosts(cls, value: str | list[str]) -> list[str]:
+        """Parse allowed hosts from comma-separated string or list."""
+        if isinstance(value, str):
+            return [host.strip() for host in value.split(",") if host.strip()]
+        return value
+
+    @field_validator("rate_limit_default", mode="before")
+    @classmethod
+    def parse_rate_limits(cls, value: str | list[str]) -> list[str]:
+        """Parse rate limit strings from comma-separated string or list."""
+        if isinstance(value, str):
+            return [limit.strip() for limit in value.split(",") if limit.strip()]
+        return value
+
+    @field_validator("metrics_endpoint")
+    @classmethod
+    def normalize_metrics_endpoint(cls, value: str) -> str:
+        """Ensure metrics endpoint path starts with a forward slash."""
+        return value if value.startswith("/") else f"/{value}"
     
     @field_validator("upload_dir")
     @classmethod
