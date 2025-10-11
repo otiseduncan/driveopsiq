@@ -41,6 +41,13 @@ dependencies = [
     "openai>=1.3.0",  # For AI features
     "anthropic>=0.7.0",  # Alternative AI provider
     "python-json-logger>=2.0.7",  # For JSON logging
+    # Performance dependencies
+    "uvloop>=0.19.0; sys_platform != 'win32'",  # Fast event loop
+    "httptools>=0.6.1",  # Fast HTTP parsing
+    "orjson>=3.9.10",  # Ultra-fast JSON serialization
+    "gunicorn>=21.2.0",  # Production WSGI server
+    "aiocache>=0.12.2",  # Async caching framework
+    "psutil>=5.9.6",  # System monitoring
 ]
 
 [project.optional-dependencies]
@@ -48,17 +55,29 @@ dev = [
     "pytest>=7.4.3",
     "pytest-asyncio>=0.21.1",
     "pytest-cov>=4.1.0",
+    "pytest-mock>=3.12.0",
+    "pytest-benchmark>=4.0.0",
+    "ruff>=0.1.6",
     "black>=23.11.0",
     "isort>=5.12.0",
-    "flake8>=6.1.0",
     "mypy>=1.7.1",
     "pre-commit>=3.5.0",
+    "bandit>=1.7.5",
+    "safety>=2.3.5",
+    "detect-secrets>=1.4.0",
+    "codecov>=2.1.13",
+    "coverage[toml]>=7.3.2",
 ]
 test = [
     "pytest>=7.4.3",
     "pytest-asyncio>=0.21.1",
     "pytest-cov>=4.1.0",
+    "pytest-mock>=3.12.0",
+    "pytest-benchmark>=4.0.0",
+    "pytest-xdist>=3.5.0",  # Parallel test execution
     "httpx>=0.25.2",
+    "factory-boy>=3.3.0",  # Test data factories
+    "faker>=20.1.0",  # Generate fake data
 ]
 
 [project.urls]
@@ -104,23 +123,121 @@ warn_unused_ignores = true
 warn_redundant_casts = true
 warn_unused_configs = true
 
+[tool.ruff]
+target-version = "py311"
+line-length = 88
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "C",  # flake8-comprehensions
+    "B",  # flake8-bugbear
+    "UP", # pyupgrade
+    "S",  # bandit (security)
+    "T20", # flake8-print
+    "SIM", # flake8-simplify
+    "ARG", # flake8-unused-arguments
+]
+ignore = [
+    "E501",  # line too long, handled by black
+    "B008",  # do not perform function calls in argument defaults
+    "S101",  # use of assert detected (allow in tests)
+]
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".hg",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "venv",
+    "alembic/versions",
+]
+
+[tool.ruff.per-file-ignores]
+"tests/*" = ["S101", "ARG", "FBT"]  # Allow asserts and unused args in tests
+
+[tool.bandit]
+exclude_dirs = ["tests", "alembic/versions"]
+skips = ["B101", "B601"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 asyncio_mode = "auto"
-addopts = "--cov=app --cov-report=term-missing --cov-report=html"
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = [
+    "--cov=app",
+    "--cov-report=term-missing",
+    "--cov-report=html:htmlcov",
+    "--cov-report=xml:coverage.xml",
+    "--cov-fail-under=80",
+    "--strict-markers",
+    "--strict-config",
+    "--disable-warnings",
+    "-ra",
+    "--tb=short",
+]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "unit: marks tests as unit tests",
+    "integration: marks tests as integration tests", 
+    "e2e: marks tests as end-to-end tests",
+    "benchmark: marks tests as benchmarks",
+]
+filterwarnings = [
+    "ignore::DeprecationWarning",
+    "ignore::PendingDeprecationWarning",
+]
 
 [tool.coverage.run]
 source = ["app"]
+parallel = true
+branch = true
+context = '${CONTEXT}'
 omit = [
     "*/tests/*",
+    "*/test_*",
+    "*/conftest.py",
     "*/venv/*",
+    "*/env/*",
     "*/__pycache__/*",
+    "*/alembic/versions/*",
+    "*/migrations/*",
 ]
 
 [tool.coverage.report]
+precision = 2
+show_missing = true
+skip_covered = false
+sort = "Cover"
 exclude_lines = [
     "pragma: no cover",
     "def __repr__",
+    "def __str__",
     "raise AssertionError",
     "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
+    "@abstract",
 ]
+
+[tool.coverage.html]
+directory = "htmlcov"
+
+[tool.coverage.xml]
+output = "coverage.xml"

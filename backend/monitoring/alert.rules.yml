@@ -1,0 +1,233 @@
+# Prometheus Alert Rules for SyferStackV2
+# Production-ready alerting for performance, availability, and security
+
+groups:
+  - name: syferstack_backend
+    interval: 30s
+    rules:
+      # High-level service availability
+      - alert: ServiceDown
+        expr: up{job="syferstack-backend"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "SyferStack backend service is down"
+          description: "Backend service {{ $labels.instance }} has been down for more than 1 minute"
+
+      # HTTP Error Rate Alerts
+      - alert: HighErrorRate
+        expr: |
+          (
+            sum(rate(http_requests_total{status=~"5.."}[5m])) by (instance)
+            /
+            sum(rate(http_requests_total[5m])) by (instance)
+          ) > 0.05
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High 5xx error rate detected"
+          description: "Instance {{ $labels.instance }} has 5xx error rate above 5% for 5 minutes"
+
+      - alert: CriticalErrorRate
+        expr: |
+          (
+            sum(rate(http_requests_total{status=~"5.."}[5m])) by (instance)
+            /
+            sum(rate(http_requests_total[5m])) by (instance)
+          ) > 0.15
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Critical 5xx error rate detected"
+          description: "Instance {{ $labels.instance }} has 5xx error rate above 15% for 2 minutes"
+
+      # Response Time Alerts
+      - alert: HighResponseTime
+        expr: histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket[5m])) by (le, instance)) > 0.5
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High response time detected"
+          description: "95th percentile response time is {{ $value }}s for instance {{ $labels.instance }}"
+
+      - alert: VeryHighResponseTime
+        expr: histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket[5m])) by (le, instance)) > 2.0
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Very high response time detected"
+          description: "95th percentile response time is {{ $value }}s for instance {{ $labels.instance }}"
+
+  - name: database_alerts
+    interval: 30s
+    rules:
+      # Database connectivity
+      - alert: DatabaseDown
+        expr: database_operations_total{status="error"} > 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Database connection issues detected"
+          description: "Database operations are failing on {{ $labels.instance }}"
+
+      # Database performance
+      - alert: SlowDatabaseQueries
+        expr: database_query_duration_seconds{quantile="0.95"} > 1.0
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Slow database queries detected"
+          description: "95th percentile database query time is {{ $value }}s"
+
+      - alert: HighDatabaseConnections
+        expr: database_connections_active > 80
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High database connection usage"
+          description: "Active database connections: {{ $value }}"
+
+  - name: system_alerts
+    interval: 30s
+    rules:
+      # Memory Usage
+      - alert: HighMemoryUsage
+        expr: (memory_usage_bytes / memory_total_bytes) * 100 > 85
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High memory usage detected"
+          description: "Memory usage is {{ $value }}% on {{ $labels.instance }}"
+
+      - alert: CriticalMemoryUsage
+        expr: (memory_usage_bytes / memory_total_bytes) * 100 > 95
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Critical memory usage detected"
+          description: "Memory usage is {{ $value }}% on {{ $labels.instance }}"
+
+      # CPU Usage
+      - alert: HighCPUUsage
+        expr: cpu_usage_percent > 80
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High CPU usage detected"
+          description: "CPU usage is {{ $value }}% on {{ $labels.instance }}"
+
+      - alert: CriticalCPUUsage
+        expr: cpu_usage_percent > 95
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Critical CPU usage detected"
+          description: "CPU usage is {{ $value }}% on {{ $labels.instance }}"
+
+      # Disk Usage
+      - alert: HighDiskUsage
+        expr: (disk_used_bytes / disk_total_bytes) * 100 > 80
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High disk usage detected"
+          description: "Disk usage is {{ $value }}% on {{ $labels.instance }}"
+
+      - alert: CriticalDiskUsage
+        expr: (disk_used_bytes / disk_total_bytes) * 100 > 90
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Critical disk usage detected"
+          description: "Disk usage is {{ $value }}% on {{ $labels.instance }}"
+
+  - name: cache_alerts
+    interval: 30s
+    rules:
+      # Cache Performance
+      - alert: LowCacheHitRate
+        expr: (cache_hits_total / (cache_hits_total + cache_misses_total)) < 0.8
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Low cache hit rate"
+          description: "Cache hit rate is {{ $value | humanizePercentage }} on {{ $labels.instance }}"
+
+      - alert: CacheConnectionIssues
+        expr: cache_operations_total{status="error"} > 0
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Cache connection issues"
+          description: "Cache operations are failing on {{ $labels.instance }}"
+
+  - name: security_alerts
+    interval: 30s
+    rules:
+      # Security Events
+      - alert: HighSecurityEvents
+        expr: increase(security_events_total[5m]) > 10
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High number of security events"
+          description: "{{ $value }} security events detected in the last 5 minutes"
+
+      - alert: CriticalSecurityEvents
+        expr: increase(security_events_total{type="critical"}[1m]) > 0
+        for: 0m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Critical security event detected"
+          description: "Critical security event of type {{ $labels.type }} detected"
+
+      # Authentication Issues
+      - alert: HighAuthenticationFailures
+        expr: increase(auth_attempts_total{status="failed"}[5m]) > 20
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High authentication failure rate"
+          description: "{{ $value }} authentication failures in the last 5 minutes"
+
+  - name: business_metrics
+    interval: 60s
+    rules:
+      # API Usage
+      - alert: LowAPIUsage
+        expr: sum(rate(http_requests_total[1h])) < 10
+        for: 30m
+        labels:
+          severity: info
+        annotations:
+          summary: "Low API usage detected"
+          description: "API request rate is {{ $value }} requests/second over the last hour"
+
+      # User Activity
+      - alert: NoActiveUsers
+        expr: active_users_total == 0
+        for: 15m
+        labels:
+          severity: info
+        annotations:
+          summary: "No active users"
+          description: "No active users detected for 15 minutes"

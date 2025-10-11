@@ -1,0 +1,86 @@
+# Prometheus Configuration for SyferStackV2
+# Scrapes metrics from backend services and system components
+
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    cluster: 'syferstack-v2'
+    environment: 'production'
+
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          - alertmanager:9093
+
+# Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
+rule_files:
+  - "alert.rules.yml"
+
+# Scrape configuration
+scrape_configs:
+  # Prometheus self-monitoring
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+    scrape_interval: 30s
+    metrics_path: '/metrics'
+
+  # SyferStack Backend API
+  - job_name: 'syferstack-backend'
+    static_configs:
+      - targets: ['backend:8000']
+    scrape_interval: 15s
+    metrics_path: '/metrics'
+    scrape_timeout: 10s
+    honor_labels: true
+    
+    # Health check monitoring
+  - job_name: 'syferstack-health'
+    static_configs:
+      - targets: ['backend:8000']
+    scrape_interval: 30s
+    metrics_path: '/api/v1/health'
+    scrape_timeout: 5s
+
+  # PostgreSQL Database metrics (using postgres_exporter)
+  - job_name: 'postgresql'
+    static_configs:
+      - targets: ['postgres_exporter:9187']
+    scrape_interval: 30s
+    
+  # Redis metrics (using redis_exporter)
+  - job_name: 'redis'
+    static_configs:
+      - targets: ['redis_exporter:9121']
+    scrape_interval: 30s
+
+  # Node/System metrics (using node_exporter)
+  - job_name: 'node'
+    static_configs:
+      - targets: ['node_exporter:9100']
+    scrape_interval: 30s
+    
+  # Nginx metrics
+  - job_name: 'nginx'
+    static_configs:
+      - targets: ['nginx:9113']
+    scrape_interval: 30s
+
+# Storage configuration
+storage:
+  tsdb:
+    path: /prometheus/
+    retention.time: 15d
+    retention.size: 10GB
+    
+# Remote write configuration (for cloud monitoring)
+# Uncomment and configure for Google Cloud Monitoring or other remote storage
+# remote_write:
+#   - url: "https://monitoring.googleapis.com/v1/projects/PROJECT_ID/location/global/prometheus/api/v1/write"
+#     write_relabel_configs:
+#       - source_labels: [__name__]
+#         regex: 'up|scrape_.*'
+#         action: drop

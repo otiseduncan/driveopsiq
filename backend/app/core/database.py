@@ -89,13 +89,20 @@ def _build_engine() -> AsyncEngine:
     # Validate the database URL first
     validated_url = _validate_database_url(settings.database_url)
     
-    # Base engine configuration
+    # Base engine configuration with enhanced performance settings
     engine_kwargs: Dict[str, Any] = {
         "echo": settings.database_echo and settings.debug,  # Only echo in debug mode
+        "echo_pool": settings.debug,  # Pool debug logging
         "future": True,
-        "pool_timeout": 30,  # Connection timeout
-        "pool_recycle": settings.database_pool_recycle,  # Recycle connections
+        "pool_timeout": 30,  # Connection timeout in seconds
+        "pool_recycle": settings.database_pool_recycle,  # Recycle connections every hour
         "pool_pre_ping": True,  # Validate connections before use
+        "pool_reset_on_return": "commit",  # Reset connections on return
+        "isolation_level": "READ_COMMITTED",  # Default isolation level
+        "execution_options": {
+            "isolation_level": "READ_COMMITTED",
+            "autocommit": False,
+        },
     }
 
     # Database-specific configuration
@@ -119,6 +126,8 @@ def _build_engine() -> AsyncEngine:
             "poolclass": QueuePool,
             "pool_size": settings.database_pool_size,
             "max_overflow": settings.database_max_overflow,
+            "pool_timeout": 30,  # Wait 30s for available connection
+            "pool_recycle": 3600,  # Recycle connections after 1 hour
         })
         
         if is_postgres:
@@ -127,16 +136,24 @@ def _build_engine() -> AsyncEngine:
                 "server_settings": {
                     "jit": "off",  # Disable JIT for faster connections
                     "application_name": "SyferStack-API",
-                }
+                    "shared_preload_libraries": "pg_stat_statements",
+                    "log_statement": "none",  # Security: don't log statements
+                    "log_min_duration_statement": "1000",  # Log slow queries only
+                },
+                "command_timeout": 60,  # Command timeout
+                "server_lifetime": 3600,  # Connection lifetime
             }
-            logger.info("Configured PostgreSQL database engine")
+            logger.info("Configured PostgreSQL database engine with performance optimizations")
         elif is_mysql:
             # MySQL-specific optimizations
             engine_kwargs["connect_args"] = {
                 "charset": "utf8mb4",
                 "autocommit": False,
+                "connect_timeout": 60,
+                "read_timeout": 30,
+                "write_timeout": 30,
             }
-            logger.info("Configured MySQL database engine")
+            logger.info("Configured MySQL database engine with performance optimizations")
     
     try:
         engine = create_async_engine(validated_url, **engine_kwargs)

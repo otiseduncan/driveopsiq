@@ -1,125 +1,130 @@
-import React, { useState, useEffect } from 'react';
+import React, { Suspense } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate, Link, useLocation } from 'react-router-dom';
 import './App.css';
 
-interface AppState {
-  isLoading: boolean;
-  error: string | null;
-  user: User | null;
-}
+// Import components
+import LoadingSpinner from '@/components/ui/LoadingSpinner';
 
-interface User {
-  id: string;
-  email: string;
-  is_active: boolean;
-  created_at: string;
-}
+// Lazy load pages for better performance and code splitting
+const Dashboard = React.lazy(() => import('@/pages/Dashboard'));
+const Login = React.lazy(() => import('@/pages/auth/Login'));
+const Register = React.lazy(() => import('@/pages/auth/Register'));
+const NotFound = React.lazy(() => import('@/pages/NotFound'));
 
-interface ApiHealthResponse {
-  status: 'healthy' | 'unhealthy';
-  version: string;
-  uptime: number;
-  timestamp: number;
-}
-
-const App: React.FC = () => {
-  const [count, setCount] = useState<number>(0);
-  const [appState, setAppState] = useState<AppState>({
-    isLoading: false,
-    error: null,
-    user: null,
-  });
-  const [healthStatus, setHealthStatus] = useState<ApiHealthResponse | null>(null);
-
-  useEffect(() => {
-    checkApiHealth();
-  }, []);
-
-  const checkApiHealth = async (): Promise<void> => {
-    try {
-      setAppState(prev => ({ ...prev, isLoading: true, error: null }));
-      
-      const response = await fetch('/api/health', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error(`API health check failed: ${response.status}`);
-      }
-
-      const health: ApiHealthResponse = await response.json();
-      setHealthStatus(health);
-    } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-      setAppState(prev => ({ ...prev, error: errorMessage }));
-    } finally {
-      setAppState(prev => ({ ...prev, isLoading: false }));
-    }
-  };
-
-  const handleCountIncrement = (): void => {
-    setCount(prevCount => prevCount + 1);
-  };
-
-  const renderHealthStatus = (): React.ReactElement => {
-    if (appState.isLoading) {
-      return <div className="health-status loading">Checking API health...</div>;
-    }
-
-    if (appState.error) {
-      return <div className="health-status error">API Error: {appState.error}</div>;
-    }
-
-    if (healthStatus) {
-      return (
-        <div className={`health-status ${healthStatus.status}`}>
-          <h3>API Status: {healthStatus.status}</h3>
-          <p>Version: {healthStatus.version}</p>
-          <p>Uptime: {Math.floor(healthStatus.uptime / 3600)}h {Math.floor((healthStatus.uptime % 3600) / 60)}m</p>
-        </div>
-      );
-    }
-
-    return <div className="health-status">No health data available</div>;
+/**
+ * Navigation component that uses router location
+ */
+const Navigation: React.FC = () => {
+  const location = useLocation();
+  
+  const isActive = (path: string) => {
+    return location.pathname === path;
   };
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>SyferStack Frontend</h1>
+    <nav className="flex items-center space-x-4">
+      <Link
+        to="/dashboard"
+        className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+          isActive('/dashboard')
+            ? 'bg-blue-100 text-blue-700'
+            : 'text-gray-600 hover:text-gray-900'
+        }`}
+      >
+        Dashboard
+      </Link>
+      <Link
+        to="/login"
+        className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+          isActive('/login')
+            ? 'bg-blue-100 text-blue-700'
+            : 'text-gray-600 hover:text-gray-900'
+        }`}
+      >
+        Login
+      </Link>
+      <Link
+        to="/register"
+        className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+          isActive('/register')
+            ? 'bg-blue-100 text-blue-700'
+            : 'text-gray-600 hover:text-gray-900'
+        }`}
+      >
+        Register
+      </Link>
+      <span className="text-sm text-gray-500">
+        🚀 Performance Optimized • 📦 Code Split • ⚡ Lazy Loaded
+      </span>
+    </nav>
+  );
+};
+
+/**
+ * Enhanced App component with React Router, lazy loading, and performance optimizations.
+ * Features:
+ * - Code splitting with React.lazy()
+ * - Suspense boundaries for smooth loading states
+ * - React Router for proper navigation
+ * - Performance-optimized component structure
+ * - SEO-friendly routing
+ */
+const App: React.FC = () => {
+  return (
+    <Router>
+      <div className="min-h-screen bg-gray-50 flex flex-col">
+        {/* Header with Navigation */}
+        <header className="bg-white shadow-sm border-b">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between h-16">
+              <div className="flex items-center">
+                <Link to="/" className="text-xl font-semibold text-gray-900 hover:text-gray-700">
+                  SyferStack V2
+                </Link>
+              </div>
+              <Navigation />
+            </div>
+          </div>
+        </header>
         
-        {renderHealthStatus()}
-        
-        <div className="card">
-          <button 
-            onClick={handleCountIncrement}
-            type="button"
-            aria-label="Increment counter"
+        {/* Main content with routing and Suspense */}
+        <main className="flex-1 max-w-7xl mx-auto w-full py-6 sm:px-6 lg:px-8">
+          <Suspense 
+            fallback={
+              <div className="flex justify-center items-center h-64">
+                <LoadingSpinner />
+              </div>
+            }
           >
-            count is {count}
-          </button>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test HMR
-          </p>
-        </div>
+            <Routes>
+              {/* Public Routes */}
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              
+              {/* Protected Routes */}
+              <Route path="/dashboard" element={<Dashboard />} />
+              
+              {/* Default and Fallback Routes */}
+              <Route path="/" element={<Navigate to="/dashboard" replace />} />
+              <Route path="/404" element={<NotFound />} />
+              <Route path="*" element={<Navigate to="/404" replace />} />
+            </Routes>
+          </Suspense>
+        </main>
         
-        <div className="actions">
-          <button 
-            onClick={checkApiHealth}
-            disabled={appState.isLoading}
-            type="button"
-          >
-            {appState.isLoading ? 'Checking...' : 'Refresh API Status'}
-          </button>
-        </div>
-        
-        <p className="read-the-docs">
-          SyferStack V2 - Production-ready full-stack application
-        </p>
-      </header>
-    </div>
+        {/* Footer */}
+        <footer className="bg-white border-t mt-auto">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div className="text-center text-sm text-gray-600 space-y-2">
+              <p>© 2025 SyferStack. All rights reserved.</p>
+              <p className="text-xs">
+                ⚡ Optimized build with Vite • 📦 Code splitting enabled • 🎯 Lazy loading active
+              </p>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </Router>
   );
 };
 

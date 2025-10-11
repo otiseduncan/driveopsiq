@@ -1,20 +1,31 @@
 """
-SyferStack FastAPI application with enhanced security configuration.
+SyferStack FastAPI application with enhanced security and performance configuration.
 """
+import asyncio
+import gzip
 import logging
 import os
 import time
 from contextlib import asynccontextmanager
-from typing import AsyncGenerator, Dict, List
+from typing import AsyncGenerator, Dict, List, Optional
 
 from fastapi import FastAPI, Request, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.security import HTTPBearer
 from prometheus_fastapi_instrumentator import Instrumentator
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.exceptions import HTTPException as StarletteHTTPException
+from starlette.responses import Response
+
+# Performance imports
+try:
+    import orjson
+    HAS_ORJSON = True
+except ImportError:
+    HAS_ORJSON = False
 
 from .core.config import settings
 from .logging_config import setup_json_logging
@@ -23,6 +34,42 @@ from .routers import health
 # Setup secure logging
 setup_json_logging()
 logger = logging.getLogger(__name__)
+
+class PerformanceMiddleware(BaseHTTPMiddleware):
+    """Enhanced middleware for performance monitoring and optimization."""
+    
+    async def dispatch(self, request: Request, call_next):
+        # Start timing
+        start_time = time.perf_counter()
+        
+        # Add request ID for tracing
+        request_id = f"req_{int(time.time() * 1000)}_{hash(request.url.path) % 10000:04d}"
+        
+        # Process request
+        response = await call_next(request)
+        
+        # Calculate response time
+        process_time = time.perf_counter() - start_time
+        
+        # Add performance headers
+        response.headers["X-Process-Time"] = f"{process_time:.6f}"
+        response.headers["X-Request-ID"] = request_id
+        
+        # Log slow requests
+        if process_time > 1.0:  # Log requests taking more than 1 second
+            logger.warning(
+                "Slow request detected",
+                extra={
+                    "request_id": request_id,
+                    "method": request.method,
+                    "path": request.url.path,
+                    "process_time": process_time,
+                    "status_code": response.status_code,
+                }
+            )
+        
+        return response
+
 
 class SecurityHeadersMiddleware(BaseHTTPMiddleware):
     """Middleware to add security headers to all responses."""
@@ -37,9 +84,112 @@ class SecurityHeadersMiddleware(BaseHTTPMiddleware):
         response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
         response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
         response.headers["Permissions-Policy"] = "geolocation=(), microphone=(), camera=()"
+        response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+        response.headers["Pragma"] = "no-cache"
+        response.headers["Expires"] = "0"
         
         # Remove server header for security
         response.headers.pop("Server", None)
+        
+        return response
+
+
+class CacheControlMiddleware(BaseHTTPMiddleware):
+    """Middleware to add appropriate caching headers based on route."""
+    
+    def __init__(self, app):
+        super().__init__(app)
+        # Define caching rules for different endpoints
+        self.cache_rules = {
+            "/health": {"max_age": 60, "public": True},
+            "/metrics": {"max_age": 30, "public": False},
+            "/api/v1/users/me": {"max_age": 300, "public": False},
+            "/openapi.json": {"max_age": 3600, "public": True},
+            "/docs": {"max_age": 3600, "public": True},
+            "/redoc": {"max_age": 3600, "public": True},
+        }
+    
+    async def dispatch(self, request: Request, call_next):
+        response = await call_next(request)
+        
+        # Apply caching rules
+        path = request.url.path
+        
+        # Find matching cache rule
+        cache_config = None
+        for route_pattern, config in self.cache_rules.items():
+            if path.startswith(route_pattern) or path == route_pattern:
+                cache_config = config
+                break
+        
+        if cache_config:
+            cache_directive = f"max-age={cache_config['max_age']}"
+            if cache_config.get("public", False):
+                cache_directive = f"public, {cache_directive}"
+            else:
+                cache_directive = f"private, {cache_directive}"
+            
+            response.headers["Cache-Control"] = cache_directive
+        else:
+            # Default: no cache for API endpoints
+            response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+        
+        return response
+
+
+class CompressionMiddleware(BaseHTTPMiddleware):
+    """Enhanced compression middleware with better performance."""
+    
+    def __init__(self, app, minimum_size: int = 1024, compression_level: int = 6):
+        super().__init__(app)
+        self.minimum_size = minimum_size
+        self.compression_level = compression_level
+        
+        # Content types that benefit from compression
+        self.compressible_types = {
+            "application/json",
+            "application/javascript",
+            "text/css", 
+            "text/html",
+            "text/plain",
+            "text/xml",
+            "application/xml",
+            "application/atom+xml",
+            "application/rss+xml",
+        }
+    
+    async def dispatch(self, request: Request, call_next):
+        response = await call_next(request)
+        
+        # Check if client accepts gzip
+        accept_encoding = request.headers.get("accept-encoding", "")
+        if "gzip" not in accept_encoding.lower():
+            return response
+        
+        # Check content type
+        content_type = response.headers.get("content-type", "").split(";")[0]
+        if content_type not in self.compressible_types:
+            return response
+        
+        # Check if already compressed
+        if response.headers.get("content-encoding"):
+            return response
+        
+        # Get response body
+        if hasattr(response, 'body'):
+            body = response.body
+            
+            # Check minimum size
+            if len(body) < self.minimum_size:
+                return response
+            
+            # Compress the body
+            compressed_body = gzip.compress(body, compresslevel=self.compression_level)
+            
+            # Update response
+            response.headers["content-encoding"] = "gzip"
+            response.headers["content-length"] = str(len(compressed_body))
+            response.body = compressed_body
         
         return response
 
@@ -87,8 +237,24 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     # Startup
     logger.info("🚀 SyferStack API starting up...")
     
-    # Initialize database connections, caches, etc. here
-    # await database.connect()
+    try:
+        # Initialize cache system
+        from app.core.cache import cache_manager, warm_cache
+        await cache_manager.initialize()
+        logger.info("✅ Cache system initialized")
+        
+        # Warm up cache with common data
+        await warm_cache()
+        logger.info("✅ Cache warm-up completed")
+        
+        # Initialize database connections
+        from app.core.database import init_db
+        await init_db()
+        logger.info("✅ Database initialized")
+        
+    except Exception as e:
+        logger.error(f"❌ Startup failed: {e}")
+        raise
     
     logger.info("✅ SyferStack API startup complete")
     
@@ -97,20 +263,47 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     # Shutdown
     logger.info("🛑 SyferStack API shutting down...")
     
-    # Cleanup resources here
-    # await database.disconnect()
+    try:
+        # Cleanup cache connections
+        await cache_manager.close()
+        logger.info("✅ Cache connections closed")
+        
+        # Cleanup database connections
+        from app.core.database import close_db
+        await close_db()
+        logger.info("✅ Database connections closed")
+        
+    except Exception as e:
+        logger.error(f"❌ Shutdown error: {e}")
     
     logger.info("✅ SyferStack API shutdown complete")
 
-# Create FastAPI app with secure configuration
+# Create custom JSON response class for better performance
+if HAS_ORJSON:
+    from fastapi.responses import ORJSONResponse
+    
+    class FastJSONResponse(ORJSONResponse):
+        """Ultra-fast JSON response using orjson."""
+        pass
+    
+    default_response_class = FastJSONResponse
+    logger.info("Using orjson for enhanced JSON performance")
+else:
+    default_response_class = JSONResponse
+    logger.info("Using standard JSON encoder (consider installing orjson for better performance)")
+
+# Create FastAPI app with secure and performance configuration
 app = FastAPI(
     title="SyferStack API",
-    description="Secure production-grade API for SyferStack",
+    description="Secure high-performance API for SyferStack with enterprise-grade features",
     version="2.0.0",
     docs_url="/docs" if settings.debug else None,  # Disable docs in production
     redoc_url="/redoc" if settings.debug else None,
     openapi_url="/openapi.json" if settings.debug else None,
+    default_response_class=default_response_class,
     lifespan=lifespan,
+    # Performance configurations
+    generate_unique_id_function=lambda route: f"{route.tags[0] if route.tags else 'default'}_{route.name}",
     # Security configurations
     dependencies=[],  # Global dependencies can be added here
 )
@@ -169,11 +362,17 @@ async def general_exception_handler(request: Request, exc: Exception):
         content={"detail": "An unexpected error occurred"}
     )
 
-# Security middleware (order matters!)
-# 1. Trusted hosts
+# Performance and Security middleware (order matters!)
+# 1. Trusted hosts (first for security)
 app.add_middleware(TrustedHostMiddleware, allowed_hosts=settings.allowed_hosts)
 
-# 2. CORS (if needed)
+# 2. Performance monitoring (early for accurate timing)
+app.add_middleware(PerformanceMiddleware)
+
+# 3. Compression (before security headers to ensure proper compression)
+app.add_middleware(GZipMiddleware, minimum_size=1000)
+
+# 4. CORS (if needed, before security headers)
 if settings.debug or settings.allowed_origins:
     app.add_middleware(
         CORSMiddleware,
@@ -181,13 +380,18 @@ if settings.debug or settings.allowed_origins:
         allow_credentials=True,
         allow_methods=settings.allowed_methods,
         allow_headers=settings.allowed_headers,
+        max_age=3600,  # Cache CORS headers
     )
 
-# 3. Security headers
+# 5. Cache control (before security headers)
+app.add_middleware(CacheControlMiddleware)
+
+# 6. Security headers
 app.add_middleware(SecurityHeadersMiddleware)
 
-# 4. Rate limiting
-app.add_middleware(RateLimitMiddleware, calls_per_minute=100)
+# 7. Rate limiting (last middleware for performance)
+rate_limit = 200 if settings.debug else 100  # Higher limit in development
+app.add_middleware(RateLimitMiddleware, calls_per_minute=rate_limit)
 
 # Set up Prometheus instrumentation (after middleware)
 instrumentator = Instrumentator(
@@ -230,12 +434,43 @@ async def root_health():
 if __name__ == "__main__":
     import uvicorn
     
+    # Check for performance dependencies
+    try:
+        import uvloop
+        asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
+        logger.info("Using uvloop for enhanced async performance")
+    except ImportError:
+        logger.info("uvloop not available, using default asyncio")
+    
     # Configuration for development
-    uvicorn.run(
-        "app.main:app",
-        host="0.0.0.0",
-        port=8000,
-        reload=settings.debug,
-        log_level="info",
-        access_log=True,
-    )
+    config = {
+        "app": "app.main:app",
+        "host": "0.0.0.0", 
+        "port": 8000,
+        "reload": settings.debug,
+        "log_level": "info",
+        "access_log": True,
+        "loop": "asyncio",
+        "interface": "asgi3",
+        "lifespan": "on",
+    }
+    
+    # Performance optimizations for development
+    if not settings.debug:
+        config.update({
+            "workers": 1,  # Single worker for development
+            "timeout_keep_alive": 5,
+            "limit_concurrency": 100,
+            "backlog": 2048,
+        })
+    
+    # Use httptools if available
+    try:
+        import httptools
+        config["http"] = "httptools"
+        logger.info("Using httptools for faster HTTP parsing")
+    except ImportError:
+        config["http"] = "h11"
+        logger.info("httptools not available, using h11")
+    
+    uvicorn.run(**config)
