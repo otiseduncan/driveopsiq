@@ -41,6 +41,8 @@ jobs:
       contents: read
       security-events: write  # For SARIF upload
       pull-requests: write    # For PR comments
+      actions: read           # For workflow access
+      checks: write           # For check runs
     
     steps:
       - name: 🔄 Checkout Code
@@ -229,7 +231,7 @@ jobs:
           "
       
       - name: 🔒 Upload SARIF Results
-        if: always()
+        if: always() && github.repository == 'otiseduncan/SyferStackV2' && !github.event.pull_request.head.repo.fork
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: audit_reports/audit.sarif
@@ -351,7 +353,9 @@ jobs:
           output: 'trivy-results.sarif'
       
       - name: 📤 Upload Trivy Results
+        if: github.repository == 'otiseduncan/SyferStackV2' && !github.event.pull_request.head.repo.fork
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: 'trivy-results.sarif'
           category: 'trivy-dependencies'
+        continue-on-error: true
