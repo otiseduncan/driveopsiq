@@ -1,5 +1,5 @@
 import { lazy } from 'react';
-import { createBrowserRouter, RouteObject } from 'react-router-dom';
+import { createBrowserRouter } from 'react-router-dom';
 
 // Layout components (loaded eagerly)
 import RootLayout from '@/components/layouts/RootLayout';
