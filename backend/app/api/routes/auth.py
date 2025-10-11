@@ -17,6 +17,7 @@ from app.core.security import (
     get_password_hash,
     verify_password,
     verify_token,
+    upgrade_password_if_needed,
 )
 from app.models.user import User
 from app.schemas.auth import (
@@ -107,6 +108,12 @@ async def login(
             detail="User account is disabled",
         )
     
+    # Auto-upgrade old hashes (bcrypt -> Argon2)
+    new_hash = upgrade_password_if_needed(form_data.password, user.hashed_password)
+    if new_hash != user.hashed_password:
+        user.hashed_password = new_hash
+        await db.commit()
+    
     # Create access token
     access_token = create_access_token(subject=user.id)
     refresh_token = create_refresh_token(subject=user.id)
@@ -151,6 +158,12 @@ async def login_json(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="User account is disabled",
         )
+    
+    # Auto-upgrade old hashes (bcrypt -> Argon2)
+    new_hash = upgrade_password_if_needed(user_data.password, user.hashed_password)
+    if new_hash != user.hashed_password:
+        user.hashed_password = new_hash
+        await db.commit()
     
     # Create tokens
     access_token = create_access_token(subject=user.id)

@@ -17,6 +17,7 @@ from app.schemas.ai import (
     ChatRequest,
     ChatResponse,
     ChatMessage,
+    ChatRole,
     CompletionRequest,
     CompletionResponse,
     EmbeddingRequest,
@@ -96,6 +97,7 @@ async def get_available_models() -> Any:
                 description="Most capable GPT-4 model",
                 max_tokens=8192,
                 supports_streaming=True,
+                pricing={"input_tokens_per_1k": 0.03, "output_tokens_per_1k": 0.06}
             ),
             ModelInfo(
                 id="gpt-4-turbo-preview",
@@ -104,6 +106,7 @@ async def get_available_models() -> Any:
                 description="Latest GPT-4 Turbo model with improved capabilities",
                 max_tokens=128000,
                 supports_streaming=True,
+                pricing={"input_tokens_per_1k": 0.01, "output_tokens_per_1k": 0.03}
             ),
             ModelInfo(
                 id="gpt-3.5-turbo",
@@ -112,6 +115,7 @@ async def get_available_models() -> Any:
                 description="Fast and efficient model for most tasks",
                 max_tokens=16385,
                 supports_streaming=True,
+                pricing={"input_tokens_per_1k": 0.001, "output_tokens_per_1k": 0.002}
             ),
         ])
     
@@ -125,6 +129,7 @@ async def get_available_models() -> Any:
                 description="Most capable Claude model",
                 max_tokens=200000,
                 supports_streaming=True,
+                pricing={"input_tokens_per_1k": 0.015, "output_tokens_per_1k": 0.075}
             ),
             ModelInfo(
                 id="claude-3-sonnet-20240229",
@@ -133,6 +138,7 @@ async def get_available_models() -> Any:
                 description="Balanced Claude model",
                 max_tokens=200000,
                 supports_streaming=True,
+                pricing={"input_tokens_per_1k": 0.003, "output_tokens_per_1k": 0.015}
             ),
             ModelInfo(
                 id="claude-3-haiku-20240307",
@@ -141,6 +147,7 @@ async def get_available_models() -> Any:
                 description="Fast and efficient Claude model",
                 max_tokens=200000,
                 supports_streaming=True,
+                pricing={"input_tokens_per_1k": 0.00025, "output_tokens_per_1k": 0.00125}
             ),
         ])
     
@@ -196,7 +203,7 @@ async def chat(
             
             return ChatResponse(
                 message=ChatMessage(
-                    role="assistant",
+                    role=ChatRole.ASSISTANT,
                     content=response.choices[0].message.content,
                 ),
                 model=request.model,
@@ -234,7 +241,7 @@ async def chat(
             
             return ChatResponse(
                 message=ChatMessage(
-                    role="assistant",
+                    role=ChatRole.ASSISTANT,
                     content=response.content[0].text,
                 ),
                 model=request.model,

@@ -1,0 +1,3126 @@
+{
+  "timestamp": "2025-10-10T21:41:47.594574",
+  "ruff": [
+    {
+      "cell": null,
+      "code": "F401",
+      "end_location": {
+        "column": 41,
+        "row": 11
+      },
+      "filename": "/home/otis/SyferStackV2/scripts/audit_scheduler.py",
+      "fix": {
+        "applicability": "safe",
+        "edits": [
+          {
+            "content": "from datetime import datetime",
+            "end_location": {
+              "column": 41,
+              "row": 11
+            },
+            "location": {
+              "column": 1,
+              "row": 11
+            }
+          }
+        ],
+        "message": "Remove unused import: `datetime.timedelta`"
+      },
+      "location": {
+        "column": 32,
+        "row": 11
+      },
+      "message": "`datetime.timedelta` imported but unused",
+      "noqa_row": 11,
+      "url": "https://docs.astral.sh/ruff/rules/unused-import"
+    },
+    {
+      "cell": null,
+      "code": "F401",
+      "end_location": {
+        "column": 12,
+        "row": 15
+      },
+      "filename": "/home/otis/SyferStackV2/scripts/audit_scheduler.py",
+      "fix": {
+        "applicability": "safe",
+        "edits": [
+          {
+            "content": "",
+            "end_location": {
+              "column": 1,
+              "row": 16
+            },
+            "location": {
+              "column": 1,
+              "row": 15
+            }
+          }
+        ],
+        "message": "Remove unused import: `time`"
+      },
+      "location": {
+        "column": 8,
+        "row": 15
+      },
+      "message": "`time` imported but unused",
+      "noqa_row": 15,
+      "url": "https://docs.astral.sh/ruff/rules/unused-import"
+    },
+    {
+      "cell": null,
+      "code": "F401",
+      "end_location": {
+        "column": 12,
+        "row": 16
+      },
+      "filename": "/home/otis/SyferStackV2/scripts/audit_scheduler.py",
+      "fix": {
+        "applicability": "safe",
+        "edits": [
+          {
+            "content": "",
+            "end_location": {
+              "column": 1,
+              "row": 17
+            },
+            "location": {
+              "column": 1,
+              "row": 16
+            }
+          }
+        ],
+        "message": "Remove unused import: `json`"
+      },
+      "location": {
+        "column": 8,
+        "row": 16
+      },
+      "message": "`json` imported but unused",
+      "noqa_row": 16,
+      "url": "https://docs.astral.sh/ruff/rules/unused-import"
+    },
+    {
+      "cell": null,
+      "code": "F541",
+      "end_location": {
+        "column": 58,
+        "row": 90
+      },
+      "filename": "/home/otis/SyferStackV2/scripts/audit_scheduler.py",
+      "fix": {
+        "applicability": "safe",
+        "edits": [
+          {
+            "content": "\"\ud83d\udee1\ufe0f SyferStackV2 Audit Complete\"",
+            "end_location": {
+              "column": 58,
+              "row": 90
+            },
+            "location": {
+              "column": 25,
+              "row": 90
+            }
+          }
+        ],
+        "message": "Remove extraneous `f` prefix"
+      },
+      "location": {
+        "column": 25,
+        "row": 90
+      },
+      "message": "f-string without any placeholders",
+      "noqa_row": 90,
+      "url": "https://docs.astral.sh/ruff/rules/f-string-missing-placeholders"
+    },
+    {
+      "cell": null,
+      "code": "F401",
+      "end_location": {
+        "column": 10,
+        "row": 10
+      },
+      "filename": "/home/otis/SyferStackV2/scripts/cache_system.py",
+      "fix": {
+        "applicability": "safe",
+        "edits": [
+          {
+            "content": "",
+            "end_location": {
+              "column": 1,
+              "row": 11
+            },
+            "location": {
+              "column": 1,
+              "row": 10
+            }
+          }
+        ],
+        "message": "Remove unused import: `os`"
+      },
+      "location": {
+        "column": 8,
+        "row": 10
+      },
+      "message": "`os` imported but unused",
+      "noqa_row": 10,
+      "url": "https://docs.astral.sh/ruff/rules/unused-import"
+    },
+    {
+      "cell": null,
+      "code": "F401",
+      "end_location": {
+        "column": 42,
+        "row": 13
+      },
+      "filename": "/home/otis/SyferStackV2/scripts/cache_system.py",
+      "fix": {
+        "applicability": "safe",
+        "edits": [
+          {
+            "content": "from dataclasses import dataclass",
+            "end_location": {
+              "column": 42,
+              "row": 13
+            },
+            "location": {
+              "column": 1,
+              "row": 13
+            }
+          }
+        ],
+        "message": "Remove unused import: `dataclasses.asdict`"
+      },
+      "location": {
+        "column": 36,
+        "row": 13
+      },
+      "message": "`dataclasses.asdict` imported but unused",
+      "noqa_row": 13,
+      "url": "https://docs.astral.sh/ruff/rules/unused-import"
+    },
+    {
+      "cell": null,
+      "code": "F401",
+      "end_location": {
+        "column": 30,
+        "row": 16
+      },
+      "filename": "/home/otis/SyferStackV2/scripts/cache_system.py",
+      "fix": {
+        "applicability": "safe",
+        "edits": [
+          {
+            "content": "from typing import Dict, Optional, Set, Any",
+            "end_location": {
+              "column": 57,
+              "row": 16
+            },
+            "location": {
+              "column": 1,
+              "row": 16
+            }
+          }
+        ],
+        "message": "Remove unused import"
+      },
+      "location": {
+        "column": 26,
+        "row": 16
+      },
+      "message": "`typing.List` imported but unused",
+      "noqa_row": 16,
+      "url": "https://docs.astral.sh/ruff/rules/unused-import"
+    },
+    {
+      "cell": null,
+      "code": "F401",
+      "end_location": {
+        "column": 52,
+        "row": 16
+      },
+      "filename": "/home/otis/SyferStackV2/scripts/cache_system.py",
+      "fix": {
+        "applicability": "safe",
+        "edits": [
+          {
+            "content": "from typing import Dict, Optional, Set, Any",
+            "end_location": {
+              "column": 57,
+              "row": 16
+            },
+            "location": {
+              "column": 1,
+              "row": 16
+            }
+          }
+        ],
+        "message": "Remove unused import"
+      },
+      "location": {
+        "column": 47,
+        "row": 16
+      },
+      "message": "`typing.Tuple` imported but unused",
+      "noqa_row": 16,
+      "url": "https://docs.astral.sh/ruff/rules/unused-import"
+    },
+    {
+      "cell": null,
+      "code": "F401",
+      "end_location": {
+        "column": 34,
+        "row": 9
+      },
+      "filename": "/home/otis/SyferStackV2/scripts/config_manager.py",
+      "fix": {
+        "applicability": "safe",
+        "edits": [
+          {
+            "content": "",
+            "end_location": {
+              "column": 1,
+              "row": 10
+            },
+            "location": {
+              "column": 1,
+              "row": 9
+            }
+          }
+        ],
+        "message": "Remove unused import"
+      },
+      "location": {
+        "column": 25,
+        "row": 9
+      },
+      "message": "`dataclasses.dataclass` imported but unused",
+      "noqa_row": 9,
+      "url": "https://docs.astral.sh/ruff/rules/unused-import"
+    },
+    {
+      "cell": null,
+      "code": "F401",
+      "end_location": {
+        "column": 41,
+        "row": 9
+      },
+      "filename": "/home/otis/SyferStackV2/scripts/config_manager.py",
+      "fix": {
+        "applicability": "safe",
+        "edits": [
+          {
+            "content": "",
+            "end_location": {
+              "column": 1,
+              "row": 10
+            },
+            "location": {
+              "column": 1,
+              "row": 9
+            }
+          }
+        ],
+        "message": "Remove unused import"
+      },
+      "location": {
+        "column": 36,
+        "row": 9
+      },
+      "message": "`dataclasses.field` imported but unused",
+      "noqa_row": 9,
+      "url": "https://docs.astral.sh/ruff/rules/unused-import"
+    },
+    {
+      "cell": null,
+      "code": "F401",
+      "end_location": {
+        "column": 38,
+        "row": 13
+      },
+      "filename": "/home/otis/SyferStackV2/scripts/config_manager.py",
+      "fix": {
+        "applicability": "safe",
+        "edits": [
+          {
+            "content": "from pydantic import BaseModel, validator, ValidationError",
+            "end_location": {
+              "column": 66,
+              "row": 13
+            },
+            "location": {
+              "column": 1,
+              "row": 13
+            }
+          }
+        ],
+        "message": "Remove unused import: `pydantic.Field`"
+      },
+      "location": {
+        "column": 33,
+        "row": 13
+      },
+      "message": "`pydantic.Field` imported but unused",
+      "noqa_row": 13,
+      "url": "https://docs.astral.sh/ruff/rules/unused-import"
+    },
+    {
+      "cell": null,
+      "code": "F401",
+      "end_location": {
+        "column": 13,
+        "row": 12
+      },
+      "filename": "/home/otis/SyferStackV2/scripts/improved_audit.py",
+      "fix": {
+        "applicability": "safe",
+        "edits": [
+          {
+            "content": "",
+            "end_location": {
+              "column": 1,
+              "row": 13
+            },
+            "location": {
+              "column": 1,
+              "row": 12
+            }
+          }
+        ],
+        "message": "Remove unused import: `shlex`"
+      },
+      "location": {
+        "column": 8,
+        "row": 12
+      },
+      "message": "`shlex` imported but unused",
+      "noqa_row": 12,
+      "url": "https://docs.astral.sh/ruff/rules/unused-import"
+    },
+    {
+      "cell": null,
+      "code": "F401",
+      "end_location": {
+        "column": 18,
+        "row": 13
+      },
+      "filename": "/home/otis/SyferStackV2/scripts/improved_audit.py",
+      "fix": {
+        "applicability": "safe",
+        "edits": [
+          {
+            "content": "",
+            "end_location": {
+              "column": 1,
+              "row": 14
+            },
+            "location": {
+              "column": 1,
+              "row": 13
+            }
+          }
+        ],
+        "message": "Remove unused import: `subprocess`"
+      },
+      "location": {
+        "column": 8,
+        "row": 13
+      },
+      "message": "`subprocess` imported but unused",
+      "noqa_row": 13,
+      "url": "https://docs.astral.sh/ruff/rules/unused-import"
+    },
+    {
+      "cell": null,
+      "code": "F401",
+      "end_location": {
+        "column": 43,
+        "row": 21
+      },
+      "filename": "/home/otis/SyferStackV2/scripts/improved_audit.py",
+      "fix": {
+        "applicability": "safe",
+        "edits": [
+          {
+            "content": "from rich.progress import Progress",
+            "end_location": {
+              "column": 43,
+              "row": 21
+            },
+            "location": {
+              "column": 1,
+              "row": 21
+            }
+          }
+        ],
+        "message": "Remove unused import: `rich.progress.TaskID`"
+      },
+      "location": {
+        "column": 37,
+        "row": 21
+      },
+      "message": "`rich.progress.TaskID` imported but unused",
+      "noqa_row": 21,
+      "url": "https://docs.astral.sh/ruff/rules/unused-import"
+    },
+    {
+      "cell": null,
+      "code": "F841",
+      "end_location": {
+        "column": 19,
+        "row": 251
+      },
+      "filename": "/home/otis/SyferStackV2/scripts/improved_audit.py",
+      "fix": {
+        "applicability": "unsafe",
+        "edits": [
+          {
+            "content": "",
+            "end_location": {
+              "column": 1,
+              "row": 252
+            },
+            "location": {
+              "column": 1,
+              "row": 251
+            }
+          }
+        ],
+        "message": "Remove assignment to unused variable `low_weight`"
+      },
+      "location": {
+        "column": 9,
+        "row": 251
+      },
+      "message": "Local variable `low_weight` is assigned to but never used",
+      "noqa_row": 251,
+      "url": "https://docs.astral.sh/ruff/rules/unused-variable"
+    },
+    {
+      "cell": null,
+      "code": "E701",
+      "end_location": {
+        "column": 24,
+        "row": 255
+      },
+      "filename": "/home/otis/SyferStackV2/scripts/improved_audit.py",
+      "fix": null,
+      "location": {
+        "column": 23,
+        "row": 255
+      },
+      "message": "Multiple statements on one line (colon)",
+      "noqa_row": 255,
+      "url": "https://docs.astral.sh/ruff/rules/multiple-statements-on-one-line-colon"
+    },
+    {
+      "cell": null,
+      "code": "E701",
+      "end_location": {
+        "column": 24,
+        "row": 256
+      },
+      "filename": "/home/otis/SyferStackV2/scripts/improved_audit.py",
+      "fix": null,
+      "location": {
+        "column": 23,
+        "row": 256
+      },
+      "message": "Multiple statements on one line (colon)",
+      "noqa_row": 256,
+      "url": "https://docs.astral.sh/ruff/rules/multiple-statements-on-one-line-colon"
+    },
+    {
+      "cell": null,
+      "code": "E701",
+      "end_location": {
+        "column": 24,
+        "row": 257
+      },
+      "filename": "/home/otis/SyferStackV2/scripts/improved_audit.py",
+      "fix": null,
+      "location": {
+        "column": 23,
+        "row": 257
+      },
+      "message": "Multiple statements on one line (colon)",
+      "noqa_row": 257,
+      "url": "https://docs.astral.sh/ruff/rules/multiple-statements-on-one-line-colon"
+    },
+    {
+      "cell": null,
+      "code": "E701",
+      "end_location": {
+        "column": 24,
+        "row": 258
+      },
+      "filename": "/home/otis/SyferStackV2/scripts/improved_audit.py",
+      "fix": null,
+      "location": {
+        "column": 23,
+        "row": 258
+      },
+      "message": "Multiple statements on one line (colon)",
+      "noqa_row": 258,
+      "url": "https://docs.astral.sh/ruff/rules/multiple-statements-on-one-line-colon"
+    },
+    {
+      "cell": null,
+      "code": "E701",
+      "end_location": {
+        "column": 24,
+        "row": 259
+      },
+      "filename": "/home/otis/SyferStackV2/scripts/improved_audit.py",
+      "fix": null,
+      "location": {
+        "column": 23,
+        "row": 259
+      },
+      "message": "Multiple statements on one line (colon)",
+      "noqa_row": 259,
+      "url": "https://docs.astral.sh/ruff/rules/multiple-statements-on-one-line-colon"
+    },
+    {
+      "cell": null,
+      "code": "E701",
+      "end_location": {
+        "column": 24,
+        "row": 260
+      },
+      "filename": "/home/otis/SyferStackV2/scripts/improved_audit.py",
+      "fix": null,
+      "location": {
+        "column": 23,
+        "row": 260
+      },
+      "message": "Multiple statements on one line (colon)",
+      "noqa_row": 260,
+      "url": "https://docs.astral.sh/ruff/rules/multiple-statements-on-one-line-colon"
+    },
+    {
+      "cell": null,
+      "code": "E701",
+      "end_location": {
+        "column": 24,
+        "row": 261
+      },
+      "filename": "/home/otis/SyferStackV2/scripts/improved_audit.py",
+      "fix": null,
+      "location": {
+        "column": 23,
+        "row": 261
+      },
+      "message": "Multiple statements on one line (colon)",
+      "noqa_row": 261,
+      "url": "https://docs.astral.sh/ruff/rules/multiple-statements-on-one-line-colon"
+    },
+    {
+      "cell": null,
+      "code": "F401",
+      "end_location": {
+        "column": 28,
+        "row": 13
+      },
+      "filename": "/home/otis/SyferStackV2/scripts/local_audit.py",
+      "fix": {
+        "applicability": "safe",
+        "edits": [
+          {
+            "content": "",
+            "end_location": {
+              "column": 1,
+              "row": 14
+            },
+            "location": {
+              "column": 1,
+              "row": 13
+            }
+          }
+        ],
+        "message": "Remove unused import: `statistics.mean`"
+      },
+      "location": {
+        "column": 24,
+        "row": 13
+      },
+      "message": "`statistics.mean` imported but unused",
+      "noqa_row": 13,
+      "url": "https://docs.astral.sh/ruff/rules/unused-import"
+    },
+    {
+      "cell": null,
+      "code": "E701",
+      "end_location": {
+        "column": 24,
+        "row": 259
+      },
+      "filename": "/home/otis/SyferStackV2/scripts/local_audit.py",
+      "fix": null,
+      "location": {
+        "column": 23,
+        "row": 259
+      },
+      "message": "Multiple statements on one line (colon)",
+      "noqa_row": 259,
+      "url": "https://docs.astral.sh/ruff/rules/multiple-statements-on-one-line-colon"
+    },
+    {
+      "cell": null,
+      "code": "E701",
+      "end_location": {
+        "column": 24,
+        "row": 260
+      },
+      "filename": "/home/otis/SyferStackV2/scripts/local_audit.py",
+      "fix": null,
+      "location": {
+        "column": 23,
+        "row": 260
+      },
+      "message": "Multiple statements on one line (colon)",
+      "noqa_row": 260,
+      "url": "https://docs.astral.sh/ruff/rules/multiple-statements-on-one-line-colon"
+    },
+    {
+      "cell": null,
+      "code": "E701",
+      "end_location": {
+        "column": 24,
+        "row": 261
+      },
+      "filename": "/home/otis/SyferStackV2/scripts/local_audit.py",
+      "fix": null,
+      "location": {
+        "column": 23,
+        "row": 261
+      },
+      "message": "Multiple statements on one line (colon)",
+      "noqa_row": 261,
+      "url": "https://docs.astral.sh/ruff/rules/multiple-statements-on-one-line-colon"
+    },
+    {
+      "cell": null,
+      "code": "E701",
+      "end_location": {
+        "column": 24,
+        "row": 262
+      },
+      "filename": "/home/otis/SyferStackV2/scripts/local_audit.py",
+      "fix": null,
+      "location": {
+        "column": 23,
+        "row": 262
+      },
+      "message": "Multiple statements on one line (colon)",
+      "noqa_row": 262,
+      "url": "https://docs.astral.sh/ruff/rules/multiple-statements-on-one-line-colon"
+    },
+    {
+      "cell": null,
+      "code": "F541",
+      "end_location": {
+        "column": 64,
+        "row": 270
+      },
+      "filename": "/home/otis/SyferStackV2/scripts/local_audit.py",
+      "fix": {
+        "applicability": "safe",
+        "edits": [
+          {
+            "content": "\"# \ud83e\udde9 SyferStackV2 Production Audit Summary\\n\"",
+            "end_location": {
+              "column": 64,
+              "row": 270
+            },
+            "location": {
+              "column": 18,
+              "row": 270
+            }
+          }
+        ],
+        "message": "Remove extraneous `f` prefix"
+      },
+      "location": {
+        "column": 18,
+        "row": 270
+      },
+      "message": "f-string without any placeholders",
+      "noqa_row": 270,
+      "url": "https://docs.astral.sh/ruff/rules/f-string-missing-placeholders"
+    },
+    {
+      "cell": null,
+      "code": "F541",
+      "end_location": {
+        "column": 42,
+        "row": 273
+      },
+      "filename": "/home/otis/SyferStackV2/scripts/local_audit.py",
+      "fix": {
+        "applicability": "safe",
+        "edits": [
+          {
+            "content": "\"### Static Analysis\\n\"",
+            "end_location": {
+              "column": 42,
+              "row": 273
+            },
+            "location": {
+              "column": 18,
+              "row": 273
+            }
+          }
+        ],
+        "message": "Remove extraneous `f` prefix"
+      },
+      "location": {
+        "column": 18,
+        "row": 273
+      },
+      "message": "f-string without any placeholders",
+      "noqa_row": 273,
+      "url": "https://docs.astral.sh/ruff/rules/f-string-missing-placeholders"
+    },
+    {
+      "cell": null,
+      "code": "F541",
+      "end_location": {
+        "column": 43,
+        "row": 279
+      },
+      "filename": "/home/otis/SyferStackV2/scripts/local_audit.py",
+      "fix": {
+        "applicability": "safe",
+        "edits": [
+          {
+            "content": "\"### Audit Statistics\\n\"",
+            "end_location": {
+              "column": 43,
+              "row": 279
+            },
+            "location": {
+              "column": 18,
+              "row": 279
+            }
+          }
+        ],
+        "message": "Remove extraneous `f` prefix"
+      },
+      "location": {
+        "column": 18,
+        "row": 279
+      },
+      "message": "f-string without any placeholders",
+      "noqa_row": 279,
+      "url": "https://docs.astral.sh/ruff/rules/f-string-missing-placeholders"
+    },
+    {
+      "cell": null,
+      "code": "F541",
+      "end_location": {
+        "column": 46,
+        "row": 286
+      },
+      "filename": "/home/otis/SyferStackV2/scripts/local_audit.py",
+      "fix": {
+        "applicability": "safe",
+        "edits": [
+          {
+            "content": "\"- **Skip Reasons:**\\n\"",
+            "end_location": {
+              "column": 46,
+              "row": 286
+            },
+            "location": {
+              "column": 22,
+              "row": 286
+            }
+          }
+        ],
+        "message": "Remove extraneous `f` prefix"
+      },
+      "location": {
+        "column": 22,
+        "row": 286
+      },
+      "message": "f-string without any placeholders",
+      "noqa_row": 286,
+      "url": "https://docs.astral.sh/ruff/rules/f-string-missing-placeholders"
+    },
+    {
+      "cell": null,
+      "code": "F541",
+      "end_location": {
+        "column": 23,
+        "row": 289
+      },
+      "filename": "/home/otis/SyferStackV2/scripts/local_audit.py",
+      "fix": {
+        "applicability": "safe",
+        "edits": [
+          {
+            "content": "\"\\n\"",
+            "end_location": {
+              "column": 23,
+              "row": 289
+            },
+            "location": {
+              "column": 18,
+              "row": 289
+            }
+          }
+        ],
+        "message": "Remove extraneous `f` prefix"
+      },
+      "location": {
+        "column": 18,
+        "row": 289
+      },
+      "message": "f-string without any placeholders",
+      "noqa_row": 289,
+      "url": "https://docs.astral.sh/ruff/rules/f-string-missing-placeholders"
+    },
+    {
+      "cell": null,
+      "code": "F541",
+      "end_location": {
+        "column": 39,
+        "row": 292
+      },
+      "filename": "/home/otis/SyferStackV2/scripts/local_audit.py",
+      "fix": {
+        "applicability": "safe",
+        "edits": [
+          {
+            "content": "\"### LLM Insights\\n\"",
+            "end_location": {
+              "column": 39,
+              "row": 292
+            },
+            "location": {
+              "column": 18,
+              "row": 292
+            }
+          }
+        ],
+        "message": "Remove extraneous `f` prefix"
+      },
+      "location": {
+        "column": 18,
+        "row": 292
+      },
+      "message": "f-string without any placeholders",
+      "noqa_row": 292,
+      "url": "https://docs.astral.sh/ruff/rules/f-string-missing-placeholders"
+    },
+    {
+      "cell": null,
+      "code": "F541",
+      "end_location": {
+        "column": 85,
+        "row": 304
+      },
+      "filename": "/home/otis/SyferStackV2/scripts/local_audit.py",
+      "fix": {
+        "applicability": "safe",
+        "edits": [
+          {
+            "content": "\"\\n\u2705 Report automatically generated by SyferStackV2 Local Audit\\n\"",
+            "end_location": {
+              "column": 85,
+              "row": 304
+            },
+            "location": {
+              "column": 18,
+              "row": 304
+            }
+          }
+        ],
+        "message": "Remove extraneous `f` prefix"
+      },
+      "location": {
+        "column": 18,
+        "row": 304
+      },
+      "message": "f-string without any placeholders",
+      "noqa_row": 304,
+      "url": "https://docs.astral.sh/ruff/rules/f-string-missing-placeholders"
+    },
+    {
+      "cell": null,
+      "code": "F401",
+      "end_location": {
+        "column": 49,
+        "row": 11
+      },
+      "filename": "/home/otis/SyferStackV2/scripts/metrics_system.py",
+      "fix": {
+        "applicability": "safe",
+        "edits": [
+          {
+            "content": "from dataclasses import dataclass, field",
+            "end_location": {
+              "column": 49,
+              "row": 11
+            },
+            "location": {
+              "column": 1,
+              "row": 11
+            }
+          }
+        ],
+        "message": "Remove unused import: `dataclasses.asdict`"
+      },
+      "location": {
+        "column": 43,
+        "row": 11
+      },
+      "message": "`dataclasses.asdict` imported but unused",
+      "noqa_row": 11,
+      "url": "https://docs.astral.sh/ruff/rules/unused-import"
+    },
+    {
+      "cell": null,
+      "code": "F401",
+      "end_location": {
+        "column": 40,
+        "row": 14
+      },
+      "filename": "/home/otis/SyferStackV2/scripts/metrics_system.py",
+      "fix": {
+        "applicability": "safe",
+        "edits": [
+          {
+            "content": "from typing import Dict, List, Any",
+            "end_location": {
+              "column": 69,
+              "row": 14
+            },
+            "location": {
+              "column": 1,
+              "row": 14
+            }
+          }
+        ],
+        "message": "Remove unused import"
+      },
+      "location": {
+        "column": 32,
+        "row": 14
+      },
+      "message": "`typing.Optional` imported but unused",
+      "noqa_row": 14,
+      "url": "https://docs.astral.sh/ruff/rules/unused-import"
+    },
+    {
+      "cell": null,
+      "code": "F401",
+      "end_location": {
+        "column": 69,
+        "row": 14
+      },
+      "filename": "/home/otis/SyferStackV2/scripts/metrics_system.py",
+      "fix": {
+        "applicability": "safe",
+        "edits": [
+          {
+            "content": "from typing import Dict, List, Any",
+            "end_location": {
+              "column": 69,
+              "row": 14
+            },
+            "location": {
+              "column": 1,
+              "row": 14
+            }
+          }
+        ],
+        "message": "Remove unused import"
+      },
+      "location": {
+        "column": 58,
+        "row": 14
+      },
+      "message": "`typing.Counter` imported but unused",
+      "noqa_row": 14,
+      "url": "https://docs.astral.sh/ruff/rules/unused-import"
+    },
+    {
+      "cell": null,
+      "code": "F401",
+      "end_location": {
+        "column": 45,
+        "row": 15
+      },
+      "filename": "/home/otis/SyferStackV2/scripts/metrics_system.py",
+      "fix": {
+        "applicability": "safe",
+        "edits": [
+          {
+            "content": "from collections import defaultdict",
+            "end_location": {
+              "column": 45,
+              "row": 15
+            },
+            "location": {
+              "column": 1,
+              "row": 15
+            }
+          }
+        ],
+        "message": "Remove unused import: `collections.Counter`"
+      },
+      "location": {
+        "column": 38,
+        "row": 15
+      },
+      "message": "`collections.Counter` imported but unused",
+      "noqa_row": 15,
+      "url": "https://docs.astral.sh/ruff/rules/unused-import"
+    },
+    {
+      "cell": null,
+      "code": "F841",
+      "end_location": {
+        "column": 26,
+        "row": 538
+      },
+      "filename": "/home/otis/SyferStackV2/scripts/metrics_system.py",
+      "fix": {
+        "applicability": "unsafe",
+        "edits": [
+          {
+            "content": "",
+            "end_location": {
+              "column": 29,
+              "row": 538
+            },
+            "location": {
+              "column": 9,
+              "row": 538
+            }
+          }
+        ],
+        "message": "Remove assignment to unused variable `avg_analysis_time`"
+      },
+      "location": {
+        "column": 9,
+        "row": 538
+      },
+      "message": "Local variable `avg_analysis_time` is assigned to but never used",
+      "noqa_row": 538,
+      "url": "https://docs.astral.sh/ruff/rules/unused-variable"
+    },
+    {
+      "cell": null,
+      "code": "F401",
+      "end_location": {
+        "column": 58,
+        "row": 14
+      },
+      "filename": "/home/otis/SyferStackV2/scripts/plugin_system.py",
+      "fix": {
+        "applicability": "safe",
+        "edits": [
+          {
+            "content": "from typing import Any, Dict, List, Optional, Type",
+            "end_location": {
+              "column": 58,
+              "row": 14
+            },
+            "location": {
+              "column": 1,
+              "row": 14
+            }
+          }
+        ],
+        "message": "Remove unused import: `typing.Union`"
+      },
+      "location": {
+        "column": 53,
+        "row": 14
+      },
+      "message": "`typing.Union` imported but unused",
+      "noqa_row": 14,
+      "url": "https://docs.astral.sh/ruff/rules/unused-import"
+    },
+    {
+      "cell": null,
+      "code": "F541",
+      "end_location": {
+        "column": 59,
+        "row": 355
+      },
+      "filename": "/home/otis/SyferStackV2/scripts/plugin_system.py",
+      "fix": {
+        "applicability": "safe",
+        "edits": [
+          {
+            "content": "\"\ud83d\udee1\ufe0f Security audit completed\"",
+            "end_location": {
+              "column": 59,
+              "row": 355
+            },
+            "location": {
+              "column": 29,
+              "row": 355
+            }
+          }
+        ],
+        "message": "Remove extraneous `f` prefix"
+      },
+      "location": {
+        "column": 29,
+        "row": 355
+      },
+      "message": "f-string without any placeholders",
+      "noqa_row": 355,
+      "url": "https://docs.astral.sh/ruff/rules/f-string-missing-placeholders"
+    },
+    {
+      "cell": null,
+      "code": "F541",
+      "end_location": {
+        "column": 67,
+        "row": 368
+      },
+      "filename": "/home/otis/SyferStackV2/scripts/plugin_system.py",
+      "fix": {
+        "applicability": "safe",
+        "edits": [
+          {
+            "content": "\"\ud83d\udea8 Critical security issue detected!\"",
+            "end_location": {
+              "column": 67,
+              "row": 368
+            },
+            "location": {
+              "column": 29,
+              "row": 368
+            }
+          }
+        ],
+        "message": "Remove extraneous `f` prefix"
+      },
+      "location": {
+        "column": 29,
+        "row": 368
+      },
+      "message": "f-string without any placeholders",
+      "noqa_row": 368,
+      "url": "https://docs.astral.sh/ruff/rules/f-string-missing-placeholders"
+    },
+    {
+      "cell": null,
+      "code": "F401",
+      "end_location": {
+        "column": 54,
+        "row": 26
+      },
+      "filename": "/home/otis/SyferStackV2/scripts/production_audit.py",
+      "fix": {
+        "applicability": "safe",
+        "edits": [
+          {
+            "content": "from config_manager import ConfigManager",
+            "end_location": {
+              "column": 54,
+              "row": 26
+            },
+            "location": {
+              "column": 1,
+              "row": 26
+            }
+          }
+        ],
+        "message": "Remove unused import: `config_manager.AuditConfig`"
+      },
+      "location": {
+        "column": 43,
+        "row": 26
+      },
+      "message": "`config_manager.AuditConfig` imported but unused",
+      "noqa_row": 26,
+      "url": "https://docs.astral.sh/ruff/rules/unused-import"
+    },
+    {
+      "cell": null,
+      "code": "F541",
+      "end_location": {
+        "column": 48,
+        "row": 629
+      },
+      "filename": "/home/otis/SyferStackV2/scripts/production_audit.py",
+      "fix": {
+        "applicability": "safe",
+        "edits": [
+          {
+            "content": "\"\\n\ud83c\udfaf Enterprise Audit Complete!\"",
+            "end_location": {
+              "column": 48,
+              "row": 629
+            },
+            "location": {
+              "column": 15,
+              "row": 629
+            }
+          }
+        ],
+        "message": "Remove extraneous `f` prefix"
+      },
+      "location": {
+        "column": 15,
+        "row": 629
+      },
+      "message": "f-string without any placeholders",
+      "noqa_row": 629,
+      "url": "https://docs.astral.sh/ruff/rules/f-string-missing-placeholders"
+    },
+    {
+      "cell": null,
+      "code": "F401",
+      "end_location": {
+        "column": 12,
+        "row": 9
+      },
+      "filename": "/home/otis/SyferStackV2/scripts/retry_system.py",
+      "fix": {
+        "applicability": "safe",
+        "edits": [
+          {
+            "content": "",
+            "end_location": {
+              "column": 1,
+              "row": 10
+            },
+            "location": {
+              "column": 1,
+              "row": 9
+            }
+          }
+        ],
+        "message": "Remove unused import: `time`"
+      },
+      "location": {
+        "column": 8,
+        "row": 9
+      },
+      "message": "`time` imported but unused",
+      "noqa_row": 9,
+      "url": "https://docs.astral.sh/ruff/rules/unused-import"
+    },
+    {
+      "cell": null,
+      "code": "F401",
+      "end_location": {
+        "column": 66,
+        "row": 13
+      },
+      "filename": "/home/otis/SyferStackV2/scripts/retry_system.py",
+      "fix": {
+        "applicability": "safe",
+        "edits": [
+          {
+            "content": "from typing import Any, Awaitable, Callable, Dict, Optional",
+            "end_location": {
+              "column": 73,
+              "row": 13
+            },
+            "location": {
+              "column": 1,
+              "row": 13
+            }
+          }
+        ],
+        "message": "Remove unused import"
+      },
+      "location": {
+        "column": 62,
+        "row": 13
+      },
+      "message": "`typing.Type` imported but unused",
+      "noqa_row": 13,
+      "url": "https://docs.astral.sh/ruff/rules/unused-import"
+    },
+    {
+      "cell": null,
+      "code": "F401",
+      "end_location": {
+        "column": 73,
+        "row": 13
+      },
+      "filename": "/home/otis/SyferStackV2/scripts/retry_system.py",
+      "fix": {
+        "applicability": "safe",
+        "edits": [
+          {
+            "content": "from typing import Any, Awaitable, Callable, Dict, Optional",
+            "end_location": {
+              "column": 73,
+              "row": 13
+            },
+            "location": {
+              "column": 1,
+              "row": 13
+            }
+          }
+        ],
+        "message": "Remove unused import"
+      },
+      "location": {
+        "column": 68,
+        "row": 13
+      },
+      "message": "`typing.Union` imported but unused",
+      "noqa_row": 13,
+      "url": "https://docs.astral.sh/ruff/rules/unused-import"
+    },
+    {
+      "cell": null,
+      "code": "F401",
+      "end_location": {
+        "column": 31,
+        "row": 11
+      },
+      "filename": "/home/otis/SyferStackV2/scripts/test_audit_system.py",
+      "fix": {
+        "applicability": "safe",
+        "edits": [
+          {
+            "content": "from unittest.mock import AsyncMock, patch",
+            "end_location": {
+              "column": 60,
+              "row": 11
+            },
+            "location": {
+              "column": 1,
+              "row": 11
+            }
+          }
+        ],
+        "message": "Remove unused import"
+      },
+      "location": {
+        "column": 27,
+        "row": 11
+      },
+      "message": "`unittest.mock.Mock` imported but unused",
+      "noqa_row": 11,
+      "url": "https://docs.astral.sh/ruff/rules/unused-import"
+    },
+    {
+      "cell": null,
+      "code": "F401",
+      "end_location": {
+        "column": 60,
+        "row": 11
+      },
+      "filename": "/home/otis/SyferStackV2/scripts/test_audit_system.py",
+      "fix": {
+        "applicability": "safe",
+        "edits": [
+          {
+            "content": "from unittest.mock import AsyncMock, patch",
+            "end_location": {
+              "column": 60,
+              "row": 11
+            },
+            "location": {
+              "column": 1,
+              "row": 11
+            }
+          }
+        ],
+        "message": "Remove unused import"
+      },
+      "location": {
+        "column": 51,
+        "row": 11
+      },
+      "message": "`unittest.mock.MagicMock` imported but unused",
+      "noqa_row": 11,
+      "url": "https://docs.astral.sh/ruff/rules/unused-import"
+    },
+    {
+      "cell": null,
+      "code": "F401",
+      "end_location": {
+        "column": 31,
+        "row": 14
+      },
+      "filename": "/home/otis/SyferStackV2/scripts/test_audit_system.py",
+      "fix": {
+        "applicability": "safe",
+        "edits": [
+          {
+            "content": "",
+            "end_location": {
+              "column": 1,
+              "row": 15
+            },
+            "location": {
+              "column": 1,
+              "row": 14
+            }
+          }
+        ],
+        "message": "Remove unused import: `dataclasses.asdict`"
+      },
+      "location": {
+        "column": 25,
+        "row": 14
+      },
+      "message": "`dataclasses.asdict` imported but unused",
+      "noqa_row": 14,
+      "url": "https://docs.astral.sh/ruff/rules/unused-import"
+    },
+    {
+      "cell": null,
+      "code": "E712",
+      "end_location": {
+        "column": 61,
+        "row": 89
+      },
+      "filename": "/home/otis/SyferStackV2/scripts/test_audit_system.py",
+      "fix": {
+        "applicability": "unsafe",
+        "edits": [
+          {
+            "content": "config.performance.enable_caching",
+            "end_location": {
+              "column": 61,
+              "row": 89
+            },
+            "location": {
+              "column": 20,
+              "row": 89
+            }
+          }
+        ],
+        "message": "Replace with `config.performance.enable_caching`"
+      },
+      "location": {
+        "column": 20,
+        "row": 89
+      },
+      "message": "Avoid equality comparisons to `True`; use `config.performance.enable_caching:` for truth checks",
+      "noqa_row": 89,
+      "url": "https://docs.astral.sh/ruff/rules/true-false-comparison"
+    }
+  ],
+  "bandit": {
+    "errors": [],
+    "generated_at": "2025-10-11T01:41:47Z",
+    "metrics": {
+      "./audit_scheduler.py": {
+        "CONFIDENCE.HIGH": 0,
+        "CONFIDENCE.LOW": 0,
+        "CONFIDENCE.MEDIUM": 1,
+        "CONFIDENCE.UNDEFINED": 0,
+        "SEVERITY.HIGH": 0,
+        "SEVERITY.LOW": 0,
+        "SEVERITY.MEDIUM": 1,
+        "SEVERITY.UNDEFINED": 0,
+        "loc": 175,
+        "nosec": 0,
+        "skipped_tests": 0
+      },
+      "./cache_system.py": {
+        "CONFIDENCE.HIGH": 11,
+        "CONFIDENCE.LOW": 0,
+        "CONFIDENCE.MEDIUM": 0,
+        "CONFIDENCE.UNDEFINED": 0,
+        "SEVERITY.HIGH": 0,
+        "SEVERITY.LOW": 11,
+        "SEVERITY.MEDIUM": 0,
+        "SEVERITY.UNDEFINED": 0,
+        "loc": 428,
+        "nosec": 0,
+        "skipped_tests": 0
+      },
+      "./config_manager.py": {
+        "CONFIDENCE.HIGH": 0,
+        "CONFIDENCE.LOW": 0,
+        "CONFIDENCE.MEDIUM": 0,
+        "CONFIDENCE.UNDEFINED": 0,
+        "SEVERITY.HIGH": 0,
+        "SEVERITY.LOW": 0,
+        "SEVERITY.MEDIUM": 0,
+        "SEVERITY.UNDEFINED": 0,
+        "loc": 308,
+        "nosec": 0,
+        "skipped_tests": 0
+      },
+      "./improved_audit.py": {
+        "CONFIDENCE.HIGH": 1,
+        "CONFIDENCE.LOW": 0,
+        "CONFIDENCE.MEDIUM": 0,
+        "CONFIDENCE.UNDEFINED": 0,
+        "SEVERITY.HIGH": 0,
+        "SEVERITY.LOW": 1,
+        "SEVERITY.MEDIUM": 0,
+        "SEVERITY.UNDEFINED": 0,
+        "loc": 332,
+        "nosec": 0,
+        "skipped_tests": 0
+      },
+      "./local_audit.py": {
+        "CONFIDENCE.HIGH": 2,
+        "CONFIDENCE.LOW": 0,
+        "CONFIDENCE.MEDIUM": 0,
+        "CONFIDENCE.UNDEFINED": 0,
+        "SEVERITY.HIGH": 1,
+        "SEVERITY.LOW": 1,
+        "SEVERITY.MEDIUM": 0,
+        "SEVERITY.UNDEFINED": 0,
+        "loc": 222,
+        "nosec": 0,
+        "skipped_tests": 0
+      },
+      "./metrics_system.py": {
+        "CONFIDENCE.HIGH": 0,
+        "CONFIDENCE.LOW": 0,
+        "CONFIDENCE.MEDIUM": 0,
+        "CONFIDENCE.UNDEFINED": 0,
+        "SEVERITY.HIGH": 0,
+        "SEVERITY.LOW": 0,
+        "SEVERITY.MEDIUM": 0,
+        "SEVERITY.UNDEFINED": 0,
+        "loc": 485,
+        "nosec": 0,
+        "skipped_tests": 0
+      },
+      "./plugin_system.py": {
+        "CONFIDENCE.HIGH": 2,
+        "CONFIDENCE.LOW": 0,
+        "CONFIDENCE.MEDIUM": 0,
+        "CONFIDENCE.UNDEFINED": 0,
+        "SEVERITY.HIGH": 0,
+        "SEVERITY.LOW": 2,
+        "SEVERITY.MEDIUM": 0,
+        "SEVERITY.UNDEFINED": 0,
+        "loc": 470,
+        "nosec": 0,
+        "skipped_tests": 0
+      },
+      "./production_audit.py": {
+        "CONFIDENCE.HIGH": 0,
+        "CONFIDENCE.LOW": 0,
+        "CONFIDENCE.MEDIUM": 0,
+        "CONFIDENCE.UNDEFINED": 0,
+        "SEVERITY.HIGH": 0,
+        "SEVERITY.LOW": 0,
+        "SEVERITY.MEDIUM": 0,
+        "SEVERITY.UNDEFINED": 0,
+        "loc": 466,
+        "nosec": 0,
+        "skipped_tests": 0
+      },
+      "./retry_system.py": {
+        "CONFIDENCE.HIGH": 2,
+        "CONFIDENCE.LOW": 0,
+        "CONFIDENCE.MEDIUM": 0,
+        "CONFIDENCE.UNDEFINED": 0,
+        "SEVERITY.HIGH": 0,
+        "SEVERITY.LOW": 2,
+        "SEVERITY.MEDIUM": 0,
+        "SEVERITY.UNDEFINED": 0,
+        "loc": 326,
+        "nosec": 0,
+        "skipped_tests": 0
+      },
+      "./test_audit_system.py": {
+        "CONFIDENCE.HIGH": 50,
+        "CONFIDENCE.LOW": 0,
+        "CONFIDENCE.MEDIUM": 0,
+        "CONFIDENCE.UNDEFINED": 0,
+        "SEVERITY.HIGH": 0,
+        "SEVERITY.LOW": 50,
+        "SEVERITY.MEDIUM": 0,
+        "SEVERITY.UNDEFINED": 0,
+        "loc": 360,
+        "nosec": 0,
+        "skipped_tests": 0
+      },
+      "_totals": {
+        "CONFIDENCE.HIGH": 68,
+        "CONFIDENCE.LOW": 0,
+        "CONFIDENCE.MEDIUM": 1,
+        "CONFIDENCE.UNDEFINED": 0,
+        "SEVERITY.HIGH": 1,
+        "SEVERITY.LOW": 67,
+        "SEVERITY.MEDIUM": 1,
+        "SEVERITY.UNDEFINED": 0,
+        "loc": 3572,
+        "nosec": 0,
+        "skipped_tests": 0
+      }
+    },
+    "results": [
+      {
+        "code": "206                 # Check for manual trigger file\n207                 trigger_file = Path('/tmp/audit_trigger')\n208                 if trigger_file.exists():\n",
+        "col_offset": 36,
+        "end_col_offset": 56,
+        "filename": "./audit_scheduler.py",
+        "issue_confidence": "MEDIUM",
+        "issue_cwe": {
+          "id": 377,
+          "link": "https://cwe.mitre.org/data/definitions/377.html"
+        },
+        "issue_severity": "MEDIUM",
+        "issue_text": "Probable insecure usage of temp file/directory.",
+        "line_number": 207,
+        "line_range": [
+          207
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b108_hardcoded_tmp_directory.html",
+        "test_id": "B108",
+        "test_name": "hardcoded_tmp_directory"
+      },
+      {
+        "code": "11 import sqlite3\n12 import subprocess\n13 from dataclasses import dataclass, asdict\n",
+        "col_offset": 0,
+        "end_col_offset": 17,
+        "filename": "./cache_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 78,
+          "link": "https://cwe.mitre.org/data/definitions/78.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Consider possible security implications associated with the subprocess module.",
+        "line_number": 12,
+        "line_range": [
+          12
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess",
+        "test_id": "B404",
+        "test_name": "blacklist"
+      },
+      {
+        "code": "61         try:\n62             subprocess.run(\n63                 ['git', 'rev-parse', '--git-dir'],\n64                 capture_output=True,\n65                 check=True\n66             )\n67             return True\n",
+        "col_offset": 12,
+        "end_col_offset": 13,
+        "filename": "./cache_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 78,
+          "link": "https://cwe.mitre.org/data/definitions/78.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Starting a process with a partial executable path",
+        "line_number": 62,
+        "line_range": [
+          62,
+          63,
+          64,
+          65,
+          66
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html",
+        "test_id": "B607",
+        "test_name": "start_process_with_partial_path"
+      },
+      {
+        "code": "61         try:\n62             subprocess.run(\n63                 ['git', 'rev-parse', '--git-dir'],\n64                 capture_output=True,\n65                 check=True\n66             )\n67             return True\n",
+        "col_offset": 12,
+        "end_col_offset": 13,
+        "filename": "./cache_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 78,
+          "link": "https://cwe.mitre.org/data/definitions/78.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "subprocess call - check for execution of untrusted input.",
+        "line_number": 62,
+        "line_range": [
+          62,
+          63,
+          64,
+          65,
+          66
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html",
+        "test_id": "B603",
+        "test_name": "subprocess_without_shell_equals_true"
+      },
+      {
+        "code": "77             # Get the git hash of the file content\n78             result = subprocess.run(\n79                 ['git', 'hash-object', str(file_path)],\n80                 capture_output=True,\n81                 text=True,\n82                 check=True\n83             )\n84             return result.stdout.strip()\n",
+        "col_offset": 21,
+        "end_col_offset": 13,
+        "filename": "./cache_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 78,
+          "link": "https://cwe.mitre.org/data/definitions/78.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Starting a process with a partial executable path",
+        "line_number": 78,
+        "line_range": [
+          78,
+          79,
+          80,
+          81,
+          82,
+          83
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html",
+        "test_id": "B607",
+        "test_name": "start_process_with_partial_path"
+      },
+      {
+        "code": "77             # Get the git hash of the file content\n78             result = subprocess.run(\n79                 ['git', 'hash-object', str(file_path)],\n80                 capture_output=True,\n81                 text=True,\n82                 check=True\n83             )\n84             return result.stdout.strip()\n",
+        "col_offset": 21,
+        "end_col_offset": 13,
+        "filename": "./cache_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 78,
+          "link": "https://cwe.mitre.org/data/definitions/78.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "subprocess call - check for execution of untrusted input.",
+        "line_number": 78,
+        "line_range": [
+          78,
+          79,
+          80,
+          81,
+          82,
+          83
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html",
+        "test_id": "B603",
+        "test_name": "subprocess_without_shell_equals_true"
+      },
+      {
+        "code": "94         try:\n95             result = subprocess.run(\n96                 ['git', 'log', '-n', '1', '--pretty=format:%H', '--', str(file_path)],\n97                 capture_output=True,\n98                 text=True,\n99                 check=True\n100             )\n101             commit_hash = result.stdout.strip()\n",
+        "col_offset": 21,
+        "end_col_offset": 13,
+        "filename": "./cache_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 78,
+          "link": "https://cwe.mitre.org/data/definitions/78.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Starting a process with a partial executable path",
+        "line_number": 95,
+        "line_range": [
+          95,
+          96,
+          97,
+          98,
+          99,
+          100
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html",
+        "test_id": "B607",
+        "test_name": "start_process_with_partial_path"
+      },
+      {
+        "code": "94         try:\n95             result = subprocess.run(\n96                 ['git', 'log', '-n', '1', '--pretty=format:%H', '--', str(file_path)],\n97                 capture_output=True,\n98                 text=True,\n99                 check=True\n100             )\n101             commit_hash = result.stdout.strip()\n",
+        "col_offset": 21,
+        "end_col_offset": 13,
+        "filename": "./cache_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 78,
+          "link": "https://cwe.mitre.org/data/definitions/78.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "subprocess call - check for execution of untrusted input.",
+        "line_number": 95,
+        "line_range": [
+          95,
+          96,
+          97,
+          98,
+          99,
+          100
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html",
+        "test_id": "B603",
+        "test_name": "subprocess_without_shell_equals_true"
+      },
+      {
+        "code": "112         try:\n113             result = subprocess.run(\n114                 ['git', 'diff', '--name-only', commit_hash, 'HEAD'],\n115                 capture_output=True,\n116                 text=True,\n117                 check=True\n118             )\n119             changed_files = set()\n",
+        "col_offset": 21,
+        "end_col_offset": 13,
+        "filename": "./cache_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 78,
+          "link": "https://cwe.mitre.org/data/definitions/78.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Starting a process with a partial executable path",
+        "line_number": 113,
+        "line_range": [
+          113,
+          114,
+          115,
+          116,
+          117,
+          118
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html",
+        "test_id": "B607",
+        "test_name": "start_process_with_partial_path"
+      },
+      {
+        "code": "112         try:\n113             result = subprocess.run(\n114                 ['git', 'diff', '--name-only', commit_hash, 'HEAD'],\n115                 capture_output=True,\n116                 text=True,\n117                 check=True\n118             )\n119             changed_files = set()\n",
+        "col_offset": 21,
+        "end_col_offset": 13,
+        "filename": "./cache_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 78,
+          "link": "https://cwe.mitre.org/data/definitions/78.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "subprocess call - check for execution of untrusted input.",
+        "line_number": 113,
+        "line_range": [
+          113,
+          114,
+          115,
+          116,
+          117,
+          118
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html",
+        "test_id": "B603",
+        "test_name": "subprocess_without_shell_equals_true"
+      },
+      {
+        "code": "133         try:\n134             result = subprocess.run(\n135                 ['git', 'rev-parse', '--abbrev-ref', 'HEAD'],\n136                 capture_output=True,\n137                 text=True,\n138                 check=True\n139             )\n140             return result.stdout.strip()\n",
+        "col_offset": 21,
+        "end_col_offset": 13,
+        "filename": "./cache_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 78,
+          "link": "https://cwe.mitre.org/data/definitions/78.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Starting a process with a partial executable path",
+        "line_number": 134,
+        "line_range": [
+          134,
+          135,
+          136,
+          137,
+          138,
+          139
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html",
+        "test_id": "B607",
+        "test_name": "start_process_with_partial_path"
+      },
+      {
+        "code": "133         try:\n134             result = subprocess.run(\n135                 ['git', 'rev-parse', '--abbrev-ref', 'HEAD'],\n136                 capture_output=True,\n137                 text=True,\n138                 check=True\n139             )\n140             return result.stdout.strip()\n",
+        "col_offset": 21,
+        "end_col_offset": 13,
+        "filename": "./cache_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 78,
+          "link": "https://cwe.mitre.org/data/definitions/78.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "subprocess call - check for execution of untrusted input.",
+        "line_number": 134,
+        "line_range": [
+          134,
+          135,
+          136,
+          137,
+          138,
+          139
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html",
+        "test_id": "B603",
+        "test_name": "subprocess_without_shell_equals_true"
+      },
+      {
+        "code": "12 import shlex\n13 import subprocess\n14 from dataclasses import dataclass, asdict\n",
+        "col_offset": 0,
+        "end_col_offset": 17,
+        "filename": "./improved_audit.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 78,
+          "link": "https://cwe.mitre.org/data/definitions/78.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Consider possible security implications associated with the subprocess module.",
+        "line_number": 13,
+        "line_range": [
+          13
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess",
+        "test_id": "B404",
+        "test_name": "blacklist"
+      },
+      {
+        "code": "9 import json\n10 import subprocess\n11 import requests\n",
+        "col_offset": 0,
+        "end_col_offset": 17,
+        "filename": "./local_audit.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 78,
+          "link": "https://cwe.mitre.org/data/definitions/78.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Consider possible security implications associated with the subprocess module.",
+        "line_number": 10,
+        "line_range": [
+          10
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess",
+        "test_id": "B404",
+        "test_name": "blacklist"
+      },
+      {
+        "code": "100     try:\n101         result = subprocess.run(cmd, shell=True, capture_output=True, text=True)\n102         return result.stdout.strip()\n",
+        "col_offset": 17,
+        "end_col_offset": 80,
+        "filename": "./local_audit.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 78,
+          "link": "https://cwe.mitre.org/data/definitions/78.html"
+        },
+        "issue_severity": "HIGH",
+        "issue_text": "subprocess call with shell=True identified, security issue.",
+        "line_number": 101,
+        "line_range": [
+          101
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b602_subprocess_popen_with_shell_equals_true.html",
+        "test_id": "B602",
+        "test_name": "subprocess_popen_with_shell_equals_true"
+      },
+      {
+        "code": "156         \"\"\"Run ESLint on a single file.\"\"\"\n157         import subprocess\n158         import time\n",
+        "col_offset": 8,
+        "end_col_offset": 25,
+        "filename": "./plugin_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 78,
+          "link": "https://cwe.mitre.org/data/definitions/78.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Consider possible security implications associated with the subprocess module.",
+        "line_number": 157,
+        "line_range": [
+          157
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess",
+        "test_id": "B404",
+        "test_name": "blacklist"
+      },
+      {
+        "code": "163             cmd = ['eslint', '--format', 'json', str(file_path)]\n164             result = subprocess.run(cmd, capture_output=True, text=True)\n165             \n",
+        "col_offset": 21,
+        "end_col_offset": 72,
+        "filename": "./plugin_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 78,
+          "link": "https://cwe.mitre.org/data/definitions/78.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "subprocess call - check for execution of untrusted input.",
+        "line_number": 164,
+        "line_range": [
+          164
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html",
+        "test_id": "B603",
+        "test_name": "subprocess_without_shell_equals_true"
+      },
+      {
+        "code": "250             jitter_range = delay * 0.25\n251             delay += random.uniform(-jitter_range, jitter_range)\n252         \n",
+        "col_offset": 21,
+        "end_col_offset": 64,
+        "filename": "./retry_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 330,
+          "link": "https://cwe.mitre.org/data/definitions/330.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Standard pseudo-random generators are not suitable for security/cryptographic purposes.",
+        "line_number": 251,
+        "line_range": [
+          251
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random",
+        "test_id": "B311",
+        "test_name": "blacklist"
+      },
+      {
+        "code": "392     \n393     if random.random() > success_rate:\n394         raise ConnectionError(\"Simulated network failure\")\n",
+        "col_offset": 7,
+        "end_col_offset": 22,
+        "filename": "./retry_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 330,
+          "link": "https://cwe.mitre.org/data/definitions/330.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Standard pseudo-random generators are not suitable for security/cryptographic purposes.",
+        "line_number": 393,
+        "line_range": [
+          393
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random",
+        "test_id": "B311",
+        "test_name": "blacklist"
+      },
+      {
+        "code": "32         config = AuditConfig()\n33         assert config.environment == \"development\"\n34         assert config.ollama.url == \"http://localhost:11434/api/generate\"\n",
+        "col_offset": 8,
+        "end_col_offset": 50,
+        "filename": "./test_audit_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 703,
+          "link": "https://cwe.mitre.org/data/definitions/703.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+        "line_number": 33,
+        "line_range": [
+          33
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html",
+        "test_id": "B101",
+        "test_name": "assert_used"
+      },
+      {
+        "code": "33         assert config.environment == \"development\"\n34         assert config.ollama.url == \"http://localhost:11434/api/generate\"\n35         assert config.files.max_size_mb == 1\n",
+        "col_offset": 8,
+        "end_col_offset": 73,
+        "filename": "./test_audit_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 703,
+          "link": "https://cwe.mitre.org/data/definitions/703.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+        "line_number": 34,
+        "line_range": [
+          34
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html",
+        "test_id": "B101",
+        "test_name": "assert_used"
+      },
+      {
+        "code": "34         assert config.ollama.url == \"http://localhost:11434/api/generate\"\n35         assert config.files.max_size_mb == 1\n36         assert config.performance.parallel_llm_requests == 5\n",
+        "col_offset": 8,
+        "end_col_offset": 44,
+        "filename": "./test_audit_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 703,
+          "link": "https://cwe.mitre.org/data/definitions/703.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+        "line_number": 35,
+        "line_range": [
+          35
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html",
+        "test_id": "B101",
+        "test_name": "assert_used"
+      },
+      {
+        "code": "35         assert config.files.max_size_mb == 1\n36         assert config.performance.parallel_llm_requests == 5\n37     \n",
+        "col_offset": 8,
+        "end_col_offset": 60,
+        "filename": "./test_audit_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 703,
+          "link": "https://cwe.mitre.org/data/definitions/703.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+        "line_number": 36,
+        "line_range": [
+          36
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html",
+        "test_id": "B101",
+        "test_name": "assert_used"
+      },
+      {
+        "code": "62             \n63             assert config.environment == 'testing'\n64             assert config.ollama.model == 'test-model'\n",
+        "col_offset": 12,
+        "end_col_offset": 50,
+        "filename": "./test_audit_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 703,
+          "link": "https://cwe.mitre.org/data/definitions/703.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+        "line_number": 63,
+        "line_range": [
+          63
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html",
+        "test_id": "B101",
+        "test_name": "assert_used"
+      },
+      {
+        "code": "63             assert config.environment == 'testing'\n64             assert config.ollama.model == 'test-model'\n65             assert config.files.max_size_mb == 5\n",
+        "col_offset": 12,
+        "end_col_offset": 54,
+        "filename": "./test_audit_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 703,
+          "link": "https://cwe.mitre.org/data/definitions/703.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+        "line_number": 64,
+        "line_range": [
+          64
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html",
+        "test_id": "B101",
+        "test_name": "assert_used"
+      },
+      {
+        "code": "64             assert config.ollama.model == 'test-model'\n65             assert config.files.max_size_mb == 5\n66         finally:\n",
+        "col_offset": 12,
+        "end_col_offset": 48,
+        "filename": "./test_audit_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 703,
+          "link": "https://cwe.mitre.org/data/definitions/703.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+        "line_number": 65,
+        "line_range": [
+          65
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html",
+        "test_id": "B101",
+        "test_name": "assert_used"
+      },
+      {
+        "code": "85             \n86             assert config.environment == 'production'  # Overridden\n87             assert config.ollama.model == 'env-model'  # Overridden\n",
+        "col_offset": 12,
+        "end_col_offset": 53,
+        "filename": "./test_audit_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 703,
+          "link": "https://cwe.mitre.org/data/definitions/703.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+        "line_number": 86,
+        "line_range": [
+          86
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html",
+        "test_id": "B101",
+        "test_name": "assert_used"
+      },
+      {
+        "code": "86             assert config.environment == 'production'  # Overridden\n87             assert config.ollama.model == 'env-model'  # Overridden\n88             assert config.performance.parallel_llm_requests == 10  # Overridden\n",
+        "col_offset": 12,
+        "end_col_offset": 53,
+        "filename": "./test_audit_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 703,
+          "link": "https://cwe.mitre.org/data/definitions/703.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+        "line_number": 87,
+        "line_range": [
+          87
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html",
+        "test_id": "B101",
+        "test_name": "assert_used"
+      },
+      {
+        "code": "87             assert config.ollama.model == 'env-model'  # Overridden\n88             assert config.performance.parallel_llm_requests == 10  # Overridden\n89             assert config.performance.enable_caching == True  # Overridden\n",
+        "col_offset": 12,
+        "end_col_offset": 65,
+        "filename": "./test_audit_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 703,
+          "link": "https://cwe.mitre.org/data/definitions/703.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+        "line_number": 88,
+        "line_range": [
+          88
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html",
+        "test_id": "B101",
+        "test_name": "assert_used"
+      },
+      {
+        "code": "88             assert config.performance.parallel_llm_requests == 10  # Overridden\n89             assert config.performance.enable_caching == True  # Overridden\n90         finally:\n",
+        "col_offset": 12,
+        "end_col_offset": 60,
+        "filename": "./test_audit_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 703,
+          "link": "https://cwe.mitre.org/data/definitions/703.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+        "line_number": 89,
+        "line_range": [
+          89
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html",
+        "test_id": "B101",
+        "test_name": "assert_used"
+      },
+      {
+        "code": "114             \n115             assert result == 'success output'\n116             mock_subprocess.assert_called_once_with(\n",
+        "col_offset": 12,
+        "end_col_offset": 45,
+        "filename": "./test_audit_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 703,
+          "link": "https://cwe.mitre.org/data/definitions/703.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+        "line_number": 115,
+        "line_range": [
+          115
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html",
+        "test_id": "B101",
+        "test_name": "assert_used"
+      },
+      {
+        "code": "132             \n133             assert result == ''  # stdout is empty\n134     \n",
+        "col_offset": 12,
+        "end_col_offset": 31,
+        "filename": "./test_audit_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 703,
+          "link": "https://cwe.mitre.org/data/definitions/703.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+        "line_number": 133,
+        "line_range": [
+          133
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html",
+        "test_id": "B101",
+        "test_name": "assert_used"
+      },
+      {
+        "code": "142             \n143             assert isinstance(result, list)\n144             assert result[0][\"file\"] == \"test.py\"\n",
+        "col_offset": 12,
+        "end_col_offset": 43,
+        "filename": "./test_audit_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 703,
+          "link": "https://cwe.mitre.org/data/definitions/703.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+        "line_number": 143,
+        "line_range": [
+          143
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html",
+        "test_id": "B101",
+        "test_name": "assert_used"
+      },
+      {
+        "code": "143             assert isinstance(result, list)\n144             assert result[0][\"file\"] == \"test.py\"\n145     \n",
+        "col_offset": 12,
+        "end_col_offset": 49,
+        "filename": "./test_audit_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 703,
+          "link": "https://cwe.mitre.org/data/definitions/703.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+        "line_number": 144,
+        "line_range": [
+          144
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html",
+        "test_id": "B101",
+        "test_name": "assert_used"
+      },
+      {
+        "code": "151             \n152             assert \"error\" in result\n153             assert result[\"error\"] == \"Invalid Ruff output\"\n",
+        "col_offset": 12,
+        "end_col_offset": 36,
+        "filename": "./test_audit_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 703,
+          "link": "https://cwe.mitre.org/data/definitions/703.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+        "line_number": 152,
+        "line_range": [
+          152
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html",
+        "test_id": "B101",
+        "test_name": "assert_used"
+      },
+      {
+        "code": "152             assert \"error\" in result\n153             assert result[\"error\"] == \"Invalid Ruff output\"\n154     \n",
+        "col_offset": 12,
+        "end_col_offset": 59,
+        "filename": "./test_audit_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 703,
+          "link": "https://cwe.mitre.org/data/definitions/703.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+        "line_number": 153,
+        "line_range": [
+          153
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html",
+        "test_id": "B101",
+        "test_name": "assert_used"
+      },
+      {
+        "code": "162             \n163             assert \"results\" in result\n164             assert len(result[\"results\"]) == 1\n",
+        "col_offset": 12,
+        "end_col_offset": 38,
+        "filename": "./test_audit_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 703,
+          "link": "https://cwe.mitre.org/data/definitions/703.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+        "line_number": 163,
+        "line_range": [
+          163
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html",
+        "test_id": "B101",
+        "test_name": "assert_used"
+      },
+      {
+        "code": "163             assert \"results\" in result\n164             assert len(result[\"results\"]) == 1\n165 \n",
+        "col_offset": 12,
+        "end_col_offset": 46,
+        "filename": "./test_audit_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 703,
+          "link": "https://cwe.mitre.org/data/definitions/703.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+        "line_number": 164,
+        "line_range": [
+          164
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html",
+        "test_id": "B101",
+        "test_name": "assert_used"
+      },
+      {
+        "code": "193             \n194             assert isinstance(result, FileAnalysis)\n195             assert result.path == str(test_file)\n",
+        "col_offset": 12,
+        "end_col_offset": 51,
+        "filename": "./test_audit_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 703,
+          "link": "https://cwe.mitre.org/data/definitions/703.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+        "line_number": 194,
+        "line_range": [
+          194
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html",
+        "test_id": "B101",
+        "test_name": "assert_used"
+      },
+      {
+        "code": "194             assert isinstance(result, FileAnalysis)\n195             assert result.path == str(test_file)\n196             assert result.llm_analysis == \"Analysis complete\"\n",
+        "col_offset": 12,
+        "end_col_offset": 48,
+        "filename": "./test_audit_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 703,
+          "link": "https://cwe.mitre.org/data/definitions/703.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+        "line_number": 195,
+        "line_range": [
+          195
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html",
+        "test_id": "B101",
+        "test_name": "assert_used"
+      },
+      {
+        "code": "195             assert result.path == str(test_file)\n196             assert result.llm_analysis == \"Analysis complete\"\n197             assert result.error is None\n",
+        "col_offset": 12,
+        "end_col_offset": 61,
+        "filename": "./test_audit_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 703,
+          "link": "https://cwe.mitre.org/data/definitions/703.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+        "line_number": 196,
+        "line_range": [
+          196
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html",
+        "test_id": "B101",
+        "test_name": "assert_used"
+      },
+      {
+        "code": "196             assert result.llm_analysis == \"Analysis complete\"\n197             assert result.error is None\n198         finally:\n",
+        "col_offset": 12,
+        "end_col_offset": 39,
+        "filename": "./test_audit_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 703,
+          "link": "https://cwe.mitre.org/data/definitions/703.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+        "line_number": 197,
+        "line_range": [
+          197
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html",
+        "test_id": "B101",
+        "test_name": "assert_used"
+      },
+      {
+        "code": "214             \n215             assert result.error is not None\n216             assert result.skipped is True\n",
+        "col_offset": 12,
+        "end_col_offset": 43,
+        "filename": "./test_audit_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 703,
+          "link": "https://cwe.mitre.org/data/definitions/703.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+        "line_number": 215,
+        "line_range": [
+          215
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html",
+        "test_id": "B101",
+        "test_name": "assert_used"
+      },
+      {
+        "code": "215             assert result.error is not None\n216             assert result.skipped is True\n217             assert \"File too large\" in result.error\n",
+        "col_offset": 12,
+        "end_col_offset": 41,
+        "filename": "./test_audit_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 703,
+          "link": "https://cwe.mitre.org/data/definitions/703.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+        "line_number": 216,
+        "line_range": [
+          216
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html",
+        "test_id": "B101",
+        "test_name": "assert_used"
+      },
+      {
+        "code": "216             assert result.skipped is True\n217             assert \"File too large\" in result.error\n218         finally:\n",
+        "col_offset": 12,
+        "end_col_offset": 51,
+        "filename": "./test_audit_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 703,
+          "link": "https://cwe.mitre.org/data/definitions/703.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+        "line_number": 217,
+        "line_range": [
+          217
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html",
+        "test_id": "B101",
+        "test_name": "assert_used"
+      },
+      {
+        "code": "239             \n240             assert result.error is not None\n241             assert \"LLM API error 500\" in result.error\n",
+        "col_offset": 12,
+        "end_col_offset": 43,
+        "filename": "./test_audit_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 703,
+          "link": "https://cwe.mitre.org/data/definitions/703.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+        "line_number": 240,
+        "line_range": [
+          240
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html",
+        "test_id": "B101",
+        "test_name": "assert_used"
+      },
+      {
+        "code": "240             assert result.error is not None\n241             assert \"LLM API error 500\" in result.error\n242         finally:\n",
+        "col_offset": 12,
+        "end_col_offset": 54,
+        "filename": "./test_audit_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 703,
+          "link": "https://cwe.mitre.org/data/definitions/703.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+        "line_number": 241,
+        "line_range": [
+          241
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html",
+        "test_id": "B101",
+        "test_name": "assert_used"
+      },
+      {
+        "code": "289             \n290             assert report_path.exists()\n291             with open(report_path) as f:\n",
+        "col_offset": 12,
+        "end_col_offset": 39,
+        "filename": "./test_audit_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 703,
+          "link": "https://cwe.mitre.org/data/definitions/703.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+        "line_number": 290,
+        "line_range": [
+          290
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html",
+        "test_id": "B101",
+        "test_name": "assert_used"
+      },
+      {
+        "code": "293             \n294             assert data[\"timestamp\"] == \"2025-01-01T00:00:00\"\n295             assert len(data[\"files\"]) == 1\n",
+        "col_offset": 12,
+        "end_col_offset": 61,
+        "filename": "./test_audit_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 703,
+          "link": "https://cwe.mitre.org/data/definitions/703.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+        "line_number": 294,
+        "line_range": [
+          294
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html",
+        "test_id": "B101",
+        "test_name": "assert_used"
+      },
+      {
+        "code": "294             assert data[\"timestamp\"] == \"2025-01-01T00:00:00\"\n295             assert len(data[\"files\"]) == 1\n296     \n",
+        "col_offset": 12,
+        "end_col_offset": 42,
+        "filename": "./test_audit_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 703,
+          "link": "https://cwe.mitre.org/data/definitions/703.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+        "line_number": 295,
+        "line_range": [
+          295
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html",
+        "test_id": "B101",
+        "test_name": "assert_used"
+      },
+      {
+        "code": "301         # Perfect score\n302         assert reporter._calculate_grade(0, 0) == \"A+\"\n303         \n",
+        "col_offset": 8,
+        "end_col_offset": 54,
+        "filename": "./test_audit_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 703,
+          "link": "https://cwe.mitre.org/data/definitions/703.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+        "line_number": 302,
+        "line_range": [
+          302
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html",
+        "test_id": "B101",
+        "test_name": "assert_used"
+      },
+      {
+        "code": "304         # Some issues\n305         assert reporter._calculate_grade(1, 5) == \"B+\"\n306         \n",
+        "col_offset": 8,
+        "end_col_offset": 54,
+        "filename": "./test_audit_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 703,
+          "link": "https://cwe.mitre.org/data/definitions/703.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+        "line_number": 305,
+        "line_range": [
+          305
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html",
+        "test_id": "B101",
+        "test_name": "assert_used"
+      },
+      {
+        "code": "307         # Many issues\n308         assert reporter._calculate_grade(5, 10) == \"F\"\n309     \n",
+        "col_offset": 8,
+        "end_col_offset": 54,
+        "filename": "./test_audit_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 703,
+          "link": "https://cwe.mitre.org/data/definitions/703.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+        "line_number": 308,
+        "line_range": [
+          308
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html",
+        "test_id": "B101",
+        "test_name": "assert_used"
+      },
+      {
+        "code": "318             \n319             assert summary_path.exists()\n320             with open(summary_path) as f:\n",
+        "col_offset": 12,
+        "end_col_offset": 40,
+        "filename": "./test_audit_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 703,
+          "link": "https://cwe.mitre.org/data/definitions/703.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+        "line_number": 319,
+        "line_range": [
+          319
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html",
+        "test_id": "B101",
+        "test_name": "assert_used"
+      },
+      {
+        "code": "322             \n323             assert \"SyferStackV2 Production Audit Report\" in content\n324             assert \"test.py\" in content\n",
+        "col_offset": 12,
+        "end_col_offset": 68,
+        "filename": "./test_audit_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 703,
+          "link": "https://cwe.mitre.org/data/definitions/703.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+        "line_number": 323,
+        "line_range": [
+          323
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html",
+        "test_id": "B101",
+        "test_name": "assert_used"
+      },
+      {
+        "code": "323             assert \"SyferStackV2 Production Audit Report\" in content\n324             assert \"test.py\" in content\n325             assert \"This file looks good\" in content\n",
+        "col_offset": 12,
+        "end_col_offset": 39,
+        "filename": "./test_audit_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 703,
+          "link": "https://cwe.mitre.org/data/definitions/703.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+        "line_number": 324,
+        "line_range": [
+          324
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html",
+        "test_id": "B101",
+        "test_name": "assert_used"
+      },
+      {
+        "code": "324             assert \"test.py\" in content\n325             assert \"This file looks good\" in content\n326 \n",
+        "col_offset": 12,
+        "end_col_offset": 52,
+        "filename": "./test_audit_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 703,
+          "link": "https://cwe.mitre.org/data/definitions/703.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+        "line_number": 325,
+        "line_range": [
+          325
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html",
+        "test_id": "B101",
+        "test_name": "assert_used"
+      },
+      {
+        "code": "360                 \n361                 assert \"test.py\" in file_names\n362                 assert \"test.js\" in file_names\n",
+        "col_offset": 16,
+        "end_col_offset": 46,
+        "filename": "./test_audit_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 703,
+          "link": "https://cwe.mitre.org/data/definitions/703.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+        "line_number": 361,
+        "line_range": [
+          361
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html",
+        "test_id": "B101",
+        "test_name": "assert_used"
+      },
+      {
+        "code": "361                 assert \"test.py\" in file_names\n362                 assert \"test.js\" in file_names\n363                 assert \"test.txt\" not in file_names  # Not supported extension\n",
+        "col_offset": 16,
+        "end_col_offset": 46,
+        "filename": "./test_audit_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 703,
+          "link": "https://cwe.mitre.org/data/definitions/703.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+        "line_number": 362,
+        "line_range": [
+          362
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html",
+        "test_id": "B101",
+        "test_name": "assert_used"
+      },
+      {
+        "code": "362                 assert \"test.js\" in file_names\n363                 assert \"test.txt\" not in file_names  # Not supported extension\n364             finally:\n",
+        "col_offset": 16,
+        "end_col_offset": 51,
+        "filename": "./test_audit_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 703,
+          "link": "https://cwe.mitre.org/data/definitions/703.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+        "line_number": 363,
+        "line_range": [
+          363
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html",
+        "test_id": "B101",
+        "test_name": "assert_used"
+      },
+      {
+        "code": "396                 \n397                 assert len(results) == 3\n398                 assert all(isinstance(r, FileAnalysis) for r in results)\n",
+        "col_offset": 16,
+        "end_col_offset": 40,
+        "filename": "./test_audit_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 703,
+          "link": "https://cwe.mitre.org/data/definitions/703.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+        "line_number": 397,
+        "line_range": [
+          397
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html",
+        "test_id": "B101",
+        "test_name": "assert_used"
+      },
+      {
+        "code": "397                 assert len(results) == 3\n398                 assert all(isinstance(r, FileAnalysis) for r in results)\n399                 assert mock_analyzer.analyze_file.call_count == 3\n",
+        "col_offset": 16,
+        "end_col_offset": 72,
+        "filename": "./test_audit_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 703,
+          "link": "https://cwe.mitre.org/data/definitions/703.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+        "line_number": 398,
+        "line_range": [
+          398
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html",
+        "test_id": "B101",
+        "test_name": "assert_used"
+      },
+      {
+        "code": "398                 assert all(isinstance(r, FileAnalysis) for r in results)\n399                 assert mock_analyzer.analyze_file.call_count == 3\n400 \n",
+        "col_offset": 16,
+        "end_col_offset": 65,
+        "filename": "./test_audit_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 703,
+          "link": "https://cwe.mitre.org/data/definitions/703.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+        "line_number": 399,
+        "line_range": [
+          399
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html",
+        "test_id": "B101",
+        "test_name": "assert_used"
+      },
+      {
+        "code": "458                     # Verify results\n459                     assert isinstance(results, AuditResults)\n460                     assert len(results.files) == 1\n",
+        "col_offset": 20,
+        "end_col_offset": 60,
+        "filename": "./test_audit_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 703,
+          "link": "https://cwe.mitre.org/data/definitions/703.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+        "line_number": 459,
+        "line_range": [
+          459
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html",
+        "test_id": "B101",
+        "test_name": "assert_used"
+      },
+      {
+        "code": "459                     assert isinstance(results, AuditResults)\n460                     assert len(results.files) == 1\n461                     assert results.files[0].path == \"test_code.py\"\n",
+        "col_offset": 20,
+        "end_col_offset": 50,
+        "filename": "./test_audit_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 703,
+          "link": "https://cwe.mitre.org/data/definitions/703.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+        "line_number": 460,
+        "line_range": [
+          460
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html",
+        "test_id": "B101",
+        "test_name": "assert_used"
+      },
+      {
+        "code": "460                     assert len(results.files) == 1\n461                     assert results.files[0].path == \"test_code.py\"\n462                     assert \"Code looks good\" in results.files[0].llm_analysis\n",
+        "col_offset": 20,
+        "end_col_offset": 66,
+        "filename": "./test_audit_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 703,
+          "link": "https://cwe.mitre.org/data/definitions/703.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+        "line_number": 461,
+        "line_range": [
+          461
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html",
+        "test_id": "B101",
+        "test_name": "assert_used"
+      },
+      {
+        "code": "461                     assert results.files[0].path == \"test_code.py\"\n462                     assert \"Code looks good\" in results.files[0].llm_analysis\n463                     \n",
+        "col_offset": 20,
+        "end_col_offset": 77,
+        "filename": "./test_audit_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 703,
+          "link": "https://cwe.mitre.org/data/definitions/703.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+        "line_number": 462,
+        "line_range": [
+          462
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html",
+        "test_id": "B101",
+        "test_name": "assert_used"
+      },
+      {
+        "code": "467                     \n468                     assert json_report.exists()\n469                     assert markdown_report.exists()\n",
+        "col_offset": 20,
+        "end_col_offset": 47,
+        "filename": "./test_audit_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 703,
+          "link": "https://cwe.mitre.org/data/definitions/703.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+        "line_number": 468,
+        "line_range": [
+          468
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html",
+        "test_id": "B101",
+        "test_name": "assert_used"
+      },
+      {
+        "code": "468                     assert json_report.exists()\n469                     assert markdown_report.exists()\n470                     \n",
+        "col_offset": 20,
+        "end_col_offset": 51,
+        "filename": "./test_audit_system.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 703,
+          "link": "https://cwe.mitre.org/data/definitions/703.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+        "line_number": 469,
+        "line_range": [
+          469
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html",
+        "test_id": "B101",
+        "test_name": "assert_used"
+      }
+    ]
+  },
+  "mypy": "config_manager.py:12: error: Library stubs not installed for \"yaml\" \n[import-untyped]\n    import yaml\n    ^\nconfig_manager.py:12: note: Hint: \"python3 -m pip install types-PyYAML\"\nconfig_manager.py:12: note: (or run \"mypy --install-types\" to install all missing stub packages)\nconfig_manager.py:215: error: Need type annotation for \"config_data\" (hint:\n\"config_data: dict[<type>, <type>] = ...\")  [var-annotated]\n                config_data = {}\n                ^~~~~~~~~~~\nconfig_manager.py:342: error: Library stubs not installed for \"requests\" \n[import-untyped]\n            import requests\n    ^\nconfig_manager.py:342: note: Hint: \"python3 -m pip install types-requests\"\nconfig_manager.py:390: error: No return value expected  [return-value]\n                return False\n                ^~~~~~~~~~~~\nconfig_manager.py:393: error: No return value expected  [return-value]\n                return True\n                ^~~~~~~~~~~\nlocal_audit.py:11: error: Library stubs not installed for \"requests\" \n[import-untyped]\n    import requests\n    ^\nretry_system.py:147: error: Need type annotation for \"calls\" (hint:\n\"calls: list[<type>] = ...\")  [var-annotated]\n            self.calls = []\n            ^~~~~~~~~~\nretry_system.py:175: error: Incompatible default for argument \"config\" (default\nhas type \"None\", argument has type \"RetryConfig\")  [assignment]\n        def __init__(self, config: RetryConfig = None):\n                                                 ^~~~\nretry_system.py:175: note: PEP 484 prohibits implicit Optional. Accordingly, mypy has changed its default to no_implicit_optional=True\nretry_system.py:175: note: Use https://github.com/hauntsaninja/no_implicit_optional to automatically upgrade your codebase\nretry_system.py:237: error: Argument 2 to \"RetryError\" has incompatible type\n\"Any | None\"; expected \"Exception\"  [arg-type]\n                last_exception,\n                ^~~~~~~~~~~~~~\nretry_system.py:297: error:\n\"_Wrapped[[VarArg(Any), KwArg(Any)], Awaitable[Any], [VarArg(Any), KwArg(Any)], Any]\"\nhas no attribute \"retry_manager\"  [attr-defined]\n            wrapper.retry_manager = retry_manager\n            ^~~~~~~~~~~~~~~~~~~~~\nretry_system.py:307: error: Incompatible default for argument \"config\" (default\nhas type \"None\", argument has type \"RetryConfig\")  [assignment]\n        def __init__(self, base_analyzer, config: RetryConfig = None):\n                                                                ^~~~\nretry_system.py:307: note: PEP 484 prohibits implicit Optional. Accordingly, mypy has changed its default to no_implicit_optional=True\nretry_system.py:307: note: Use https://github.com/hauntsaninja/no_implicit_optional to automatically upgrade your codebase\nretry_system.py:364: error: Argument 1 to \"append\" of \"list\" has incompatible\ntype \"tuple[Any, None, str]\"; expected \"tuple[Any, Any, None]\"  [arg-type]\n                    results.append((file_path, None, str(e)))\n                                   ^~~~~~~~~~~~~~~~~~~~~~~~~\nmetrics_system.py:85: error: Incompatible default for argument \"db_path\"\n(default has type \"None\", argument has type \"Path\")  [assignment]\n        def __init__(self, db_path: Path = None, enable_prometheus: bool =...\n                                           ^~~~\nmetrics_system.py:85: note: PEP 484 prohibits implicit Optional. Accordingly, mypy has changed its default to no_implicit_optional=True\nmetrics_system.py:85: note: Use https://github.com/hauntsaninja/no_implicit_optional to automatically upgrade your codebase\nmetrics_system.py:193: error: Incompatible default for argument \"labels\"\n(default has type \"None\", argument has type \"dict[str, str]\")  [assignment]\n    ...lf, name: str, value: int = 1, labels: Dict[str, str] = None) -> None:\n                                                               ^~~~\nmetrics_system.py:193: note: PEP 484 prohibits implicit Optional. Accordingly, mypy has changed its default to no_implicit_optional=True\nmetrics_system.py:193: note: Use https://github.com/hauntsaninja/no_implicit_optional to automatically upgrade your codebase\nmetrics_system.py:204: error: Incompatible default for argument \"labels\"\n(default has type \"None\", argument has type \"dict[str, str]\")  [assignment]\n    ...self, name: str, value: float, labels: Dict[str, str] = None) -> None:\n                                                               ^~~~\nmetrics_system.py:204: note: PEP 484 prohibits implicit Optional. Accordingly, mypy has changed its default to no_implicit_optional=True\nmetrics_system.py:204: note: Use https://github.com/hauntsaninja/no_implicit_optional to automatically upgrade your codebase\nmetrics_system.py:215: error: Incompatible default for argument \"labels\"\n(default has type \"None\", argument has type \"dict[str, str]\")  [assignment]\n    ...self, name: str, value: float, labels: Dict[str, str] = None) -> None:\n                                                               ^~~~\nmetrics_system.py:215: note: PEP 484 prohibits implicit Optional. Accordingly, mypy has changed its default to no_implicit_optional=True\nmetrics_system.py:215: note: Use https://github.com/hauntsaninja/no_implicit_optional to automatically upgrade your codebase\nmetrics_system.py:227: error: Incompatible default for argument \"context\"\n(default has type \"None\", argument has type \"dict[str, Any]\")  [assignment]\n                        context: Dict[str, Any] = None) -> None:\n                                                  ^~~~\nmetrics_system.py:227: note: PEP 484 prohibits implicit Optional. Accordingly, mypy has changed its default to no_implicit_optional=True\nmetrics_system.py:227: note: Use https://github.com/hauntsaninja/no_implicit_optional to automatically upgrade your codebase\nmetrics_system.py:269: error: Incompatible default for argument \"labels\"\n(default has type \"None\", argument has type \"dict[str, str]\")  [assignment]\n        async def timer(self, name: str, labels: Dict[str, str] = None):\n                                                                  ^~~~\nmetrics_system.py:269: note: PEP 484 prohibits implicit Optional. Accordingly, mypy has changed its default to no_implicit_optional=True\nmetrics_system.py:269: note: Use https://github.com/hauntsaninja/no_implicit_optional to automatically upgrade your codebase\nmetrics_system.py:436: error: Incompatible types in assignment (expression has\ntype \"float\", variable has type \"int\")  [assignment]\n                    for name, value in self._gauges.items():\n                    ^\nmetrics_system.py:462: error: Incompatible default for argument \"config_info\"\n(default has type \"None\", argument has type \"dict[str, Any]\")  [assignment]\n    ...nc def start_session(self, config_info: Dict[str, Any] = None) -> str:\n                                                                ^~~~\nmetrics_system.py:462: note: PEP 484 prohibits implicit Optional. Accordingly, mypy has changed its default to no_implicit_optional=True\nmetrics_system.py:462: note: Use https://github.com/hauntsaninja/no_implicit_optional to automatically upgrade your codebase\nplugin_system.py:15: error: Library stubs not installed for \"yaml\" \n[import-untyped]\n    import yaml\n    ^\nplugin_system.py:392: error: Incompatible default for argument \"plugin_dir\"\n(default has type \"None\", argument has type \"Path\")  [assignment]\n        def __init__(self, plugin_dir: Path = None):\n                                              ^~~~\nplugin_system.py:392: note: PEP 484 prohibits implicit Optional. Accordingly, mypy has changed its default to no_implicit_optional=True\nplugin_system.py:392: note: Use https://github.com/hauntsaninja/no_implicit_optional to automatically upgrade your codebase\nplugin_system.py:404: error: Incompatible default for argument \"config_path\"\n(default has type \"None\", argument has type \"Path\")  [assignment]\n        def load_plugin_config(self, config_path: Path = None) -> None:\n                                                         ^~~~\nplugin_system.py:404: note: PEP 484 prohibits implicit Optional. Accordingly, mypy has changed its default to no_implicit_optional=True\nplugin_system.py:404: note: Use https://github.com/hauntsaninja/no_implicit_optional to automatically upgrade your codebase\nplugin_system.py:416: error: Only concrete class can be given where\n\"type[PluginInterface]\" is expected  [type-abstract]\n                await self._load_plugin(name, plugin_class)\n                                              ^~~~~~~~~~~~\nplugin_system.py:443: error: Argument 1 to \"module_from_spec\" has incompatible\ntype \"ModuleSpec | None\"; expected \"ModuleSpec\"  [arg-type]\n                module = importlib.util.module_from_spec(spec)\n                                                         ^~~~\nplugin_system.py:444: error: Item \"None\" of \"ModuleSpec | None\" has no\nattribute \"loader\"  [union-attr]\n                spec.loader.exec_module(module)\n                ^~~~~~~~~~~\nplugin_system.py:444: error: Item \"None\" of \"Loader | Any | None\" has no\nattribute \"exec_module\"  [union-attr]\n                spec.loader.exec_module(module)\n                ^~~~~~~~~~~~~~~~~~~~~~~\nimproved_audit.py:19: error: Library stubs not installed for \"aiofiles\" \n[import-untyped]\n    import aiofiles\n    ^\nimproved_audit.py:19: note: Hint: \"python3 -m pip install types-aiofiles\"\nimproved_audit.py:361: error: Incompatible default for argument \"config\"\n(default has type \"None\", argument has type \"AuditConfig\")  [assignment]\n        def __init__(self, config: AuditConfig = None):\n                                                 ^~~~\nimproved_audit.py:361: note: PEP 484 prohibits implicit Optional. Accordingly, mypy has changed its default to no_implicit_optional=True\nimproved_audit.py:361: note: Use https://github.com/hauntsaninja/no_implicit_optional to automatically upgrade your codebase\ntest_audit_system.py:13: error: Library stubs not installed for \"yaml\" \n[import-untyped]\n    import yaml\n    ^\ncache_system.py:148: error: Incompatible default for argument \"cache_dir\"\n(default has type \"None\", argument has type \"Path\")  [assignment]\n        def __init__(self, cache_dir: Path = None, max_age_hours: int = 24...\n                                             ^~~~\ncache_system.py:148: note: PEP 484 prohibits implicit Optional. Accordingly, mypy has changed its default to no_implicit_optional=True\ncache_system.py:148: note: Use https://github.com/hauntsaninja/no_implicit_optional to automatically upgrade your codebase\nproduction_audit.py:44: error: Incompatible default for argument \"config_path\"\n(default has type \"None\", argument has type \"Path\")  [assignment]\n        def __init__(self, config_path: Path = None):\n                                               ^~~~\nproduction_audit.py:44: note: PEP 484 prohibits implicit Optional. Accordingly, mypy has changed its default to no_implicit_optional=True\nproduction_audit.py:44: note: Use https://github.com/hauntsaninja/no_implicit_optional to automatically upgrade your codebase\nproduction_audit.py:85: error: \"validate_environment\" of \"ConfigManager\" does\nnot return a value (it only ever returns None)  [func-returns-value]\n                if not self.config_manager.validate_environment():\n                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\nproduction_audit.py:119: error: Argument 1 to \"AuditToolRunner\" has\nincompatible type \"config_manager.AuditConfig\"; expected\n\"improved_audit.AuditConfig\"  [arg-type]\n                tool_runner = AuditToolRunner(self.config)\n                                              ^~~~~~~~~~~\nproduction_audit.py:120: error: Argument 1 to \"AuditReporter\" has incompatible\ntype \"config_manager.AuditConfig\"; expected \"improved_audit.AuditConfig\" \n[arg-type]\n                reporter = AuditReporter(self.config)\n                                         ^~~~~~~~~~~\nproduction_audit.py:123: error: \"_AsyncGeneratorContextManager[Any, None]\" has\nno attribute \"__enter__\"  [attr-defined]\n                with self.metrics_collector.timer('static_analysis_duratio...\n                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\nproduction_audit.py:123: error: \"_AsyncGeneratorContextManager[Any, None]\" has\nno attribute \"__exit__\"; maybe \"__aexit__\"?  [attr-defined]\n                with self.metrics_collector.timer('static_analysis_duratio...\n                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\nproduction_audit.py:131: error: \"_AsyncGeneratorContextManager[Any, None]\" has\nno attribute \"__enter__\"  [attr-defined]\n                with self.metrics_collector.timer('file_analysis_duration'...\n                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\nproduction_audit.py:131: error: \"_AsyncGeneratorContextManager[Any, None]\" has\nno attribute \"__exit__\"; maybe \"__aexit__\"?  [attr-defined]\n                with self.metrics_collector.timer('file_analysis_duration'...\n                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\nproduction_audit.py:141: error: Argument \"config\" to \"AuditResults\" has\nincompatible type \"config_manager.AuditConfig\"; expected\n\"improved_audit.AuditConfig\"  [arg-type]\n                    config=self.config,\n                           ^~~~~~~~~~~\nproduction_audit.py:185: error: Argument 1 to \"append\" of \"list\" has\nincompatible type \"tuple[str, Coroutine[Any, Any, str]]\"; expected\n\"tuple[str, Coroutine[Any, Any, dict[str, Any]]]\"  [arg-type]\n                tasks.append(('mypy', tool_runner.run_mypy()))\n                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\nproduction_audit.py:215: error: Incompatible types in assignment (expression\nhas type \"list[AnalysisResult]\", target has type \"dict[str, Any]\")  [assignment]\n                results['plugins'] = plugin_results\n                                     ^~~~~~~~~~~~~~\nproduction_audit.py:243: error: \"Path\" has no attribute \"walk\"  [attr-defined]\n            for root, dirs, filenames in Path(\".\").walk():\n                                         ^~~~~~~~~~~~~~\nproduction_audit.py:272: error: Argument 1 to \"LLMAnalyzer\" has incompatible\ntype \"config_manager.AuditConfig\"; expected \"improved_audit.AuditConfig\" \n[arg-type]\n            base_analyzer = LLMAnalyzer(self.config)\n                                        ^~~~~~~~~~~\nproduction_audit.py:278: error: Incompatible types in assignment (expression\nhas type \"LLMAnalyzer\", variable has type \"CachedLLMAnalyzer\")  [assignment]\n                analyzer = base_analyzer\n                           ^~~~~~~~~~~~~\nproduction_audit.py:304: error: \"CachedLLMAnalyzer\" has no attribute\n\"__aenter__\"  [attr-defined]\n                                async with analyzer:\n                                           ^~~~~~~~\nproduction_audit.py:304: error: \"CachedLLMAnalyzer\" has no attribute\n\"__aexit__\"  [attr-defined]\n                                async with analyzer:\n                                           ^~~~~~~~\nproduction_audit.py:310: error: Argument \"llm_analysis\" to \"FileAnalysis\" has\nincompatible type \"str | None\"; expected \"str\"  [arg-type]\n                                llm_analysis=cached_result,\n                                             ^~~~~~~~~~~~~\nproduction_audit.py:404: error: \"AuditResults\" has no attribute \"audit_score\" \n[attr-defined]\n            results.audit_score = score\n            ^~~~~~~~~~~~~~~~~~~\nproduction_audit.py:405: error: \"AuditResults\" has no attribute \"audit_grade\" \n[attr-defined]\n            results.audit_grade = grade\n            ^~~~~~~~~~~~~~~~~~~\nproduction_audit.py:406: error: \"AuditResults\" has no attribute \"total_issues\" \n[attr-defined]\n            results.total_issues = total_issues\n            ^~~~~~~~~~~~~~~~~~~~\nproduction_audit.py:438: error: \"AuditResults\" has no attribute \"audit_grade\" \n[attr-defined]\n            html_content = f\"\"\"\n                           ^\nproduction_audit.py:438: error: \"AuditResults\" has no attribute \"audit_score\" \n[attr-defined]\n            html_content = f\"\"\"\n                           ^\nproduction_audit.py:446: error: \"AuditResults\" has no attribute \"audit_grade\" \n[attr-defined]\n                    .grade-{results.audit_grade.lower().replace('+', 'plus...\n                            ^~~~~~~~~~~~~~~~~~~\nproduction_audit.py:447: error: \"AuditResults\" has no attribute \"audit_grade\" \n[attr-defined]\n                        background: {'#27ae60' if results.audit_grade in [...\n                                                  ^~~~~~~~~~~~~~~~~~~\nproduction_audit.py:460: error: \"AuditResults\" has no attribute \"audit_grade\" \n[attr-defined]\n                <div class=\"grade-{results.audit_grade.lower().replace('+'...\n                                   ^~~~~~~~~~~~~~~~~~~\nproduction_audit.py:529: error: Value of type \"Collection[str]\" is not\nindexable  [index]\n                sarif_report[\"runs\"][0][\"results\"].append(sarif_result)\n                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\nproduction_audit.py:547: error: \"AuditResults\" has no attribute \"audit_grade\" \n[attr-defined]\n                    'grade': results.audit_grade,\n                             ^~~~~~~~~~~~~~~~~~~\nproduction_audit.py:548: error: \"AuditResults\" has no attribute \"audit_score\" \n[attr-defined]\n                    'score': results.audit_score,\n                             ^~~~~~~~~~~~~~~~~~~\nproduction_audit.py:575: error: \"AuditResults\" has no attribute \"audit_score\" \n[attr-defined]\n                    'audit_score': results.audit_score,\n                                   ^~~~~~~~~~~~~~~~~~~\nproduction_audit.py:576: error: \"AuditResults\" has no attribute \"audit_grade\" \n[attr-defined]\n                    'audit_grade': results.audit_grade,\n                                   ^~~~~~~~~~~~~~~~~~~\naudit_scheduler.py:14: error: Cannot find implementation or library stub for\nmodule named \"schedule\"  [import-not-found]\n    import schedule\n    ^\naudit_scheduler.py:14: note: See https://mypy.readthedocs.io/en/stable/running_mypy.html#missing-imports\naudit_scheduler.py:22: error: Module \"production_audit\" has no attribute\n\"ProductionAuditor\"  [attr-defined]\n    from production_audit import ProductionAuditor\n    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\naudit_scheduler.py:119: error: Argument 1 to \"post\" of \"ClientSession\" has\nincompatible type \"str | None\"; expected \"str | URL\"  [arg-type]\n                    async with session.post(self.webhook_url, json=payload...\n                                            ^~~~~~~~~~~~~~~~\naudit_scheduler.py:154: error: Argument 1 to \"post\" of \"ClientSession\" has\nincompatible type \"str | None\"; expected \"str | URL\"  [arg-type]\n                    async with session.post(self.webhook_url, json=payload...\n                                            ^~~~~~~~~~~~~~~~\nFound 65 errors in 10 files (checked 10 source files)",
+  "files": [
+    {
+      "path": "./improved_audit.py",
+      "llm_analysis": "**Production Readiness Audit Summary**\n\nThe `improved_audit.py` file demonstrates a solid foundation for a production-grade audit system. The code exhibits good structure, uses modern best practices, and addresses several efficiency and maintainability issues from the previous version.\n\n**Security Issues**\n\n* **Command Injection**: The `run_command_safe` method in `AuditToolRunner` uses `asyncio.create_subprocess_exec`, which allows shell injection attacks. Recommendation: Use a safe way to execute commands, such as `subprocess.run` with the `shell=False` parameter.\n* **JSON Output Handling**: In `run_ruff` and `run_bandit`, JSON output is parsed using `json.loads`. This can lead to potential issues if the output contains malicious data. Recommendation: Use a safer way to parse JSON, such as `aiohttp.ClientSession.json()`.\n\n**Efficiency Problems**\n\n* **Parallel LLM Requests**: The code uses `parallel_llm_requests` to parallelize LLM requests. However, this might not be effective due to potential bottlenecks in the asyncio event loop. Recommendation: Profile the performance and consider using a more efficient approach, such as using a thread pool or multiprocessing.\n* **AsyncIO Bottlenecks**: The code uses `asyncio.create_subprocess_exec` and `aiohttp.ClientSession`. While this is generally safe, it can lead to performance issues if not used efficiently. Recommendation: Profile the performance and consider optimizing the code using techniques like buffering or caching.\n\n**Code Smells**\n\n* **Magic Numbers**: The code contains several magic numbers (e.g., `1024 * 1024`, `4000`). Recommendation: Replace these with named constants for better maintainability.\n* **Long Method**: The `run_command_safe` method is quite long and complex. Recommendation: Extract smaller functions to improve readability and maintainability.\n\n**Maintainability and Scalability**\n\n* **Configurable Options**: The code uses dataclasses to configure options like `ollama_url`, `model`, and others. This is excellent for maintainability! Keep it up.\n* **Error Handling**: The code handles errors using try-except blocks, which is good. However, some error handling could be improved (e.g., logging errors instead of raising exceptions).\n* **Code Organization**: The code is generally well-organized, but some functions could be grouped together for better readability.\n\n**Alignment with Modern Best Practices**\n\n* **Type Hints**: The code uses type hints extensively, which is excellent! Keep it up.\n* **Async/Await**: The code uses async/await correctly, making it easier to read and maintain. Well done!\n* **Logging**: The code uses logging correctly, providing useful information for debugging and auditing purposes.\n\n**Actionable Recommendations**\n\n1. Address the command injection vulnerability in `run_command_safe`.\n2. Improve JSON output handling by using safer parsing methods.\n3. Profile performance and optimize asyncio-based code for better efficiency.\n4. Replace magic numbers with named constants.\n5. Extract smaller functions from long methods (e.g., `run_command_safe`).\n6. Continue to improve maintainability and scalability through good code organization, error handling, and logging practices.\n\nOverall, the `improved_audit.py` file demonstrates a solid foundation for a production-grade audit system. With some additional attention to security, efficiency, and code quality, it can become an even more robust and reliable tool."
+    },
+    {
+      "path": "./test_audit_system.py",
+      "llm_analysis": "**Production Readiness Audit Summary**\n\nThe `test_audit_system.py` file is a comprehensive test suite for the audit system. The code covers configuration, tools, LLM integration, and reporting. Overall, the code demonstrates good practices in testing and configuration management.\n\nHowever, there are some areas that require attention to ensure production readiness:\n\n**Security Issues: None**\n\nThe code does not have any obvious security vulnerabilities or issues.\n\n**Efficiency Problems:**\n\n1. **Resource consumption:** The tests create temporary files and execute processes, which can consume system resources. Consider optimizing resource usage or using more efficient testing approaches.\n2. **Test duration:** Some tests may take an extended period to complete, which can impact test suite performance. Investigate ways to speed up slow tests.\n\n**Code Smells:**\n\n1. **Magic numbers:** The code uses magic numbers (e.g., `5` in the YAML configuration). Consider replacing these with named constants or configurable values.\n2. **Long method:** The `test_yaml_config_loading` test has a long method that performs multiple operations. Break it down into smaller, more focused tests.\n\n**Maintainability and Scalability:**\n\n1. **Test suite structure:** The test suite is relatively flat, making it difficult to maintain or extend. Consider creating a more hierarchical structure with separate modules for different test types.\n2. **Code organization:** The code imports multiple modules from the same package (`config_manager`, `improved_audit`, etc.). Consider reorganizing code into distinct packages or modules.\n\n**Alignment with Modern Best Practices:**\n\n1. **Asyncio usage:** The tests use asyncio, which is good for asynchronous testing. However, ensure that you're not using it unnecessarily in other parts of the codebase.\n2. **Type hints:** The code does not include type hints, making it harder to understand and maintain. Consider adding type hints where possible.\n\n**Actionable Recommendations:**\n\n1. Optimize resource consumption and test duration.\n2. Refactor magic numbers into named constants or configurable values.\n3. Break long methods into smaller, more focused tests.\n4. Reorganize code into distinct packages or modules.\n5. Add type hints where possible to improve code readability.\n\nBy addressing these issues, you'll be able to ensure that your audit system is production-ready and maintainable for future development."
+    },
+    {
+      "path": "./retry_system.py",
+      "llm_analysis": "**Production Readiness Audit Summary**\n\nThe `retry_system.py` file is a robust retry system with exponential backoff, circuit breaker, and rate limiting. While the code shows good intentions, there are some security issues, efficiency problems, and maintainability concerns that need to be addressed.\n\n**Security Issues:**\n\n1. **Unvalidated User Input**: The `RetryConfig` class allows for user-input configuration values (e.g., `max_attempts`, `base_delay`). These values should be validated to prevent potential attacks.\n2. **Lack of Encryption**: There is no encryption used in the code, which could lead to data breaches.\n\n**Efficiency Problems:**\n\n1. **Overly Complex Code**: The `CircuitBreaker` class has a lot of logic and conditional statements, making it hard to read and maintain.\n2. **Inefficient Exception Handling**: The code uses a broad exception handler (`except Exception as e`) which can catch unintended exceptions.\n\n**Code Smells:**\n\n1. **Long Method**: The `call` method in the `CircuitBreaker` class is too long and does multiple things (execution, exception handling). It should be broken down into smaller methods.\n2. **Magic Numbers**: The code uses magic numbers (e.g., `5`, `60.0`) which are not clearly explained. These numbers should be replaced with named constants.\n\n**Maintainability and Scalability:**\n\n1. **Lack of Modularity**: The code is tightly coupled, making it difficult to extend or maintain.\n2. **Inadequate Logging**: There is no logging framework used in the code, which makes debugging challenging.\n\n**Alignment with Modern Best Practices:**\n\n1. **Type Hints**: The code lacks type hints for function parameters and return types, which can lead to runtime errors.\n2. **Async/Await Best Practices**: The `call` method uses asyncio, but the await/async usage could be improved for better readability and maintainability.\n\n**Actionable Recommendations:**\n\n1. Validate user input configuration values.\n2. Implement encryption where necessary.\n3. Simplify the `CircuitBreaker` class by breaking down complex logic into smaller methods.\n4. Improve exception handling to catch specific exceptions only.\n5. Replace magic numbers with named constants.\n6. Add a logging framework for better debugging and monitoring.\n7. Improve type hints for function parameters and return types.\n8. Refactor async/await usage in the `call` method.\n\nBy addressing these issues, you can significantly improve the security, efficiency, maintainability, and scalability of your retry system code."
+    },
+    {
+      "path": "./local_audit.py",
+      "llm_analysis": "**Production Readiness Audit Summary**\n\nThe local_audit.py file is a comprehensive audit tool that performs various checks on a Python project. The audit includes static, security, and LLM-based analyses using Ollama. The results are generated in both JSON and Markdown formats.\n\n**Security Issues:**\n\n1. **Insecure environment variable**: The OLLAMA_URL environment variable is hardcoded to `http://localhost:11434/api/generate`, which could be a potential security risk if not properly secured.\n2. **Missing input validation**: There is no input validation for user-supplied file paths or commands, which could lead to unexpected behavior or even code injection attacks.\n\n**Efficiency Problems:**\n\n1. **Repetitive file reading**: The `is_safe_to_analyze` function reads the entire file to check its encoding, which can be inefficient and slow for large files.\n2. **Subprocess calls**: The script uses subprocesses to run external commands (ruff, bandit, mypy), which can introduce performance overhead.\n\n**Code Smells:**\n\n1. **Long method**: The `analyze_with_llm` function is quite long and complex, making it difficult to understand and maintain.\n2. **Magic numbers**: There are several magic numbers throughout the code (e.g., 20 * 1024 for file size limit).\n\n**Maintainability and Scalability:**\n\n1. **Lack of modularization**: The script is monolithic, making it difficult to add new features or maintain existing ones.\n2. **No logging or error handling**: There is no centralized logging or error handling mechanism, which can make debugging challenging.\n\n**Alignment with Modern Best Practices:**\n\n1. **Missing type hints**: The code lacks type hints for function parameters and return types, making it harder to understand the code's behavior.\n2. **Inconsistent naming conventions**: The script uses both camelCase and underscore notation for variable names, which can be confusing.\n\n**Actionable Recommendations:**\n\n1. **Secure environment variables**: Use a secure method to store and retrieve sensitive data (e.g., environment variables).\n2. **Implement input validation**: Validate user-supplied inputs to prevent unexpected behavior or attacks.\n3. **Refactor code**: Break down long methods into smaller, more manageable functions. Remove magic numbers and use constants instead.\n4. **Improve performance**: Use efficient file reading mechanisms and consider caching results for repeated analyses.\n5. **Add logging and error handling**: Implement a centralized logging mechanism and error handling system to improve debugging and maintenance.\n\n**Overall Assessment:**\n\nThe local_audit.py script shows promise as a comprehensive audit tool, but it requires significant refactoring to address the identified security issues, efficiency problems, code smells, maintainability and scalability concerns, and alignment with modern best practices."
+    },
+    {
+      "path": "./config_manager.py",
+      "llm_analysis": "**Production Readiness Audit Summary**\n\nThe provided file, `config_manager.py`, appears to be a well-organized and robust configuration management system. However, there are some areas that could be improved to increase its production readiness.\n\n**Security Issues:**\n\n1. **Unvalidated User Input**: The `ToolConfig` class allows for unvalidated user input through the `extra_args` list. This could lead to command injection attacks if not properly sanitized.\n2. **Insecure Defaults**: The `enabled` attribute in the `ToolConfig` class is set to `True` by default, which may allow tools to run unintentionally.\n\n**Efficiency Problems:**\n\n1. **Redundant Validation**: Some validation logic is duplicated across multiple models (e.g., `validate_positive`, `validate_concurrency`). Consider extracting a shared validation function or using a more robust validation framework.\n2. **Excessive Use of List Comprehensions**: The `supported_extensions` and `exclude_patterns` lists are defined using list comprehensions, which may lead to performance issues with large datasets.\n\n**Code Smells:**\n\n1. **God Object**: The `ToolsConfig` class appears to be a \"God Object\" due to its complexity and the number of dependent classes.\n2. **Long Method**: The `OllamaConfig` class has several long methods (e.g., `validate_url`, `validate_positive`). Consider breaking these down into smaller, more focused functions.\n\n**Maintainability and Scalability:**\n\n1. **High-Level Configuration**: The configuration system seems to be well-structured, but it may become challenging to manage at scale.\n2. **Configuration File Handling**: The system appears to rely heavily on the `yaml` library for loading configuration files. Consider using a more robust configuration management framework.\n\n**Alignment with Modern Best Practices:**\n\n1. **Type Hints**: While there are some type hints, they could be expanded to cover more classes and attributes.\n2. **Code Organization**: The code is well-organized, but it may benefit from additional separation of concerns (e.g., separating validation logic into a dedicated module).\n\n**Actionable Recommendations:**\n\n1. **Implement input validation for `extra_args` in the `ToolConfig` class** to prevent command injection attacks.\n2. **Remove duplicate validation logic and consider using a more robust validation framework**.\n3. **Refactor the `ToolsConfig` class to reduce its complexity and dependency on other classes**.\n4. **Consider using a more robust configuration management framework** instead of relying on the `yaml` library.\n5. **Expand type hints to cover more classes and attributes**, following PEP 484 guidelines.\n\nBy addressing these issues, you can improve the production readiness of your configuration manager and ensure it remains maintainable, scalable, and secure in the long term."
+    },
+    {
+      "path": "./audit_scheduler.py",
+      "llm_analysis": "**Production Readiness Audit Summary**\n\nThe `audit_scheduler.py` file is a production-ready script that automates audit runs and supports cron-like scheduling and webhook notifications. The script has some areas for improvement, but overall, it's well-structured and maintainable.\n\n**Security Issues**\n\n* None found in this review.\n* However, it's essential to ensure that any external dependencies (e.g., `aiohttp`) are properly configured to handle potential security risks.\n\n**Efficiency Problems**\n\n* The script uses `asyncio` for asynchronous processing, which is a good practice. However, some parts of the code might benefit from optimization, such as reducing the number of database queries or minimizing the amount of data being processed.\n* The `send_notification()` function has some redundant code (e.g., calculating summary stats). Consider refactoring this method to improve efficiency.\n\n**Code Smells**\n\n* The script uses `os.getenv()` to retrieve environment variables. While this is a common practice, it's essential to ensure that these variables are properly configured and validated.\n* The `send_notification()` function contains some magic numbers (e.g., 4k). Consider defining constants or using more descriptive variable names.\n\n**Maintainability and Scalability**\n\n* The script has a clear separation of concerns between different modules (e.g., `ConfigManager`, `ProductionAuditor`, `MetricsCollector`). This makes it easier to maintain and extend the codebase.\n* The use of dependency injection (e.g., injecting `ConfigManager` and `MetricsCollector`) is a good practice. However, consider adding more descriptive names for these dependencies.\n\n**Alignment with Modern Best Practices**\n\n* The script uses Python 3.7+ features (e.g., type hints) and follows PEP 8 guidelines.\n* Consider using a more modern Python version (e.g., Python 3.9+) to take advantage of additional features and improvements.\n\n**Actionable Recommendations**\n\n1. **Optimize the `send_notification()` function**: Refactor this method to reduce redundant code, use constants instead of magic numbers, and improve overall performance.\n2. **Validate environment variables**: Ensure that environment variables are properly configured and validated to prevent potential security risks.\n3. **Consider using a more modern Python version**: Update the script to use a newer Python version (e.g., Python 3.9+) to take advantage of additional features and improvements.\n\nOverall, the `audit_scheduler.py` file is well-structured, maintainable, and efficient. With some minor optimizations and best practices, it's ready for production use."
+    }
+  ],
+  "audit_stats": {
+    "files_scanned": 10,
+    "files_analyzed": 6,
+    "files_skipped": 4,
+    "skip_reasons": {
+      "file_too_large": 4
+    }
+  }
+}

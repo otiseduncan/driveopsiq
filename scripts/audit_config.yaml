@@ -1,0 +1,130 @@
+# SyferStackV2 Audit System Configuration
+# Environment: production | development | testing
+environment: development
+
+# Ollama LLM Configuration
+ollama:
+  url: "http://localhost:11434/api/generate"
+  model: "llama3:8b"
+  timeout: 120
+  max_retries: 3
+  retry_delay: 1.0
+  backoff_factor: 2.0
+
+# File Processing Configuration  
+files:
+  max_size_mb: 1
+  max_content_chars: 4000
+  supported_extensions:
+    - ".py"
+    - ".js"
+    - ".ts"
+    - ".tsx"
+    - ".jsx"
+    - ".vue"
+    - ".go"
+    - ".rs"
+  exclude_patterns:
+    - "node_modules/**"
+    - "venv/**"
+    - "__pycache__/**"
+    - ".git/**"
+    - "*.pyc"
+    - "*.pyo"
+    - ".pytest_cache/**"
+
+# Performance Configuration
+performance:
+  parallel_llm_requests: 5
+  parallel_static_tools: 3
+  enable_caching: true
+  cache_duration_hours: 24
+
+# Output Configuration
+output:
+  reports_dir: "reports"
+  formats:
+    - "json"
+    - "markdown"
+    - "html"
+    - "junit"
+  include_metrics: true
+  include_git_info: true
+
+# Security Configuration
+security:
+  validate_paths: true
+  prevent_traversal: true
+  sanitize_output: true
+  max_analysis_time: 300
+
+# Static Analysis Tools
+tools:
+  ruff:
+    enabled: true
+    config_file: null
+    extra_args: []
+  
+  bandit:
+    enabled: true
+    config_file: null
+    severity_level: "medium"
+    confidence_level: "medium"
+    
+  mypy:
+    enabled: true
+    config_file: null
+    strict_mode: false
+    
+  # Additional tools that can be enabled
+  pylint:
+    enabled: false
+    config_file: null
+    
+  black:
+    enabled: false
+    check_only: true
+    
+  safety:
+    enabled: false
+    full_report: true
+
+# Grading Configuration
+grading:
+  weights:
+    security_critical: 15
+    security_high: 10
+    security_medium: 5
+    security_low: 2
+    quality_error: 8
+    quality_warning: 3
+    quality_info: 1
+  thresholds:
+    a_plus: 98
+    a: 95
+    b_plus: 90
+    b: 85
+    c_plus: 80
+    c: 75
+    d: 65
+
+# Notifications (future enhancement)
+notifications:
+  enabled: false
+  slack_webhook: null
+  email_recipients: []
+  
+# Metrics Collection
+metrics:
+  enabled: true
+  track_performance: true
+  track_failures: true
+  export_prometheus: false
+  
+# Logging Configuration
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: null
+  max_size_mb: 10
+  backup_count: 5
