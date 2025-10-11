@@ -31,7 +31,7 @@ class Settings(BaseSettings):
     
     # Security settings
     secret_key: str = Field(
-        ...,
+        default="dev-secret-key-change-in-production-12345678901234567890",
         description="Secret key for JWT token generation (override via SECRET_KEY)",
     )
     algorithm: str = Field(default="HS256", description="JWT algorithm")
