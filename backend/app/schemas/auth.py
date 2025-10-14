@@ -8,6 +8,8 @@ from typing import Any, Dict, Optional, List
 
 from pydantic import BaseModel, EmailStr, Field, field_validator, ConfigDict
 
+from app.schemas.user import UserResponse
+
 # Common password validation utility
 class PasswordValidatorMixin:
     """Mixin for consistent password validation across schemas."""
@@ -91,7 +93,7 @@ class UserLogin(BaseModel, PasswordValidatorMixin):
         email_str = str(v).lower().strip()
         if len(email_str) > 255:
             raise ValueError("Email address too long")
-        return EmailStr(email_str)
+        return email_str
     
     model_config = ConfigDict(
         str_strip_whitespace=True,
@@ -166,7 +168,7 @@ class UserRegister(BaseModel, PasswordValidatorMixin):
         if re.search(r'[<>"\'/\\]', email_str):
             raise ValueError("Email contains invalid characters")
         
-        return EmailStr(email_str)
+        return email_str
     
     model_config = ConfigDict(
         str_strip_whitespace=True,
@@ -187,6 +189,8 @@ class Token(BaseModel):
     access_token: str = Field(..., description="JWT access token")
     refresh_token: str = Field(..., description="JWT refresh token")
     token_type: str = Field(default="bearer", description="Token type")
+    role: Optional[str] = Field(None, description="Primary role associated with the user session")
+    user: UserResponse = Field(..., description="Authenticated user profile")
     
     model_config = {
         "json_schema_extra": {
@@ -194,6 +198,17 @@ class Token(BaseModel):
                 "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
                 "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
                 "token_type": "bearer",
+                "role": "manager_field",
+                "user": {
+                    "id": 1,
+                    "email": "user@example.com",
+                    "full_name": "John Doe",
+                    "is_active": True,
+                    "is_superuser": False,
+                    "is_verified": False,
+                    "created_at": "2024-01-01T00:00:00Z",
+                    "updated_at": "2024-01-01T00:00:00Z",
+                },
             }
         }
     }
@@ -284,7 +299,7 @@ class PasswordResetRequest(BaseModel):
         if re.search(r'[<>"\'/\\]', email_str):
             raise ValueError("Email contains invalid characters")
         
-        return EmailStr(email_str)
+        return email_str
     
     model_config = ConfigDict(
         str_strip_whitespace=True,

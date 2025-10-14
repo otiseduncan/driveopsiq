@@ -34,6 +34,17 @@ from app.schemas.user import UserResponse
 router = APIRouter()
 
 
+def _extract_primary_role(user: User | None) -> str | None:
+    """Return the first non-empty role from the user's role list."""
+    if not user or not user.roles:
+        return None
+    for raw_role in user.roles.split(","):
+        role = raw_role.strip()
+        if role:
+            return role
+    return None
+
+
 @router.post("/register", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
 async def register(
     user_data: UserRegister,
@@ -113,15 +124,26 @@ async def login(
     if new_hash != user.hashed_password:
         user.hashed_password = new_hash
         await db.commit()
+        await db.refresh(user)
     
-    # Create access token
-    access_token = create_access_token(subject=user.id)
+    await db.refresh(user)
+
+    # Extract user role for token and response
+    user_role = _extract_primary_role(user)
+    
+    # Create access token with role and email in payload (matching alignment plan)
+    access_token = create_access_token(
+        subject=user.email,  # Use email as subject per alignment plan
+        additional_claims={"role": user_role} if user_role else None
+    )
     refresh_token = create_refresh_token(subject=user.id)
     
     return Token(
         access_token=access_token,
         refresh_token=refresh_token,
         token_type="bearer",
+        role=user_role,  # <-- required for frontend routing
+        user=UserResponse.model_validate(user),
     )
 
 
@@ -164,15 +186,26 @@ async def login_json(
     if new_hash != user.hashed_password:
         user.hashed_password = new_hash
         await db.commit()
+        await db.refresh(user)
     
-    # Create tokens
-    access_token = create_access_token(subject=user.id)
+    await db.refresh(user)
+
+    # Extract user role for token and response
+    user_role = _extract_primary_role(user)
+    
+    # Create tokens with role included in access token payload (email as subject)
+    access_token = create_access_token(
+        subject=user.email,  # Use email as subject per alignment plan
+        additional_claims={"role": user_role} if user_role else None
+    )
     refresh_token = create_refresh_token(subject=user.id)
     
     return Token(
         access_token=access_token,
         refresh_token=refresh_token,
         token_type="bearer",
+        role=user_role,  # <-- required for frontend routing
+        user=UserResponse.model_validate(user),
     )
 
 
@@ -213,15 +246,25 @@ async def refresh_token(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="User not found or inactive",
             )
+
+        await db.refresh(user)
         
-        # Create new tokens
-        access_token = create_access_token(subject=user.id)
+        # Extract user role for token and response
+        user_role = _extract_primary_role(user)
+        
+        # Create new tokens with role included in access token payload
+        access_token = create_access_token(
+            subject=user.id,
+            additional_claims={"role": user_role} if user_role else None
+        )
         refresh_token = create_refresh_token(subject=user.id)
         
         return Token(
             access_token=access_token,
             refresh_token=refresh_token,
             token_type="bearer",
+            role=user_role,  # <-- required for frontend routing
+            user=UserResponse.model_validate(user),
         )
         
     except HTTPException:

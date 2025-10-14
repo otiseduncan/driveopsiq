@@ -85,14 +85,14 @@ class AdvancedCacheManager:
             logger.info("Redis cache backend initialized successfully")
             
             # Initialize in-memory cache as fallback
-            self._memory_cache = Cache.from_url("memory://", serializer=PickleSerializer())
+            self._memory_cache = Cache.from_url("memory://")
             
             self._initialized = True
             
         except Exception as e:
             logger.error(f"Failed to initialize cache backends: {e}")
             # Fallback to memory-only cache
-            self._memory_cache = Cache.from_url("memory://", serializer=PickleSerializer())
+            self._memory_cache = Cache.from_url("memory://")
             self._initialized = True
             
     async def close(self) -> None:

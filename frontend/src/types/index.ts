@@ -8,12 +8,14 @@ export interface User {
   email: string;
   is_active: boolean;
   is_superuser: boolean;
+  roles?: string | null;
   created_at: string;
   updated_at: string;
 }
 
 export interface UserCreate {
   email: string;
+  full_name: string;
   password: string;
 }
 
@@ -30,7 +32,9 @@ export interface LoginRequest {
 
 export interface LoginResponse {
   access_token: string;
+  refresh_token: string;
   token_type: string;
+  role?: string | null;
   user: User;
 }
 
@@ -78,6 +82,38 @@ export interface AIResponse {
   model: string;
   tokens_used: number;
   created_at: string;
+}
+
+// DriveOps IQ types
+export type DriveOpsRequestStatus =
+  | 'pending_validation'
+  | 'validated'
+  | 'claimed'
+  | 'enroute'
+  | 'onsite'
+  | 'complete'
+  | 'hold';
+
+export interface DriveOpsRequestCreate {
+  ro_number: string;
+  vin: string;
+  customer: string;
+  insurer: string;
+  calibration_type: string;
+  notes?: string | null;
+}
+
+export interface DriveOpsRequest extends DriveOpsRequestCreate {
+  id: string;
+  status: DriveOpsRequestStatus;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface DriveOpsRequestCreateResponse {
+  status: string;
+  message: string;
+  request: DriveOpsRequest;
 }
 
 // Component props types

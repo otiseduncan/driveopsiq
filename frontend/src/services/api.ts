@@ -26,7 +26,13 @@ export class AuthService {
       // Set auth token for subsequent requests
       if (response.access_token) {
         httpClient.setAuthToken(response.access_token);
-        this.storeToken(response.access_token);
+        this.storeAccessToken(response.access_token);
+      }
+
+      this.emitAuthChange();
+
+      if (response.refresh_token) {
+        this.storeRefreshToken(response.refresh_token);
       }
       
       return response;
@@ -49,7 +55,9 @@ export class AuthService {
       // Continue with local logout even if server request fails
     } finally {
       httpClient.setAuthToken('');
-      this.removeToken();
+      this.removeAccessToken();
+      this.removeRefreshToken();
+      this.emitAuthChange();
     }
   }
 
@@ -75,8 +83,10 @@ export class AuthService {
       return await httpClient.get<User>('/auth/me');
     } catch (error) {
       if (error instanceof ApiError && error.statusCode === 401) {
-        this.removeToken();
+        this.removeAccessToken();
+        this.removeRefreshToken();
         httpClient.setAuthToken('');
+        this.emitAuthChange();
         throw new Error('Session expired. Please login again.');
       }
       throw new Error('Failed to get user profile');
@@ -86,22 +96,40 @@ export class AuthService {
   /**
    * Store authentication token
    */
-  private static storeToken(token: string): void {
+  private static storeAccessToken(token: string): void {
     try {
       localStorage.setItem('auth_token', token);
     } catch (error) {
       console.warn('Failed to store auth token:', error);
+    }
+    this.emitAuthChange();
+  }
+
+  private static storeRefreshToken(token: string): void {
+    try {
+      localStorage.setItem('refresh_token', token);
+    } catch (error) {
+      console.warn('Failed to store refresh token:', error);
     }
   }
 
   /**
    * Remove authentication token
    */
-  private static removeToken(): void {
+  private static removeAccessToken(): void {
     try {
       localStorage.removeItem('auth_token');
     } catch (error) {
       console.warn('Failed to remove auth token:', error);
+    }
+    this.emitAuthChange();
+  }
+
+  private static removeRefreshToken(): void {
+    try {
+      localStorage.removeItem('refresh_token');
+    } catch (error) {
+      console.warn('Failed to remove refresh token:', error);
     }
   }
 
@@ -117,6 +145,15 @@ export class AuthService {
     }
   }
 
+  static getStoredRefreshToken(): string | null {
+    try {
+      return localStorage.getItem('refresh_token');
+    } catch (error) {
+      console.warn('Failed to get stored refresh token:', error);
+      return null;
+    }
+  }
+
   /**
    * Initialize authentication from stored token
    */
@@ -124,6 +161,12 @@ export class AuthService {
     const token = this.getStoredToken();
     if (token) {
       httpClient.setAuthToken(token);
+    }
+  }
+
+  private static emitAuthChange(): void {
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new Event('authchange'));
     }
   }
 }

@@ -8,6 +8,7 @@ from sqlalchemy.ext.asyncio import create_async_engine
 from app.core.database import Base
 from app.core.config import settings
 from app.models import user, auth  # Import all models
+from app.modules.driveops_iq import models  # Import DriveOps models
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -63,10 +64,8 @@ async def run_async_migrations():
     """In this scenario we need to create an Engine
     and associate a connection with the context.
     """
-    # Convert async URL to sync for Alembic
-    url = settings.database_url.replace("+aiosqlite", "").replace("+asyncpg", "")
-    
-    connectable = create_async_engine(url)
+    # Use the async URL directly - SQLAlchemy will handle it properly
+    connectable = create_async_engine(settings.database_url)
 
     async with connectable.connect() as connection:
         await connection.run_sync(do_run_migrations)

@@ -21,7 +21,7 @@ export class HttpClient {
   private readonly defaultHeaders: Record<string, string>;
   private readonly timeout: number;
 
-  constructor(baseUrl: string = '/api', timeout: number = 30000) {
+  constructor(baseUrl: string = '/api/v1', timeout: number = 30000) {
     this.baseUrl = baseUrl.replace(/\/$/, ''); // Remove trailing slash
     this.timeout = timeout;
     this.defaultHeaders = {
@@ -259,5 +259,10 @@ export class HttpClient {
   }
 }
 
+const apiBaseUrl =
+  (import.meta.env?.VITE_API_BASE_URL as string | undefined) ||
+  (import.meta.env?.VITE_API_URL as string | undefined) ||
+  '/api/v1';
+
 // Default HTTP client instance
-export const httpClient = new HttpClient();
+export const httpClient = new HttpClient(apiBaseUrl);

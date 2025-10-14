@@ -29,7 +29,10 @@ except ImportError:
 
 from .core.config import settings
 from .logging_config import setup_json_logging
+from .modules.driveops_iq.router import router as driveops_router
 from .routers import health
+from .services.demo_seed import seed_demo_users
+from .db.session import SessionLocal
 
 # Setup secure logging
 setup_json_logging()
@@ -89,7 +92,8 @@ class SecurityHeadersMiddleware(BaseHTTPMiddleware):
         response.headers["Expires"] = "0"
         
         # Remove server header for security
-        response.headers.pop("Server", None)
+        if "Server" in response.headers:
+            del response.headers["Server"]
         
         return response
 
@@ -238,16 +242,7 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     logger.info("🚀 SyferStack API starting up...")
     
     try:
-        # Initialize cache system
-        from app.core.cache import cache_manager, warm_cache
-        await cache_manager.initialize()
-        logger.info("✅ Cache system initialized")
-        
-        # Warm up cache with common data
-        await warm_cache()
-        logger.info("✅ Cache warm-up completed")
-        
-        # Initialize database connections
+        # Initialize database connections (cache temporarily disabled)
         from app.core.database import init_db
         await init_db()
         logger.info("✅ Database initialized")
@@ -264,9 +259,7 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     logger.info("🛑 SyferStack API shutting down...")
     
     try:
-        # Cleanup cache connections
-        await cache_manager.close()
-        logger.info("✅ Cache connections closed")
+        # Cleanup database connections (cache temporarily disabled)
         
         # Cleanup database connections
         from app.core.database import close_db
@@ -307,6 +300,21 @@ app = FastAPI(
     # Security configurations
     dependencies=[],  # Global dependencies can be added here
 )
+
+@app.on_event("startup")
+def startup_event() -> None:
+    """Seed demo data when running in demo mode."""
+    if not settings.DEMO_MODE:
+        return
+
+    logger.info("Running DriveOps-IQ demo seeder…")
+    db = SessionLocal()
+    try:
+        seed_demo_users(db)
+    except Exception as exc:  # pragma: no cover - startup logging
+        logger.exception("Failed to seed demo users: %s", exc)
+    finally:
+        db.close()
 
 # Exception handlers for better error management
 @app.exception_handler(StarletteHTTPException)
@@ -413,6 +421,12 @@ else:
 
 # Include routers
 app.include_router(health.router, prefix="/api/v1")
+app.include_router(driveops_router, prefix="/api/v1")
+
+# Import and include auth routes
+from .api.routes import auth, users
+app.include_router(auth.router, prefix="/api/v1/auth", tags=["authentication"])
+app.include_router(users.router, prefix="/api/v1/users", tags=["users"])
 
 # Add root endpoint
 @app.get("/", include_in_schema=False)

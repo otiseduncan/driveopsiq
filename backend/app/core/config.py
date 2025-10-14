@@ -72,6 +72,10 @@ class Settings(BaseSettings):
         default=["localhost", "127.0.0.1", "*.syfernetics.com", "*.syferstack.com"],
         description="Allowed hosts for TrustedHostMiddleware",
     )
+    DEMO_MODE: bool = Field(
+        default=True,
+        description="Enable demo/test fixtures such as seeded accounts",
+    )
     rate_limit_default: list[str] = Field(
         default=["100/minute"],
         description="Default rate limits applied per client",
@@ -138,6 +142,14 @@ class Settings(BaseSettings):
             return [limit.strip() for limit in value.split(",") if limit.strip()]
         return value
 
+    @field_validator("DEMO_MODE", mode="before")
+    @classmethod
+    def parse_demo_mode(cls, value: str | bool, _: ValidationInfo) -> bool:
+        """Parse demo mode flag from string or bool."""
+        if isinstance(value, str):
+            return value.lower() in ("true", "1", "yes", "on")
+        return bool(value)
+
     @field_validator("metrics_endpoint")
     @classmethod
     def normalize_metrics_endpoint(cls, value: str) -> str:
@@ -161,6 +173,11 @@ class Settings(BaseSettings):
     def is_production(self) -> bool:
         """Check if running in production mode."""
         return not self.is_development
+
+    @property
+    def demo_mode(self) -> bool:
+        """Backward compatible alias for legacy lowercase flag."""
+        return self.DEMO_MODE
 
 
 @lru_cache

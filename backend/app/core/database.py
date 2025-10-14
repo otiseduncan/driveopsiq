@@ -15,7 +15,7 @@ from sqlalchemy.ext.asyncio import (
     create_async_engine,
 )
 from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy.pool import StaticPool, QueuePool
+from sqlalchemy.pool import StaticPool
 from sqlalchemy.exc import SQLAlchemyError, DisconnectionError, DatabaseError
 
 from app.core.config import settings
@@ -98,11 +98,6 @@ def _build_engine() -> AsyncEngine:
         "pool_recycle": settings.database_pool_recycle,  # Recycle connections every hour
         "pool_pre_ping": True,  # Validate connections before use
         "pool_reset_on_return": "commit",  # Reset connections on return
-        "isolation_level": "READ_COMMITTED",  # Default isolation level
-        "execution_options": {
-            "isolation_level": "READ_COMMITTED",
-            "autocommit": False,
-        },
     }
 
     # Database-specific configuration
@@ -119,11 +114,13 @@ def _build_engine() -> AsyncEngine:
                 "timeout": 20,  # SQLite timeout
             },
         })
+        engine_kwargs.pop("pool_timeout", None)
+        engine_kwargs.pop("pool_recycle", None)
         logger.info("Configured SQLite database engine")
     else:
         # Production database configuration (PostgreSQL, MySQL, etc.)
+        # Note: For async engines, SQLAlchemy automatically uses the appropriate pool
         engine_kwargs.update({
-            "poolclass": QueuePool,
             "pool_size": settings.database_pool_size,
             "max_overflow": settings.database_max_overflow,
             "pool_timeout": 30,  # Wait 30s for available connection
@@ -134,14 +131,9 @@ def _build_engine() -> AsyncEngine:
             # PostgreSQL-specific optimizations
             engine_kwargs["connect_args"] = {
                 "server_settings": {
-                    "jit": "off",  # Disable JIT for faster connections
                     "application_name": "SyferStack-API",
-                    "shared_preload_libraries": "pg_stat_statements",
-                    "log_statement": "none",  # Security: don't log statements
-                    "log_min_duration_statement": "1000",  # Log slow queries only
                 },
                 "command_timeout": 60,  # Command timeout
-                "server_lifetime": 3600,  # Connection lifetime
             }
             logger.info("Configured PostgreSQL database engine with performance optimizations")
         elif is_mysql:
@@ -199,7 +191,10 @@ async def get_db_session() -> AsyncIterator[AsyncSession]:
         logger.error("Database operation failed", exc_info=e, extra={
             "session_id": id(session),
         })
-        raise DatabaseError(f"Database operation failed: {str(e)}") from e
+        raise RuntimeError(f"Database operation failed: {str(e)}") from e
+    except HTTPException as exc:
+        await session.rollback()
+        raise exc
     except Exception as e:
         await session.rollback()
         logger.error("Unexpected error in database session", exc_info=e, extra={
@@ -239,6 +234,8 @@ async def get_db() -> AsyncIterator[AsyncSession]:
             status_code=500,
             detail="Internal database error"
         ) from e
+    except HTTPException as exc:
+        raise exc
     except Exception as e:
         logger.error("Unexpected database error", exc_info=e)
         raise HTTPException(
@@ -302,6 +299,7 @@ async def init_db() -> None:
         async with engine.begin() as conn:
             # Import all models to ensure they are registered with SQLAlchemy
             from app.models import auth, user  # noqa: F401
+            from app.modules.driveops_iq import models as driveops_models  # noqa: F401
             
             # Create all tables
             await conn.run_sync(Base.metadata.create_all)
@@ -313,7 +311,7 @@ async def init_db() -> None:
         
     except Exception as e:
         logger.error("Database initialization failed", exc_info=e)
-        raise DatabaseError(f"Failed to initialize database: {str(e)}") from e
+        raise RuntimeError(f"Failed to initialize database: {str(e)}") from e
 
 
 async def close_db() -> None:

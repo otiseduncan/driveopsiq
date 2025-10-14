@@ -32,16 +32,6 @@ class User(Base):
     
     # Table constraints for data integrity and security
     __table_args__ = (
-        # Ensure email is valid format
-        CheckConstraint(
-            "email ~ '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$'",
-            name="valid_email_format"
-        ),
-        # Ensure password hash is from a secure algorithm
-        CheckConstraint(
-            "hashed_password ~ '^\\$argon2|^\\$bcrypt|^\\$scrypt'",
-            name="secure_password_hash"
-        ),
         # Ensure full name is not empty and reasonable length
         CheckConstraint(
             "length(trim(full_name)) >= 2 AND length(full_name) <= 255",
@@ -95,6 +85,13 @@ class User(Base):
         nullable=False,
         server_default="false",
         comment="Email verification status"
+    )
+    
+    # Role-based access control
+    roles: Mapped[Optional[str]] = mapped_column(
+        Text,
+        nullable=True,
+        comment="Comma-separated list of user roles (admin,shop_manager,field_manager,shop_cmr,mobile_cmr,shop_parts_manager,field_tech)"
     )
     
     # Optional profile information with validation

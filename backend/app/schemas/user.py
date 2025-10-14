@@ -4,7 +4,7 @@ User-related Pydantic schemas for request/response validation.
 from datetime import datetime
 from typing import List, Optional
 
-from pydantic import BaseModel, EmailStr, Field, field_validator
+from pydantic import BaseModel, EmailStr, Field, field_validator, constr
 
 
 class UserBase(BaseModel):
@@ -15,11 +15,15 @@ class UserBase(BaseModel):
     is_active: bool = Field(default=True, description="Whether user is active")
 
 
-class UserCreate(UserBase):
+class UserCreate(BaseModel):
     """Schema for creating a new user."""
     
-    password: str = Field(..., min_length=8, max_length=128, description="User password")
+    email: EmailStr = Field(..., description="User email address")
+    full_name: constr(min_length=2, max_length=255) = Field(..., description="User full name")
+    password: constr(min_length=8, max_length=128) = Field(..., description="User password")
+    is_active: bool = Field(default=True, description="Whether user is active")
     is_superuser: bool = Field(default=False, description="Whether user is a superuser")
+    roles: Optional[str] = Field(None, description="Comma-separated list of user roles")
     
     @field_validator("password")
     @classmethod
@@ -47,13 +51,14 @@ class UserUpdate(BaseModel):
     """Schema for updating user information."""
     
     email: Optional[EmailStr] = Field(None, description="User email address")
-    full_name: Optional[str] = Field(None, min_length=1, max_length=255, description="User full name")
+    full_name: Optional[constr(min_length=2, max_length=255)] = Field(None, description="User full name")
     avatar_url: Optional[str] = Field(None, max_length=500, description="Avatar URL")
     bio: Optional[str] = Field(None, max_length=1000, description="User biography")
     location: Optional[str] = Field(None, max_length=255, description="User location")
     website_url: Optional[str] = Field(None, max_length=500, description="Website URL")
     is_active: Optional[bool] = Field(None, description="Whether user is active")
     is_superuser: Optional[bool] = Field(None, description="Whether user is a superuser")
+    roles: Optional[str] = Field(None, description="Comma-separated list of user roles")
 
 
 class UserResponse(BaseModel):
@@ -65,6 +70,7 @@ class UserResponse(BaseModel):
     is_active: bool = Field(..., description="Whether user is active")
     is_superuser: bool = Field(..., description="Whether user is a superuser")
     is_verified: bool = Field(..., description="Whether user is verified")
+    roles: Optional[str] = Field(None, description="Comma-separated list of user roles")
     
     # Optional profile fields
     avatar_url: Optional[str] = Field(None, description="Avatar URL")

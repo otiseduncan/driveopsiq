@@ -1,21 +1,18 @@
-"""
-Basic tests to verify app functions and ensure coverage is measured.
-"""
+"""Smoke tests for core application endpoints."""
 
-def test_simple_function():
-    """Test a simple function to verify coverage works."""
-    # Test basic math to ensure coverage is working
-    result = 2 + 2
-    assert result == 4
+import pytest
 
-def test_string_operations():
-    """Test string operations for coverage."""
-    text = "SyferStack API"
-    assert len(text) > 0
-    assert "API" in text
 
-def test_list_operations():
-    """Test list operations for coverage."""
-    items = [1, 2, 3, 4, 5]
-    assert len(items) == 5
-    assert sum(items) == 15
+pytestmark = pytest.mark.asyncio
+
+
+async def test_root_health(async_client):
+    response = await async_client.get("/health")
+    assert response.status_code == 200
+
+
+async def test_api_root(async_client):
+    response = await async_client.get("/")
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["service"] == "SyferStack API"

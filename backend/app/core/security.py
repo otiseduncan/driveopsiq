@@ -422,9 +422,17 @@ async def get_current_user(
     
     # Import here to avoid circular imports
     from app.models.user import User
-    from sqlalchemy import select
+    from sqlalchemy import select, or_
     
-    result = await db.execute(select(User).where(User.id == token_data.sub))
+    # Try to find user by email first (new tokens), then by ID (old tokens) for compatibility
+    result = await db.execute(
+        select(User).where(
+            or_(
+                User.email == token_data.sub,
+                User.id == (int(token_data.sub) if token_data.sub.isdigit() else None)
+            )
+        )
+    )
     user = result.scalar_one_or_none()
     
     if user is None:

@@ -115,6 +115,7 @@ async def create_user(
         hashed_password=get_password_hash(user_data.password),
         is_active=user_data.is_active,
         is_superuser=user_data.is_superuser,
+        roles=user_data.roles,
     )
     
     db.add(user)
