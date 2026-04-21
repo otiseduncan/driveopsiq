@@ -1,0 +1,138 @@
+# SyferStackV2 Audit Ignore Patterns
+# Similar to .gitignore - exclude directories and files from audit
+
+# Virtual environments
+venv/
+env/
+.venv/
+.env/
+virtualenv/
+
+# Python cache and build artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Node.js dependencies and package management
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Third-party and vendor directories
+vendor/
+third_party/
+external/
+libs/
+packages/
+site-packages/
+
+# Git and version control
+.git/
+.svn/
+.hg/
+.bzr/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Audit system outputs
+reports/
+.audit_cache/
+audit_reports/
+
+# Large data files and media
+*.zip
+*.tar.gz
+*.rar
+*.7z
+*.bin
+*.exe
+*.dll
+*.so
+*.dylib
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.pdf
+*.mp4
+*.avi
+*.mov
+
+# Generated files and migrations
+alembic/versions/
+migrations/
+*.generated.*
+*.auto.*
+*.min.js
+*.min.css
+*.bundle.*
+*.chunk.*
+
+# Infrastructure and deployment files
+docker-compose*.yml
+dockerfile*
+nginx/
+redis/
+db/init/
+uploads/
+static/
+
+# Configuration and secrets (optional - be careful)
+# .env
+# config/secrets/
+# *.key
+# *.pem
+
+# Test coverage and temporary files
+.coverage
+.pytest_cache/
+.tox/
+.cache/
+.mypy_cache/
+.ruff_cache/
+htmlcov/
+.tmp/
+temp/
+tmp/
+
+# Documentation builds
+docs/_build/
+site/
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Logs
+*.log
+logs/

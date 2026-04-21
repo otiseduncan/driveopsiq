@@ -1,0 +1,153 @@
+version: '3.8'
+
+services:
+  # Main audit service
+  audit-runner:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: syfer-audit
+    environment:
+      - AUDIT_ENVIRONMENT=production
+      - AUDIT_OLLAMA_URL=http://ollama:11434/api/generate
+      - AUDIT_REPORTS_DIR=/app/reports
+      - AUDIT_LOG_LEVEL=INFO
+      - AUDIT_ENABLE_CACHE=true
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./reports:/app/reports
+      - ./.audit_cache:/app/.audit_cache
+      - .:/app/source:ro  # Mount source code as read-only
+    working_dir: /app/source
+    depends_on:
+      - ollama
+      - prometheus
+      - grafana
+    networks:
+      - audit-network
+    restart: unless-stopped
+    command: >
+      sh -c "
+        echo 'Waiting for Ollama to be ready...' &&
+        sleep 10 &&
+        python /app/scripts/production_audit.py
+      "
+
+  # Ollama LLM service
+  ollama:
+    image: ollama/ollama:latest
+    container_name: syfer-ollama
+    environment:
+      - OLLAMA_ORIGINS=*
+    volumes:
+      - ollama-data:/root/.ollama
+    ports:
+      - "11434:11434"
+    networks:
+      - audit-network
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    # Pull model on startup
+    command: >
+      sh -c "
+        ollama serve &
+        sleep 10 &&
+        ollama pull llama3:8b &&
+        wait
+      "
+
+  # Prometheus for metrics collection
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: syfer-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=30d'
+      - '--web.enable-lifecycle'
+    networks:
+      - audit-network
+    restart: unless-stopped
+
+  # Grafana for metrics visualization
+  grafana:
+    image: grafana/grafana:latest
+    container_name: syfer-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin123
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./grafana/dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./grafana/datasources:/etc/grafana/provisioning/datasources:ro
+    networks:
+      - audit-network
+    restart: unless-stopped
+
+  # Redis for caching (optional)
+  redis:
+    image: redis:7-alpine
+    container_name: syfer-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - audit-network
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+
+  # Audit scheduler for automated runs
+  audit-scheduler:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: syfer-scheduler
+    environment:
+      - AUDIT_ENVIRONMENT=production
+      - AUDIT_OLLAMA_URL=http://ollama:11434/api/generate
+      - AUDIT_SCHEDULE_CRON=0 2 * * *  # Run daily at 2 AM
+    volumes:
+      - ./reports:/app/reports
+      - ./.audit_cache:/app/.audit_cache
+      - .:/app/source:ro
+    working_dir: /app/source
+    depends_on:
+      - audit-runner
+    networks:
+      - audit-network
+    restart: unless-stopped
+    command: >
+      sh -c "
+        echo 'Starting audit scheduler...' &&
+        python /app/scripts/audit_scheduler.py
+      "
+
+volumes:
+  ollama-data:
+    driver: local
+  prometheus-data:
+    driver: local
+  grafana-data:
+    driver: local
+  redis-data:
+    driver: local
+
+networks:
+  audit-network:
+    driver: bridge

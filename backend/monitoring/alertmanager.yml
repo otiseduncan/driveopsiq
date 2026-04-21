@@ -1,0 +1,171 @@
+# Alertmanager Configuration for SyferStackV2
+# Handles alert routing and notification delivery
+
+global:
+  smtp_smarthost: 'localhost:587'
+  smtp_from: 'alerts@syferstack.local'
+  slack_api_url: '${SLACK_WEBHOOK_URL}'
+  
+# Templates for custom alert formatting
+templates:
+  - '/etc/alertmanager/templates/*.tmpl'
+
+# Routing tree for alerts
+route:
+  group_by: ['alertname', 'cluster', 'service']
+  group_wait: 10s
+  group_interval: 10s
+  repeat_interval: 1h
+  receiver: 'default'
+  
+  routes:
+    # Critical alerts - immediate notification
+    - match:
+        severity: critical
+      receiver: 'critical-alerts'
+      group_wait: 0s
+      repeat_interval: 15m
+      
+    # Warning alerts - grouped notifications
+    - match:
+        severity: warning
+      receiver: 'warning-alerts'
+      group_wait: 30s
+      repeat_interval: 2h
+      
+    # Security alerts - immediate notification to security team
+    - match_re:
+        alertname: '.*Security.*|.*Authentication.*'
+      receiver: 'security-alerts'
+      group_wait: 0s
+      repeat_interval: 5m
+      
+    # Database alerts - DBA team
+    - match_re:
+        alertname: '.*Database.*|.*PostgreSQL.*'
+      receiver: 'database-alerts'
+      group_wait: 30s
+      repeat_interval: 1h
+
+# Inhibition rules to reduce noise
+inhibit_rules:
+  # If service is down, don't alert on high error rates
+  - source_match:
+      alertname: 'ServiceDown'
+    target_match_re:
+      alertname: '.*ErrorRate.*|.*ResponseTime.*'
+    equal: ['instance']
+    
+  # If critical memory usage, don't alert on high memory usage
+  - source_match:
+      severity: 'critical'
+      alertname: 'CriticalMemoryUsage'
+    target_match:
+      severity: 'warning'
+      alertname: 'HighMemoryUsage'
+    equal: ['instance']
+
+# Notification receivers
+receivers:
+  # Default fallback receiver
+  - name: 'default'
+    slack_configs:
+      - api_url: '${SLACK_WEBHOOK_URL}'
+        channel: '#alerts'
+        title: 'SyferStack Alert - {{ .GroupLabels.alertname }}'
+        text: '{{ range .Alerts }}{{ .Annotations.summary }}{{ end }}'
+        color: 'warning'
+        
+  # Critical alerts - multiple channels + PagerDuty
+  - name: 'critical-alerts'
+    slack_configs:
+      - api_url: '${SLACK_WEBHOOK_URL}'
+        channel: '#critical-alerts'
+        title: '🚨 CRITICAL: {{ .GroupLabels.alertname }}'
+        text: |
+          {{ range .Alerts }}
+          *Alert:* {{ .Annotations.summary }}
+          *Description:* {{ .Annotations.description }}
+          *Instance:* {{ .Labels.instance }}
+          *Severity:* {{ .Labels.severity }}
+          {{ end }}
+        color: 'danger'
+        send_resolved: true
+        
+    # Email notification for critical alerts
+    email_configs:
+      - to: '${ADMIN_EMAIL}'
+        subject: '🚨 CRITICAL ALERT: {{ .GroupLabels.alertname }}'
+        body: |
+          Critical alert triggered in SyferStack V2:
+          
+          {{ range .Alerts }}
+          Alert: {{ .Annotations.summary }}
+          Description: {{ .Annotations.description }}
+          Instance: {{ .Labels.instance }}
+          Started: {{ .StartsAt }}
+          {{ end }}
+          
+    # Discord webhook for critical alerts
+    webhook_configs:
+      - url: '${DISCORD_WEBHOOK_URL}'
+        send_resolved: true
+        
+  # Warning alerts - Slack only
+  - name: 'warning-alerts'
+    slack_configs:
+      - api_url: '${SLACK_WEBHOOK_URL}'
+        channel: '#alerts'
+        title: '⚠️  WARNING: {{ .GroupLabels.alertname }}'
+        text: |
+          {{ range .Alerts }}
+          *Alert:* {{ .Annotations.summary }}
+          *Description:* {{ .Annotations.description }}
+          *Instance:* {{ .Labels.instance }}
+          {{ end }}
+        color: 'warning'
+        send_resolved: true
+        
+  # Security alerts - immediate high-priority notification
+  - name: 'security-alerts'
+    slack_configs:
+      - api_url: '${SLACK_WEBHOOK_URL}'
+        channel: '#security-alerts'
+        title: '🔒 SECURITY ALERT: {{ .GroupLabels.alertname }}'
+        text: |
+          {{ range .Alerts }}
+          *Security Event:* {{ .Annotations.summary }}
+          *Details:* {{ .Annotations.description }}
+          *Instance:* {{ .Labels.instance }}
+          *Time:* {{ .StartsAt }}
+          {{ end }}
+        color: 'danger'
+        send_resolved: true
+        
+    email_configs:
+      - to: '${SECURITY_EMAIL}'
+        subject: '🔒 SECURITY ALERT: {{ .GroupLabels.alertname }}'
+        body: |
+          Security alert in SyferStack V2:
+          
+          {{ range .Alerts }}
+          Event: {{ .Annotations.summary }}
+          Details: {{ .Annotations.description }}
+          Instance: {{ .Labels.instance }}
+          Time: {{ .StartsAt }}
+          {{ end }}
+          
+  # Database alerts - DBA team
+  - name: 'database-alerts'
+    slack_configs:
+      - api_url: '${SLACK_WEBHOOK_URL}'
+        channel: '#database-alerts'
+        title: '🗄️  DATABASE ALERT: {{ .GroupLabels.alertname }}'
+        text: |
+          {{ range .Alerts }}
+          *Database Issue:* {{ .Annotations.summary }}
+          *Details:* {{ .Annotations.description }}
+          *Instance:* {{ .Labels.instance }}
+          {{ end }}
+        color: 'warning'
+        send_resolved: true

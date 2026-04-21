@@ -1,0 +1,34 @@
+# Prometheus configuration for audit system monitoring
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+rule_files:
+  # - "first_rules.yml"
+  # - "second_rules.yml"
+
+scrape_configs:
+  # Prometheus self-monitoring
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # Audit system metrics
+  - job_name: 'audit-system'
+    static_configs:
+      - targets: ['audit-runner:9091']  # Custom metrics port
+    scrape_interval: 30s
+    metrics_path: '/metrics'
+
+  # System metrics (if node_exporter is added)
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['localhost:9100']
+    scrape_interval: 30s
+
+  # Ollama metrics (if available)
+  - job_name: 'ollama'
+    static_configs:
+      - targets: ['ollama:11434']
+    scrape_interval: 60s
+    metrics_path: '/metrics'

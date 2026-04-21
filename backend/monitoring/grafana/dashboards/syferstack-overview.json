@@ -1,0 +1,200 @@
+{
+  "dashboard": {
+    "id": null,
+    "title": "SyferStack V2 - Performance Overview",
+    "tags": ["syferstack", "performance", "monitoring"],
+    "timezone": "browser",
+    "panels": [
+      {
+        "id": 1,
+        "title": "Service Health Status",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "up{job=\"syferstack-backend\"}",
+            "legendFormat": "Backend Service",
+            "refId": "A"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "thresholds": {
+              "steps": [
+                {"color": "red", "value": 0},
+                {"color": "green", "value": 1}
+              ]
+            },
+            "mappings": [
+              {"options": {"0": {"text": "DOWN"}}, "type": "value"},
+              {"options": {"1": {"text": "UP"}}, "type": "value"}
+            ]
+          }
+        },
+        "gridPos": {"h": 6, "w": 6, "x": 0, "y": 0}
+      },
+      {
+        "id": 2,
+        "title": "HTTP Request Rate",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "sum(rate(http_requests_total[5m])) by (method, status)",
+            "legendFormat": "{{method}} {{status}}",
+            "refId": "A"
+          }
+        ],
+        "yAxes": [
+          {"label": "Requests/sec", "min": 0}
+        ],
+        "gridPos": {"h": 6, "w": 12, "x": 6, "y": 0}
+      },
+      {
+        "id": 3,
+        "title": "Response Time (95th Percentile)",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket[5m])) by (le))",
+            "legendFormat": "95th Percentile",
+            "refId": "A"
+          },
+          {
+            "expr": "histogram_quantile(0.50, sum(rate(http_request_duration_seconds_bucket[5m])) by (le))",
+            "legendFormat": "Median",
+            "refId": "B"
+          }
+        ],
+        "yAxes": [
+          {"label": "Seconds", "min": 0}
+        ],
+        "gridPos": {"h": 6, "w": 6, "x": 18, "y": 0}
+      },
+      {
+        "id": 4,
+        "title": "System Resources",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "cpu_usage_percent",
+            "legendFormat": "CPU Usage %",
+            "refId": "A"
+          },
+          {
+            "expr": "(memory_usage_bytes / memory_total_bytes) * 100",
+            "legendFormat": "Memory Usage %",
+            "refId": "B"
+          },
+          {
+            "expr": "(disk_used_bytes / disk_total_bytes) * 100",
+            "legendFormat": "Disk Usage %",
+            "refId": "C"
+          }
+        ],
+        "yAxes": [
+          {"label": "Percentage", "min": 0, "max": 100}
+        ],
+        "gridPos": {"h": 6, "w": 12, "x": 0, "y": 6}
+      },
+      {
+        "id": 5,
+        "title": "Database Performance",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "database_query_duration_seconds{quantile=\"0.95\"}",
+            "legendFormat": "Query Time (95th)",
+            "refId": "A"
+          },
+          {
+            "expr": "database_connections_active",
+            "legendFormat": "Active Connections",
+            "refId": "B"
+          }
+        ],
+        "yAxes": [
+          {"label": "Seconds / Count", "min": 0}
+        ],
+        "gridPos": {"h": 6, "w": 12, "x": 12, "y": 6}
+      },
+      {
+        "id": 6,
+        "title": "Cache Performance",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "rate(cache_hits_total[5m])",
+            "legendFormat": "Cache Hits/sec",
+            "refId": "A"
+          },
+          {
+            "expr": "rate(cache_misses_total[5m])",
+            "legendFormat": "Cache Misses/sec",
+            "refId": "B"
+          },
+          {
+            "expr": "cache_hits_total / (cache_hits_total + cache_misses_total) * 100",
+            "legendFormat": "Hit Rate %",
+            "refId": "C"
+          }
+        ],
+        "yAxes": [
+          {"label": "Rate / Percentage", "min": 0}
+        ],
+        "gridPos": {"h": 6, "w": 12, "x": 0, "y": 12}
+      },
+      {
+        "id": 7,
+        "title": "Security Events",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "increase(security_events_total[1h])",
+            "legendFormat": "Security Events/hour",
+            "refId": "A"
+          },
+          {
+            "expr": "increase(auth_attempts_total{status=\"failed\"}[1h])",
+            "legendFormat": "Failed Auth/hour",
+            "refId": "B"
+          }
+        ],
+        "yAxes": [
+          {"label": "Events", "min": 0}
+        ],
+        "gridPos": {"h": 6, "w": 12, "x": 12, "y": 12}
+      },
+      {
+        "id": 8,
+        "title": "Error Rate by Status Code",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "sum(rate(http_requests_total{status=~\"4..\"}[5m])) by (status)",
+            "legendFormat": "4xx Errors",
+            "refId": "A"
+          },
+          {
+            "expr": "sum(rate(http_requests_total{status=~\"5..\"}[5m])) by (status)",
+            "legendFormat": "5xx Errors",
+            "refId": "B"
+          }
+        ],
+        "yAxes": [
+          {"label": "Errors/sec", "min": 0}
+        ],
+        "gridPos": {"h": 6, "w": 24, "x": 0, "y": 18}
+      }
+    ],
+    "time": {
+      "from": "now-1h",
+      "to": "now"
+    },
+    "refresh": "30s",
+    "schemaVersion": 27,
+    "version": 1,
+    "links": []
+  }
+}

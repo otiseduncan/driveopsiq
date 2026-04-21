@@ -1,0 +1,361 @@
+name: 🛡️ SyferStackV2 Security Audit
+
+on:
+  push:
+    branches: [ main, staging, develop ]
+  pull_request:
+    branches: [ main, staging ]
+  schedule:
+    # Run daily audit at 2 AM UTC
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+    inputs:
+      audit_type:
+        description: 'Type of audit to run'
+        required: true
+        default: 'full'
+        type: choice
+        options:
+          - 'full'
+          - 'security-only'
+          - 'quality-only'
+      upload_results:
+        description: 'Upload results as artifacts'
+        required: false
+        default: true
+        type: boolean
+
+env:
+  AUDIT_ENVIRONMENT: production
+  AUDIT_LOG_LEVEL: INFO
+  AUDIT_ENABLE_CACHE: true
+
+jobs:
+  # Security and code quality audit
+  security-audit:
+    name: 🔍 Security & Quality Audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    
+    permissions:
+      contents: read
+      security-events: write  # For SARIF upload
+      pull-requests: write    # For PR comments
+      actions: read           # For workflow access
+      checks: write           # For check runs
+    
+    steps:
+      - name: 🔄 Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full history for git-based caching
+      
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      
+      - name: 📦 Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r scripts/requirements.txt
+          pip install schedule  # For scheduler
+      
+      - name: 🔧 Install Audit Tools
+        run: |
+          pip install ruff bandit mypy safety pylint black isort
+      
+      - name: ⚙️ Configure Audit System
+        run: |
+          # Create configuration for CI environment
+          cat > scripts/audit_config_ci.yaml << EOF
+          environment: testing
+          ollama:
+            url: "http://localhost:11434/api/generate"
+            model: "llama3:8b"
+            timeout: 60
+            max_retries: 2
+          
+          files:
+            max_size_mb: 5
+            max_content_chars: 2000
+            exclude_patterns:
+              - "node_modules/**"
+              - ".git/**"
+              - "__pycache__/**"
+              - "*.pyc"
+          
+          performance:
+            parallel_llm_requests: 2
+            enable_caching: true
+          
+          output:
+            reports_dir: "audit_reports"
+            formats: ["json", "markdown", "sarif"]
+            include_git_info: true
+          
+          tools:
+            ruff:
+              enabled: true
+            bandit:
+              enabled: true
+              severity_level: "medium"
+            mypy:
+              enabled: true
+            safety:
+              enabled: true
+          EOF
+      
+      - name: 🧹 Cache Audit Results
+        uses: actions/cache@v3
+        with:
+          path: .audit_cache
+          key: audit-cache-${{ runner.os }}-${{ hashFiles('**/*.py') }}
+          restore-keys: |
+            audit-cache-${{ runner.os }}-
+      
+      - name: 🚀 Start Ollama (Optional)
+        if: github.event.inputs.audit_type == 'full' || github.event_name == 'schedule'
+        run: |
+          # Try to start Ollama for LLM analysis
+          docker run -d --name ollama -p 11434:11434 ollama/ollama:latest || echo "Ollama not available"
+          sleep 10
+          docker exec ollama ollama pull llama3:8b || echo "Model pull failed"
+        continue-on-error: true
+      
+      - name: 🔍 Run Security Audit
+        id: audit
+        run: |
+          cd scripts
+          python -c "
+          import asyncio
+          import sys
+          from pathlib import Path
+          sys.path.append(str(Path.cwd()))
+          
+          from config_manager import ConfigManager
+          from production_audit import ProductionAuditor
+          
+          async def run_audit():
+              try:
+                  config_manager = ConfigManager(Path('audit_config_ci.yaml'))
+                  config = config_manager.load_config()
+                  
+                  auditor = ProductionAuditor(config)
+                  results = await auditor.run_audit()
+                  
+                  # Calculate summary stats
+                  total_files = len(results.files)
+                  ruff_issues = len(results.ruff) if isinstance(results.ruff, list) else 0
+                  bandit_issues = len(results.bandit.get('results', []))
+                  total_issues = ruff_issues + bandit_issues
+                  
+                  print(f'AUDIT_TOTAL_FILES={total_files}')
+                  print(f'AUDIT_TOTAL_ISSUES={total_issues}')
+                  print(f'AUDIT_RUFF_ISSUES={ruff_issues}')
+                  print(f'AUDIT_BANDIT_ISSUES={bandit_issues}')
+                  
+                  # Set exit code based on critical issues
+                  if bandit_issues > 10 or ruff_issues > 50:
+                      print('AUDIT_STATUS=FAILED')
+                      sys.exit(1)
+                  elif bandit_issues > 5 or ruff_issues > 20:
+                      print('AUDIT_STATUS=WARNING')
+                      sys.exit(0)
+                  else:
+                      print('AUDIT_STATUS=PASSED')
+                      sys.exit(0)
+                      
+              except Exception as e:
+                  print(f'AUDIT_ERROR={str(e)}')
+                  print('AUDIT_STATUS=ERROR')
+                  sys.exit(1)
+          
+          asyncio.run(run_audit())
+          " >> $GITHUB_OUTPUT
+        continue-on-error: true
+      
+      - name: 📊 Generate SARIF Report
+        if: always()
+        run: |
+          # Convert audit results to SARIF format for GitHub Security tab
+          python -c "
+          import json
+          from pathlib import Path
+          
+          # Simple SARIF conversion (can be enhanced)
+          sarif_report = {
+              'version': '2.1.0',
+              'schema': 'https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0.json',
+              'runs': [{
+                  'tool': {
+                      'driver': {
+                          'name': 'SyferStackV2 Audit',
+                          'version': '1.0.0',
+                          'informationUri': 'https://github.com/otiseduncan/SyferStackV2'
+                      }
+                  },
+                  'results': []
+              }]
+          }
+          
+          # Add bandit results if available
+          reports_dir = Path('audit_reports')
+          if (reports_dir / 'production_audit.json').exists():
+              with open(reports_dir / 'production_audit.json') as f:
+                  audit_data = json.load(f)
+              
+              # Convert bandit results to SARIF
+              for issue in audit_data.get('bandit', {}).get('results', []):
+                  sarif_result = {
+                      'ruleId': issue.get('test_id', 'unknown'),
+                      'message': {'text': issue.get('issue_text', 'Security issue detected')},
+                      'level': 'warning' if issue.get('issue_severity') == 'MEDIUM' else 'error',
+                      'locations': [{
+                          'physicalLocation': {
+                              'artifactLocation': {'uri': issue.get('filename', 'unknown')},
+                              'region': {
+                                  'startLine': issue.get('line_number', 1),
+                                  'startColumn': 1
+                              }
+                          }
+                      }]
+                  }
+                  sarif_report['runs'][0]['results'].append(sarif_result)
+          
+          # Save SARIF report
+          reports_dir.mkdir(exist_ok=True)
+          with open(reports_dir / 'audit.sarif', 'w') as f:
+              json.dump(sarif_report, f, indent=2)
+          "
+      
+      - name: 🔒 Upload SARIF Results
+        if: always() && github.repository == 'otiseduncan/SyferStackV2' && !github.event.pull_request.head.repo.fork
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: audit_reports/audit.sarif
+          category: syfer-audit
+        continue-on-error: true
+      
+      - name: 📝 Comment on PR
+        if: github.event_name == 'pull_request' && always()
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            
+            // Read audit summary
+            let summary = '## 🛡️ SyferStackV2 Audit Results\n\n';
+            
+            try {
+              const reportPath = 'audit_reports/summary.md';
+              if (fs.existsSync(reportPath)) {
+                const content = fs.readFileSync(reportPath, 'utf8');
+                summary += content;
+              } else {
+                summary += '❌ Audit report not available\n';
+              }
+            } catch (error) {
+              summary += `❌ Error reading audit report: ${error.message}\n`;
+            }
+            
+            // Add workflow link
+            summary += `\n\n🔗 [View full audit results](${context.payload.repository.html_url}/actions/runs/${context.runId})`;
+            
+            // Comment on PR
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: summary
+            });
+      
+      - name: 📤 Upload Audit Reports
+        if: always() && (github.event.inputs.upload_results != 'false')
+        uses: actions/upload-artifact@v4
+        with:
+          name: audit-reports-${{ github.run_number }}
+          path: |
+            audit_reports/
+            .audit_cache/metrics.db
+          retention-days: 30
+      
+      - name: 🚨 Notify on Failure
+        if: failure() && github.ref == 'refs/heads/main'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `🚨 Security Audit Failed - ${new Date().toISOString().split('T')[0]}`,
+              body: `
+              ## Security Audit Failure Alert
+              
+              **Workflow:** ${context.workflow}
+              **Run ID:** ${context.runId}
+              **Branch:** ${context.ref}
+              **Commit:** ${context.sha.substring(0, 7)}
+              
+              The security audit has failed on the main branch. Please review the results and address any critical security issues.
+              
+              [View Workflow Run](${context.payload.repository.html_url}/actions/runs/${context.runId})
+              `,
+              labels: ['security', 'bug', 'priority:high']
+            });
+
+  # Deploy audit dashboard (optional)
+  deploy-dashboard:
+    name: 📊 Deploy Audit Dashboard  
+    needs: security-audit
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && success()
+    
+    steps:
+      - name: 🔄 Checkout Code
+        uses: actions/checkout@v4
+      
+      - name: 📊 Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./audit_reports
+          destination_dir: audit-dashboard
+        continue-on-error: true
+
+  # Security dependency check
+  dependency-scan:
+    name: 🔍 Dependency Security Scan
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 🔄 Checkout Code
+        uses: actions/checkout@v4
+      
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: 🔒 Run Safety Check
+        run: |
+          pip install safety
+          safety check --json --output safety-report.json || true
+      
+      - name: 🔍 Run Trivy Vulnerability Scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+      
+      - name: 📤 Upload Trivy Results
+        if: github.repository == 'otiseduncan/SyferStackV2' && !github.event.pull_request.head.repo.fork
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: 'trivy-results.sarif'
+          category: 'trivy-dependencies'
+        continue-on-error: true

@@ -1,0 +1,122 @@
+version: '3.8'
+
+services:
+  # FastAPI Backend
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    container_name: syferstack-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=true
+      - DATABASE_URL=postgresql+asyncpg://syferstack:password@db:5432/syferstack
+      - REDIS_URL=redis://redis:6379/0
+      - SECRET_KEY=your-super-secret-key-change-this-in-production
+      # AI API keys (add your own)
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+    volumes:
+      - .:/app
+      - uploads:/app/uploads
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 5
+    networks:
+      - syferstack-network
+    restart: unless-stopped
+
+  # PostgreSQL Database
+  db:
+    image: postgres:15-alpine
+    container_name: syferstack-db
+    environment:
+      - POSTGRES_USER=syferstack
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=syferstack
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U syferstack"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - syferstack-network
+    restart: unless-stopped
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: syferstack-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - syferstack-network
+    restart: unless-stopped
+
+  # pgAdmin (PostgreSQL Admin Interface)
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: syferstack-pgadmin
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@syferstack.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+      - PGADMIN_CONFIG_SERVER_MODE=False
+    ports:
+      - "8080:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      - db
+    networks:
+      - syferstack-network
+    restart: unless-stopped
+
+  # Redis Commander (Redis Admin Interface)
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    container_name: syferstack-redis-commander
+    environment:
+      - REDIS_HOSTS=local:redis:6379
+    ports:
+      - "8081:8081"
+    depends_on:
+      - redis
+    networks:
+      - syferstack-network
+    restart: unless-stopped
+
+# Networks
+networks:
+  syferstack-network:
+    driver: bridge
+
+# Volumes
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  pgadmin_data:
+    driver: local
+  uploads:
+    driver: local
