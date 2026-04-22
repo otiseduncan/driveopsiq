@@ -1,13 +1,13 @@
-# SyferStack Frontend
+# DriveOps-IQ Frontend
 
-A modern React + TypeScript + Vite frontend application.
+A React + TypeScript + Vite frontend for the DriveOps-IQ platform.
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js (version 18 or higher)
-- npm, yarn, or pnpm
+- Node.js **22 or higher** (required — this project uses Vite 7 which requires Node 20+)
+- npm 10+
 
 ### Installation
 

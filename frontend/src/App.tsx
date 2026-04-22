@@ -10,6 +10,7 @@ import { DriveOpsRequestForm } from '@/modules/driveops_iq';
 import AdminDashboard from '@/pages/admin/AdminDashboard';
 import ManagerRouter from './router/ManagerRouter';
 const Register = lazy(() => import('@/pages/auth/Register'));
+const ForgotPassword = lazy(() => import('@/pages/auth/ForgotPassword'));
 const NotFound = lazy(() => import('@/pages/NotFound'));
 const Unauthorized = lazy(() => import('@/pages/Unauthorized'));
 const ShopCMRDashboard = lazy(() => import('@/pages/cmr/ShopCMRDashboard'));
@@ -42,6 +43,7 @@ const App: React.FC = () => (
         <Route path="/" element={<SplashScreen />} />
         <Route path="/login" element={<LoginScreen />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route
           path="/driveops"
           element={

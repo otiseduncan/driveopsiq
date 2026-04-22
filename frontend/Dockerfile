@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
 # Build stage for frontend assets
-FROM node:18-alpine AS builder
+FROM node:22-alpine AS builder
 
 # Set working directory
 WORKDIR /app
@@ -9,8 +9,8 @@ WORKDIR /app
 # Copy package files for dependency installation
 COPY package*.json ./
 
-# Install dependencies with npm ci for faster, reliable builds
-RUN npm ci --only=production && npm cache clean --force
+# Install all dependencies (devDeps needed for vite/tsc build)
+RUN npm ci && npm cache clean --force
 
 # Copy source code
 COPY . .
@@ -55,7 +55,7 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
 CMD ["nginx", "-g", "daemon off;"]
 
 # Development stage with hot reload
-FROM node:18-alpine AS development
+FROM node:22-alpine AS development
 
 WORKDIR /app
 

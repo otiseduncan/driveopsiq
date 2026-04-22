@@ -58,7 +58,7 @@ export default function LoginScreen(): JSX.Element {
       const primaryRole = roleCandidates.length > 0 ? roleCandidates[0] : null;
 
       localStorage.setItem('token', data.access_token);
-      localStorage.setItem('refreshToken', data.refresh_token);
+      localStorage.setItem('refreshToken', data.refresh_token ?? '');
 
       if (primaryRole) {
         localStorage.setItem('role', primaryRole);

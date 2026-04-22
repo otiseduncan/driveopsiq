@@ -116,8 +116,8 @@ const AdminDashboard: React.FC = () => {
 
       try {
         const [summaryResponse, jobsResponse] = await Promise.all([
-          fetch(`${baseUrl}/api/admin/summary`, requestInit),
-          fetch(`${baseUrl}/api/admin/jobs`, requestInit),
+          fetch(`${baseUrl}/api/v1/driveops/summary`, requestInit),
+          fetch(`${baseUrl}/api/v1/driveops/requests`, requestInit),
         ]);
 
         if (!signal?.aborted && summaryResponse.ok) {

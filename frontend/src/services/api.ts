@@ -21,7 +21,7 @@ export class AuthService {
    */
   static async login(credentials: LoginRequest): Promise<LoginResponse> {
     try {
-      const response = await httpClient.post<LoginResponse>('/auth/login', credentials);
+      const response = await httpClient.post<LoginResponse>('/v1/auth/login/json', credentials);
 
       // Set auth token for subsequent requests
       if (response.access_token) {
@@ -57,7 +57,7 @@ export class AuthService {
    */
   static async logout(): Promise<void> {
     try {
-      await httpClient.post('/auth/logout');
+      await httpClient.post('/v1/auth/logout');
     } catch (error) {
       console.warn('Logout request failed:', error);
       // Continue with local logout even if server request fails
@@ -76,7 +76,7 @@ export class AuthService {
    */
   static async register(userData: UserCreate): Promise<User> {
     try {
-      return await httpClient.post<User>('/auth/register', userData);
+      return await httpClient.post<User>('/v1/auth/register', userData);
     } catch (error) {
       if (error instanceof ApiError) {
         throw new Error(`Registration failed: ${error.message}`);
@@ -90,7 +90,7 @@ export class AuthService {
    */
   static async getCurrentUser(): Promise<User> {
     try {
-      return await httpClient.get<User>('/auth/me');
+      return await httpClient.get<User>('/v1/auth/me');
     } catch (error) {
       if (error instanceof ApiError && error.statusCode === 401) {
         this.removeAccessToken();
@@ -246,7 +246,7 @@ export class UserService {
    */
   static async getUsers(): Promise<User[]> {
     try {
-      return await httpClient.get<User[]>('/users');
+      return await httpClient.get<User[]>('/v1/users');
     } catch (error) {
       if (error instanceof ApiError) {
         throw new Error(`Failed to get users: ${error.message}`);
@@ -260,7 +260,7 @@ export class UserService {
    */
   static async getUserById(userId: string): Promise<User> {
     try {
-      return await httpClient.get<User>(`/users/${userId}`);
+      return await httpClient.get<User>(`/v1/users/${userId}`);
     } catch (error) {
       if (error instanceof ApiError) {
         throw new Error(`Failed to get user: ${error.message}`);
@@ -274,7 +274,7 @@ export class UserService {
    */
   static async updateUser(userId: string, updates: UserUpdate): Promise<User> {
     try {
-      return await httpClient.put<User>(`/users/${userId}`, updates);
+      return await httpClient.put<User>(`/v1/users/${userId}`, updates);
     } catch (error) {
       if (error instanceof ApiError) {
         throw new Error(`Failed to update user: ${error.message}`);
@@ -288,7 +288,7 @@ export class UserService {
    */
   static async deleteUser(userId: string): Promise<void> {
     try {
-      await httpClient.delete(`/users/${userId}`);
+      await httpClient.delete(`/v1/users/${userId}`);
     } catch (error) {
       if (error instanceof ApiError) {
         throw new Error(`Failed to delete user: ${error.message}`);

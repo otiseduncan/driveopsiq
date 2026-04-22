@@ -16,7 +16,7 @@ export default function FieldManagerDashboard() {
       if (!baseUrl) {
         throw new Error("API base URL not configured");
       }
-      const res = await fetch(`${baseUrl}/api/manager/field/summary`, {
+      const res = await fetch(`${baseUrl}/api/v1/driveops/summary`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (res.ok) {

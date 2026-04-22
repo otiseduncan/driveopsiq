@@ -1,15 +1,25 @@
 import { Navigate } from 'react-router-dom';
-import DriveOpsRequestForm from '@/modules/driveops_iq/DriveOpsRequestForm';
+
+const ROLE_ROUTES: Record<string, string> = {
+  super_admin: '/dashboard/admin',
+  admin: '/dashboard/admin',
+  manager_field: '/dashboard/manager/field',
+  manager_shop: '/dashboard/manager/shop',
+  cmr_shop: '/dashboard/cmr/shop',
+  cmr_mobile: '/dashboard/cmr/mobile',
+  technician: '/dashboard/technician',
+};
 
 const Dashboard: React.FC = () => {
-  if (typeof window !== 'undefined') {
-    const token = window.localStorage.getItem('token');
-    if (!token) {
-      return <Navigate to="/login" replace />;
-    }
+  const token = typeof window !== 'undefined' ? window.localStorage.getItem('token') : null;
+  if (!token) {
+    return <Navigate to="/login" replace />;
   }
 
-  return <DriveOpsRequestForm />;
+  const role = typeof window !== 'undefined' ? window.localStorage.getItem('role') : null;
+  const destination = (role && ROLE_ROUTES[role]) ?? '/unauthorized';
+  return <Navigate to={destination} replace />;
 };
 
 export default Dashboard;
+
