@@ -68,6 +68,7 @@ dev = [
     "detect-secrets>=1.4.0",
     "codecov>=2.1.13",
     "coverage[toml]>=7.3.2",
+    "asgi-lifespan>=2.1.0",
 ]
 test = [
     "pytest>=7.4.3",
@@ -79,6 +80,7 @@ test = [
     "httpx>=0.25.2",
     "factory-boy>=3.3.0",  # Test data factories
     "faker>=20.1.0",  # Generate fake data
+    "asgi-lifespan>=2.1.0",
 ]
 
 [project.urls]

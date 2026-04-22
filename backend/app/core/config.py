@@ -5,7 +5,7 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Optional
 
-from pydantic import Field, ValidationInfo, field_validator
+from pydantic import Field, ValidationInfo, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -23,7 +23,8 @@ class Settings(BaseSettings):
     app_name: str = "SyferStack Backend"
     app_version: str = "0.1.0"
     debug: bool = Field(default=False, description="Enable debug mode")
-    
+    environment: str = Field(default="development", description="Runtime environment: development, staging, production")
+
     # Server configuration
     host: str = Field(default="0.0.0.0", description="Server host")
     port: int = Field(default=8000, description="Server port")
@@ -73,7 +74,7 @@ class Settings(BaseSettings):
         description="Allowed hosts for TrustedHostMiddleware",
     )
     DEMO_MODE: bool = Field(
-        default=True,
+        default=False,
         description="Enable demo/test fixtures such as seeded accounts",
     )
     rate_limit_default: list[str] = Field(
@@ -110,6 +111,19 @@ class Settings(BaseSettings):
         description="Route path exposing Prometheus metrics",
     )
     
+
+    @field_validator("environment")
+    @classmethod
+    def normalize_environment(cls, value: str) -> str:
+        """Normalize supported environment names."""
+        normalized = value.strip().lower()
+        aliases = {"prod": "production", "dev": "development", "stage": "staging"}
+        normalized = aliases.get(normalized, normalized)
+        allowed = {"development", "staging", "production"}
+        if normalized not in allowed:
+            raise ValueError(f"Unsupported environment '{value}'. Expected one of: {sorted(allowed)}")
+        return normalized
+
     @field_validator("debug", mode="before")
     @classmethod
     def parse_debug(cls, value: str | bool, _: ValidationInfo) -> bool:
@@ -167,17 +181,39 @@ class Settings(BaseSettings):
     @property
     def is_development(self) -> bool:
         """Check if running in development mode."""
-        return self.debug or self.reload
-    
+        return self.environment == "development" or self.debug or self.reload
+
     @property
     def is_production(self) -> bool:
         """Check if running in production mode."""
-        return not self.is_development
+        return self.environment == "production" and not self.debug and not self.reload
+
+
+    @field_validator("secret_key")
+    @classmethod
+    def validate_secret_key_strength(cls, value: str) -> str:
+        """Require sufficiently strong secret keys."""
+        if len(value) < 32:
+            raise ValueError("SECRET_KEY must be at least 32 characters long")
+        return value
 
     @property
     def demo_mode(self) -> bool:
         """Backward compatible alias for legacy lowercase flag."""
         return self.DEMO_MODE
+
+
+    @model_validator(mode="after")
+    def enforce_production_safety(self) -> "Settings":
+        """Fail fast on insecure production defaults."""
+        if self.is_production:
+            if self.secret_key.startswith("dev-secret-key-change"):
+                raise ValueError("In production, SECRET_KEY must not use the development default")
+            if self.DEMO_MODE:
+                raise ValueError("In production, DEMO_MODE must be false")
+            if "*" in self.allowed_hosts:
+                raise ValueError("In production, wildcard allowed hosts are not permitted")
+        return self
 
 
 @lru_cache
