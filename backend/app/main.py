@@ -4,7 +4,7 @@ SyferStack FastAPI application with enhanced security and performance configurat
 import asyncio
 import gzip
 import logging
-import os
+import secrets
 import time
 from contextlib import asynccontextmanager
 from typing import AsyncGenerator, Dict, List, Optional
@@ -46,7 +46,7 @@ class PerformanceMiddleware(BaseHTTPMiddleware):
         start_time = time.perf_counter()
         
         # Add request ID for tracing
-        request_id = f"req_{int(time.time() * 1000)}_{hash(request.url.path) % 10000:04d}"
+        request_id = f"req_{secrets.token_hex(8)}"
         
         # Process request
         response = await call_next(request)
@@ -83,8 +83,8 @@ class SecurityHeadersMiddleware(BaseHTTPMiddleware):
         # Security headers
         response.headers["X-Content-Type-Options"] = "nosniff"
         response.headers["X-Frame-Options"] = "DENY"
-        response.headers["X-XSS-Protection"] = "1; mode=block"
-        response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
+        if request.url.scheme == "https":
+            response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
         response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
         response.headers["Permissions-Policy"] = "geolocation=(), microphone=(), camera=()"
         response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"

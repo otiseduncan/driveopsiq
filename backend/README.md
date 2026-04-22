@@ -71,7 +71,13 @@ backend/
 ## Environment Variables
 - Review `.env.example` for a full list of supported variables.
 - `SECRET_KEY` **must** be replaced prior to deployment.
+- `ENVIRONMENT` should be set to `production` for live deployments.
 - Set `DATABASE_URL` to a PostgreSQL async URL (e.g., `postgresql+asyncpg://user:pass@host:5432/db`) when running against Postgres.
+
+### Production Hardening Defaults
+- Demo user seeding is disabled by default (`DEMO_MODE=false`).
+- Production startup now fails fast if an insecure default `SECRET_KEY` is used.
+- HSTS headers are only sent on HTTPS requests to avoid local-development browser lock-in.
 
 ## Next Steps
 1. Configure CI to run `pytest` and formatting checks.
